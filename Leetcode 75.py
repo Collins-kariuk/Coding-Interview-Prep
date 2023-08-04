@@ -33,10 +33,22 @@ def gcdOfStrings(str1, str2):
 
 # --------- Delete the Middle Node of a Linked List - Leetcode 2095 - Medium ------------
 def deleteMiddle(head):
-    pass
-
-# print(1 // 2)
-
-for i in range(-1):
-    print(i)
-
+    res = head
+    traverser = head
+    
+    def counter(headNode):
+        counter = 0
+        counterPointer = head
+        while counterPointer:
+            counter += 1
+            counterPointer = counterPointer.next
+        return counter
+    
+    numNodes = counter(head)
+    for i in range((numNodes // 2) - 1):
+        traverser = traverser.next
+    
+    if numNodes > 1:
+        traverser.next = traverser.next.next
+        return res
+    return None
