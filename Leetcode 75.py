@@ -52,3 +52,20 @@ def deleteMiddle(head):
         traverser.next = traverser.next.next
         return res
     return None
+
+
+# --------- Container With Most Water - Leetcode 11 - Medium ------------
+def maxArea(height):
+    l = 0
+    r = len(height) - 1
+    maxVol = 0
+    while l < r:
+        minHeight = min(height[l], height[r])
+        pointerDifference = r - l
+        maxVol = max(maxVol, pointerDifference * minHeight)
+        # vol.append(pointerDifference * minHeight)
+        if height[l] < height[r]:
+            l += 1
+        else:
+            r -= 1
+    return maxVol
