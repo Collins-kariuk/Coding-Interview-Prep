@@ -63,9 +63,22 @@ def maxArea(height):
         minHeight = min(height[l], height[r])
         pointerDifference = r - l
         maxVol = max(maxVol, pointerDifference * minHeight)
-        # vol.append(pointerDifference * minHeight)
         if height[l] < height[r]:
             l += 1
         else:
             r -= 1
     return maxVol
+
+
+# --------- Reverse Linked List - Leetcode 206 - Easy ------------
+def reverseList(head):
+    prev = None
+    curr = head
+
+    while curr:
+        savedNextNode = curr.next
+        curr.next = prev
+        prev = curr
+        curr = savedNextNode
+    
+    return prev
