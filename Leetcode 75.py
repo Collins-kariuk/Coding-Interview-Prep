@@ -1,4 +1,4 @@
-# --------- Merge Strings Alternately - Leetcode 1768 - Easy ------------
+# --------- 1. Merge Strings Alternately - Leetcode 1768 - Easy ------------
 def mergeAlternately(word1, word2):
     l = 0
     r = 0
@@ -13,7 +13,7 @@ def mergeAlternately(word1, word2):
     return ''.join(res)
 
 
-# --------- Greatest Common Divisor of Strings - Leetcode 1071 - Easy ------------
+# --------- 2. Greatest Common Divisor of Strings - Leetcode 1071 - Easy ------------
 def gcdOfStrings(str1, str2):
     len1 = len(str1)
     len2 = len(str2)
@@ -31,7 +31,7 @@ def gcdOfStrings(str1, str2):
     return ""
 
 
-# --------- Delete the Middle Node of a Linked List - Leetcode 2095 - Medium ------------
+# --------- 3. Delete the Middle Node of a Linked List - Leetcode 2095 - Medium ------------
 def deleteMiddle(head):
     res = head
     traverser = head
@@ -54,7 +54,7 @@ def deleteMiddle(head):
     return None
 
 
-# --------- Container With Most Water - Leetcode 11 - Medium ------------
+# --------- 4. Container With Most Water - Leetcode 11 - Medium ------------
 def maxArea(height):
     l = 0
     r = len(height) - 1
@@ -70,7 +70,7 @@ def maxArea(height):
     return maxVol
 
 
-# --------- Reverse Linked List - Leetcode 206 - Easy ------------
+# --------- 5. Reverse Linked List - Leetcode 206 - Easy ------------
 def reverseList(head):
     prev = None
     curr = head
@@ -82,3 +82,5 @@ def reverseList(head):
         curr = savedNextNode
     
     return prev
+
+# --------- 6. Reverse Linked List - Leetcode 206 - Easy ------------
