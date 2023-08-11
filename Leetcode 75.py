@@ -83,7 +83,7 @@ def reverseList(head):
     
     return prev
 
-# --------- 6. Reverse Linked List - Leetcode 206 - Easy ------------
+# --------- 6. Maximum Average Subarray I - Leetcode 643 - Easy ------------
 def findMaxAverage(nums, k):
     currSum = maxSum = sum(nums[:k])
 
@@ -93,5 +93,3 @@ def findMaxAverage(nums, k):
 
     return maxSum / k
 
-print(findMaxAverage([1, 12, -5, -6, 50, 3], 4))
-print(findMaxAverage([5], 1))
