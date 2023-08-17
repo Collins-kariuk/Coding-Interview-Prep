@@ -38,7 +38,7 @@ class TreeNode:
         self.left = left
         self.right = right
 
-# --------- 2. Invert Binary Tree - Leetcode 19 - Medium ------------
+# --------- 2. Invert Binary Tree - Leetcode 226 - Easy ------------
 def invertTree(root):
     # check whether the root contains value and if not return none
     if root == None:
