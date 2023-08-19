@@ -170,12 +170,24 @@ class MedianFinder:
         self.small, self.large = [], []  # maxHeap, minHeap (python default)
 
     def addNum(self, num: int) -> None:
+        # when the large heap is non-empty and the number to be added is
+        # greater than the largest number in the large heap, then we add
+        # the number to the large heap
         if self.large and num > self.large[0]:
             heapq.heappush(self.large, num)
+        # otherwise, we just normally add it to the small heap
+        # note that since Python's default implementation of a heap is a
+        # minheap, we negate the numbers we need to add before adding them
         else:
             heapq.heappush(self.small, -1 * num)
-        
+
+        # uneven sizes? we need the lengths of both heaps to be no more
+        # than 1
         if len(self.small) > len(self.large) + 1:
+            # the smaller heap is bigger than normal and so we need to
+            # remove the smallest (the largest after multiplying by 1)
+            # number and add it to the large heap to maintain length
+            # parity
             val = -1 * heapq.heappop(self.small)
             heapq.heappush(self.large, val)
         if len(self.large) > len(self.small) + 1:
