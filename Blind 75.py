@@ -130,3 +130,28 @@ def numIslands(grid):
         # the final number of islands
         return islands
 
+# =================================================================== #
+
+### ARRAYS & HASHING ###
+# --------- 4. Contains Duplicate - Leetcode 217 - Easy ------------
+def containsDuplicate(nums):
+    # initialize a dictionary that'll store the running occurrences
+    # of elements in nums
+    dict_list = {}
+    # loop through nums
+    for num in nums:
+        # if the number already exists in the dictionary, then nums
+        # contains a duplicate since it means it was added in a
+        # previous iteration
+        if num in dict_list:
+            return True
+        # if the number does not already exist in the dictionary,
+        # we add it to the dict, so that if we encounter it in a
+        # following iteration, we'll know nums contains a duplicate
+        else:
+            dict_list[num] = 1
+    # we've gone through all numbers in nums and have not found
+    # nums to have a duplicate
+    return False
+
+
