@@ -211,4 +211,39 @@ class MedianFinder:
         return (-1 * self.small[0] + self.large[0]) / 2
 
 
+# =================================================================== #
+
+### HEAPS OR PRIORITY QUEUES ###
+# --------- 5. Best Time to Buy and Sell Stock - Leetcode 121 - Easy ------------
+def maxProfit(prices):
+    # initialize pointer
+    l = 0
+    r = 1
+    # initialize variable that's gonna store the maximum profit
+    maxProfit = 0
+
+    # continue as long as the right pointer doesn't go out of bounds of the length
+    # of the prices list
+    while r < len(prices):
+        # it's futile to calculate the profit if the value at the right pointer is
+        # less than the value at the left pointer, so it means we've encountered a
+        # value which is less than the one at the left pointer and would therefore
+        # be better suited to calculate the maximum profit
+        # we therefore change the left pointer to where the right pointer is and
+        # increment the right pointer by one
+        if prices[r] <= prices[l]:
+            l = r
+            r += 1
+        else:
+            # otherwise we calculate the current profit normally
+            currProfit = prices[r] - prices[l]
+            # the maximum profit will be the larger profit between the previous max
+            # profit and the just calculated current profit
+            maxProfit = max(maxProfit, currProfit)
+            # we increment the right pointer by onw
+            r += 1
+    # the maximum profit at the end
+    return maxProfit
+
+
 
