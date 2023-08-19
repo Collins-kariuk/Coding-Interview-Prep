@@ -14,11 +14,13 @@ def removeNthFromEnd(head, n):
     first = dummy
     second = dummy
     
-    # Advances first pointer so that the gap between first and second is n nodes apart
+    # Advances first pointer so that the gap between first and second is n nodes
+    # apart
     for i in range(n + 1):
         first = first.next
         
-    # While the first pointer does not equal null move both first and second to maintain the gap and get nth node from the end
+    # While the first pointer does not equal null move both first and second to 
+    # maintain the gap and get nth node from the end
     while (first != None):
         first = first.next
         second = second.next
@@ -29,6 +31,7 @@ def removeNthFromEnd(head, n):
     # Return dummy.next
     return dummy.next
     
+# =================================================================== #
 
 ### TREES ###
 
@@ -60,6 +63,7 @@ def invertTree(root):
 # =================================================================== #
 
 ### GRAPHS ###
+from collections import deque
 
 # --------- 3. Number of Islands - Leetcode 200 - Medium ------------
 def numIslands(grid):
@@ -102,7 +106,6 @@ def numIslands(grid):
                 # generic LEFT, RIGHT, UP, and DOWN directions
                 directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
 
-                # 
                 for dr, dc in directions:
                     # specific coordinates of neighbors
                     r = row + dr
@@ -210,11 +213,10 @@ class MedianFinder:
         # when the sizes of the small and large heaps are equal
         return (-1 * self.small[0] + self.large[0]) / 2
 
-
 # =================================================================== #
 
 ### HEAPS OR PRIORITY QUEUES ###
-# --------- 5. Best Time to Buy and Sell Stock - Leetcode 121 - Easy ------------
+# --------- 6. Best Time to Buy and Sell Stock - Leetcode 121 - Easy ------------
 def maxProfit(prices):
     # initialize pointer
     l = 0
@@ -245,5 +247,35 @@ def maxProfit(prices):
     # the maximum profit at the end
     return maxProfit
 
+# =================================================================== #
 
+### SLIDING WINDOW ###
 
+# --------- 7. Longest Substring Without Repeating Characters - Leetcode 3 - Medium ------------
+def lengthOfLongestSubstring(s):
+    # create a set that'll store all unique non-repeating characters
+    charSet = set()
+    # initialize left pointer at first element of input string
+    l = 0
+    # result that'll hold the longest substring without repeating characters
+    res = 0
+
+    # the right pointer that'll traverse/loop through the list as it checks for repeating
+    # characters
+    for r in range(len(s)):
+        # when the character at the right pointer is in the set (meaning that character at that
+        # point in the loop is repeated) we remove characters starting from the left of the 
+        # substring with the repetition in it until that substring does not contain the current
+        # character in s[r]
+        while s[r] in charSet:
+            # we have to remove it in 2 ways
+            # 1. remove it from the set
+            charSet.remove(s[l])
+            # 2. advance the left pointer rightwards
+            l += 1
+        # if the character at s[r] is not in the set, it means we've not encountered a
+        # repetition and we can add it to the set 
+        charSet.add(s[r])
+        res = max(res, r - l + 1)
+    
+    return res
