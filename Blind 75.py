@@ -279,3 +279,45 @@ def lengthOfLongestSubstring(s):
         res = max(res, r - l + 1)
     
     return res
+
+# =================================================================== #
+
+### BINARY SEARCH ###
+# --------- 8. Find Minimum in Rotated Sorted Array - Leetcode 153 - Medium ------------
+def findMin(nums):
+    # variable that'll store the current minimum
+    res = nums[0]
+    # left pointer initially at the leftmost end
+    l = 0
+    # right pointer initially at the rightmost end
+    r = len(nums) - 1
+
+    # continue looping as long left and right pointers don't cross
+    # each other
+    while l <= r:
+        # if the number at the left pointer is less than the one at
+        # the right pointer, it means that nums is already sorted and
+        # we can safely return the number at the left pointer or the 
+        # current minimum, whichever is smaller
+        if nums[l] < nums[r]:
+            res = min(res, nums[l])
+            break
+
+        # calculation of the location of the middle pointer
+        mid = (l + r) // 2
+        # before further comparison, the number at the middle pointer
+        # will serve as the minimum
+        res = min(res, nums[mid])
+        # if the number at the middle is greater than or equal than
+        # the number at the left pointer, it means that we need to look
+        #  at the right part of the sublist because it means that the
+        # left part of the sublist is already sorted and because of the
+        # rotation, it makes no sense to look at the left part of nums 
+        # since it will always be larger than the right part of nums, so
+        # we focus our attention to the right part of nums
+        if nums[mid] >= nums[l]:
+            l = mid + 1
+        # the opposite holds
+        else:
+            r = mid - 1
+    return res
