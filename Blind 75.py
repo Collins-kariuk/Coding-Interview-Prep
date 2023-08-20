@@ -334,7 +334,7 @@ def findMin(nums):
         res = min(res, nums[mid])
         # if the number at the middle is greater than or equal than
         # the number at the left pointer, it means that we need to look
-        #  at the right part of the sublist because it means that the
+        # at the right part of the sublist because it means that the
         # left part of the sublist is already sorted and because of the
         # rotation, it makes no sense to look at the left part of nums 
         # since it will always be larger than the right part of nums, so
@@ -345,3 +345,41 @@ def findMin(nums):
         else:
             r = mid - 1
     return res
+
+# ---------- 10. Search in Rotated Sorted Array - Leetcode 33 - Medium -------------
+def search(nums, target):
+    # initialize your pointers
+    l = 0
+    r = len(nums) - 1
+
+    # as long as the pointers don't cross each other, continue with the 
+    while l <= r:
+        # calculated the middle pointer
+        mid = (l + r) // 2
+        # direct return if the target is equal to the number at the middle pointer
+        if target == nums[mid]:
+            return mid
+
+        # left sorted portion
+        # if the number at the middle is less than the number at the left pointer, 
+        # we are at the left sorted portion
+        if nums[l] <= nums[mid]:
+            # if the target greater than the number at the middle OR if the target is 
+            # less than the number at the left pointer, there is no point in looking 
+            # at the left sorted portion, so we update our pointers to concentrate our
+            # search on the right sorted portion
+            if target > nums[mid] or target < nums[l]:
+                l = mid + 1
+            # otherwise, our target is surely in the left sorted portion and we change
+            # our pointers to concentrate on this region
+            else:
+                r = mid - 1
+        
+        # right sorted portion
+        else:
+            if target < nums[mid] or target > nums[r]:
+                r = mid - 1
+            else:
+                l = mid + 1
+    # when the target is not in our list of numbers, we just return -1
+    return -1 
