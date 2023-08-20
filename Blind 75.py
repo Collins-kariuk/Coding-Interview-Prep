@@ -133,6 +133,7 @@ def numIslands(grid):
         # the final number of islands
         return islands
 
+
 # =================================================================== #
 
 ### ARRAYS & HASHING ###
@@ -156,6 +157,29 @@ def containsDuplicate(nums):
     # we've gone through all numbers in nums and have not found
     # nums to have a duplicate
     return False
+
+# ---------------- 9. Two Sum - Leetcode 1 - Easy -------------------
+def twoSum(nums, target):
+    # dictionary that'll store already visited numbers in nums alongside 
+    # their indices as key:value pairs. conveniently, the values will be
+    # the index of each number
+    twoSumDict = {}
+    
+    # looping through nums, where each number in each iteration will act
+    # as num1
+    for i in range(len(nums)):
+        # the second number, num2, that when added to num1 will produce
+        # target
+        num2 = target - nums[i]
+        # when num2 is already in the dictionary, it means we've already
+        # found our 2 numbers and we can return their indices as a list
+        if num2 in twoSumDict:
+            return [i, twoSumDict[num2]]
+        # otherwise we add the number, at the current iteration, into the
+        # dictionary which will later serve as num2
+        else:
+            twoSumDict[nums[i]] = i
+
 
 # =================================================================== #
 
