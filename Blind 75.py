@@ -180,6 +180,52 @@ def twoSum(nums, target):
         else:
             twoSumDict[nums[i]] = i
 
+# ---------------- 11. Top K Frequent Elements - Leetcode 347 - Medium -------------------
+def topKFrequent(nums, k):
+    # function to count the frequency of numbers in a list of numbers
+    def dictify(nums):
+        numsDict = {}
+        for num in nums:
+            if num in numsDict:
+                numsDict[num] += 1
+            else:
+                numsDict[num] = 1
+        return numsDict
+
+    # dictionary containing key:value pairs of the frequency of the occurrences of numbers
+    # in nums
+    count = dictify(nums)
+    # our "bucket"
+    # essentially, frequencies acts as a measure of the question, "how many elements occur
+    # i number of times?" where i is dictated by the length of nums
+    # essentially, this provides an easy control of the length of the list that controls
+    # the frequencies of the numbers in nums
+    # if you may imagine another scenario where the length of frequencies is controlled by
+    # the actual elements in nums instead of their frequencies, we would have the length of
+    # the frequencies list being controlled by the largest number in nums which would not
+    # be a good use of memory since the largest number in nums could be quite a large number,
+    # say 1,000,000
+    frequencies = [[] for i in range(len(nums) + 1)]
+
+    # loop through the numbers and their respective counts in the dictionary
+    for num, count in count.items():
+        frequencies[count].append(num)
+    
+    # initialize our results array
+    res = []
+    # loop through the nested list that is frequencies
+    # notice that we loop starting from the end since we want the top k frequent elements
+    for i in range(len(frequencies) - 1, 0, -1):
+        # looping through each individual sublist
+        for num in frequencies[i]:
+            # add the top number in res
+            res.append(num)
+            # we have to stop eventually, and this will be signified when the length of res
+            # is equal to k
+            # we need not go further when it is so
+            if len(res) == k:
+                return res
+
 
 # =================================================================== #
 
@@ -194,7 +240,8 @@ class MedianFinder:
         
         # two heaps, large, small, minheap, maxheap
         # heaps should be equal size
-        self.small, self.large = [], []  # maxHeap, minHeap (python default)
+        self.small = [] # maxheap
+        self.large = [] # minHeap (Python's default)
 
     def addNum(self, num: int) -> None:
         # when the large heap is non-empty AND the number to be added is
@@ -209,13 +256,12 @@ class MedianFinder:
         else:
             heapq.heappush(self.small, -1 * num)
 
-        # uneven sizes? we need the lengths of both heaps to be no more
-        # than 1
+        # uneven sizes?
+        # we need the lengths of both heaps to be no more than 1
         if len(self.small) > len(self.large) + 1:
             # the smaller heap is bigger than normal and so we need to
             # remove the smallest (the largest after multiplying by 1)
-            # number and add it to the large heap to maintain length
-            # parity
+            # number and add it to the large heap to maintain length parity
             val = -1 * heapq.heappop(self.small)
             heapq.heappush(self.large, val)
         if len(self.large) > len(self.small) + 1:
@@ -237,9 +283,9 @@ class MedianFinder:
         # when the sizes of the small and large heaps are equal
         return (-1 * self.small[0] + self.large[0]) / 2
 
-# =================================================================== #
+# ================================================================================= #
 
-### HEAPS OR PRIORITY QUEUES ###
+### SLIDING WINDOW ###
 # --------- 6. Best Time to Buy and Sell Stock - Leetcode 121 - Easy ------------
 def maxProfit(prices):
     # initialize pointer
@@ -270,10 +316,6 @@ def maxProfit(prices):
             r += 1
     # the maximum profit at the end
     return maxProfit
-
-# =================================================================== #
-
-### SLIDING WINDOW ###
 
 # --------- 7. Longest Substring Without Repeating Characters - Leetcode 3 - Medium ------------
 def lengthOfLongestSubstring(s):
@@ -316,8 +358,7 @@ def findMin(nums):
     # right pointer initially at the rightmost end
     r = len(nums) - 1
 
-    # continue looping as long left and right pointers don't cross
-    # each other
+    # continue looping as long left and right pointers don't cross each other
     while l <= r:
         # if the number at the left pointer is less than the one at
         # the right pointer, it means that nums is already sorted and
@@ -329,16 +370,15 @@ def findMin(nums):
 
         # calculation of the location of the middle pointer
         mid = (l + r) // 2
-        # before further comparison, the number at the middle pointer
-        # will serve as the minimum
+        # before further comparison, the number at the middle pointer will serve as
+        # the minimum
         res = min(res, nums[mid])
-        # if the number at the middle is greater than or equal than
-        # the number at the left pointer, it means that we need to look
-        # at the right part of the sublist because it means that the
-        # left part of the sublist is already sorted and because of the
-        # rotation, it makes no sense to look at the left part of nums 
-        # since it will always be larger than the right part of nums, so
-        # we focus our attention to the right part of nums
+        # if the number at the middle is greater than or equal than the number at 
+        # the left pointer, it means that we need to look at the right part of nums 
+        # because it means that the left part of the sublist is already sorted and
+        # because of the rotation, it makes no sense to look at the left part of
+        # nums since it will always be larger than the right part of nums, so we
+        # focus our attention to the right part of nums
         if nums[mid] >= nums[l]:
             l = mid + 1
         # the opposite holds
