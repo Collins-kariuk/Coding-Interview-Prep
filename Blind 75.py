@@ -30,6 +30,32 @@ def removeNthFromEnd(head, n):
     
     # Return dummy.next
     return dummy.next
+
+# --------- 14. Reverse Linked List - Leetcode 209 - Easy ------------
+def reverseList(head):
+    # intialize the 2 needed pointers required to traverse through the
+    # linked list
+    prev = None
+    curr = head
+
+    # continue with the loop as long as the current pointer does not
+    # point at a null node
+    while curr:
+        # save the reference to the next node after the current one since
+        # it the next iteration it will serve as the current node
+        placeholder = curr.next
+        # changing the "direction of the arrow" or where the current node
+        # points to
+        curr.next = prev
+        # advancing the previous pointer to be where the current pointer is 
+        prev = curr
+        # advancing the current pointer to the placeholder we conviently
+        # saved earlier
+        curr = placeholder
+    
+    # the new head of the reversed linked list will be the node the prev
+    # pointer is pointing to
+    return prev
     
 # =================================================================== #
 
