@@ -566,6 +566,7 @@ class Trie:
         """
         Inserts a word into the trie
         """
+
         # initially start at the root
         curr = self.root
 
@@ -580,6 +581,7 @@ class Trie:
             # update the current pointer by moving to the node represented by the character
             # we're looking at
             curr = curr.children[c]
+        
         # we've finished iterating through each character of the word we want to insert
         # our current pointer points to the trie node representing the last character in the
         # inserted word
@@ -592,8 +594,10 @@ class Trie:
         """
         Returns if the word is in the trie
         """
+
         # initially start at the root
         curr = self.root
+
         # search through the word character by character
         for c in word:
             # if we reach a point in our iteration where the character is not among the list
@@ -604,6 +608,7 @@ class Trie:
             # update the current pointer by moving to the node represented by the character
             # we're looking at
             curr = curr.children[c]
+        
         # we've reached the end of the word we're searching and we know that we've reached the
         # end of the word if the character is the end of the word
         return curr.endOfWord
@@ -613,8 +618,10 @@ class Trie:
         """
         Returns is there is any word in the trie that starts with the given prefix
         """
+
         # initially start at the root
         curr = self.root
+
         # search through the prefix character by character
         for c in prefix:
             # if the character we're looking at is not among the children nodes of the current
@@ -625,6 +632,7 @@ class Trie:
             # update the current pointer by moving to the node represented by the character
             # we're looking at
             curr = curr.children[c]
+        
         # at the end we've looked at each character in the prefix and we now know for sure that
         # there are a set of nodes with these set of characters from the prefix and hence we
         # return true
@@ -635,3 +643,95 @@ class Trie:
 # obj.insert(word)
 # param_2 = obj.search(word)
 # param_3 = obj.startsWith(prefix)
+
+# --------- 16. Design Add and Search Words Data Structure - Leetcode 211 - Medium ------------
+
+#TODO: NOT FULLY UNDERSTOOD
+class TrieNode:
+    # initialize the trie node
+    # you can't have a trie or solve a trie-related question without first having
+    # a way to represent the nodes
+    def __init__(self):
+        # each node will have children but instead of initializing an array composed
+        # of 26 characters of the English alphabet but a hashmap doing the same thing
+        # will be easier
+        self.children = {}
+        # we need a way to determine when we've reached the end of a word
+        # we can do this by initializing a boolean to False but we can set it to true
+        # is a certain character is the end of the word
+        # notice how we're not actually storing the character itself in the trie node,
+        # that's gonna be implicit from the hashmap
+        # so if we were adding a lowercase character 'a', we'd have children['a'] = TrieNode(),
+        # this is how we're gonna be inserting a node
+        self.endOfWord = False
+
+class WordDictionary:
+
+    def __init__(self):
+        """
+        initialize your data structure here
+        """
+        self.root = TrieNode()
+    
+    def addWord(self, word: str) -> None:
+        # initially start at the (empty) root
+        curr = self.root
+
+        # then we're gonna go character by character in the word
+        for c in word:
+            # we're basically going to check 2 things, if the character already exists or not
+            # when the character is not in the hashmap yet, or the children of the node we're
+            # looking at, then that means that it has not been inserted yet and so we're going
+            # to create a trie node for this character
+            if c not in curr.children:
+                curr.children[c] = TrieNode()
+            # update the current pointer by moving to the node represented by the character
+            # we're looking at
+            curr = curr.children[c]
+        
+        # we've finished iterating through each character of the word we want to insert
+        # our current pointer points to the trie node representing the last character in the
+        # inserted word
+        # to signify that we're done we need to mark this last character as the end of the
+        # inserted word
+        curr.endOfWord = True
+
+    def search(self, word: str) -> bool:
+        # a depth-first search as a way to look at every possible (tree) path when we encounter a dot character
+        def dfs(j, root):
+            curr = root
+            # go through every character in the word as a means of searching whether each character is in the trie
+            for i in range(j, len(word)):
+                c = word[i]
+                # when the character is a dot
+                if c == '.':
+                    # since a dot acts as a wildcard, we want to investigate every possible child branch of the current node we are looking at which is done by looping over all children of the current node
+                    # notice that we are looping over the values since they are the actual children
+                    for child in curr.children.values():
+                        # we want to know what's the remaining portion of the word that we're trying to match
+                        # we also want to know what is the current node in our trie
+                        # i + 1 because we are skipping the dot
+                        if dfs(i + 1, child):
+                            return True
+                    return False
+                # when the character we're looking at is a regular lowercase character
+                else:
+                    # if the character we're looking at is not among the children nodes of the current
+                    # node, then it means there is no trie node dedicated to this character and hence
+                    # we return False
+                    if c not in curr.children:
+                        return False
+                    # update the current pointer by moving to the node represented by the character
+                    # we're looking at
+                    curr = curr.children[c]
+            return curr.endOfWord
+
+        return dfs(0, self.root)
+
+        
+
+
+# Your WordDictionary object will be instantiated and called as such:
+# obj = WordDictionary()
+# obj.addWord(word)
+# param_2 = obj.search(word)
