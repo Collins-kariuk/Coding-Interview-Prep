@@ -529,3 +529,109 @@ def isValid(s):
     # string, the stack should be empty which is just the technical way of saying we have
     # crossed out all matching parens and we have made sure they appear in order
     return len(stack) == 0
+
+
+# ======================================================================================== #
+
+### TRIES ###
+# --------- 15. Implement Trie (Prefix Tree) - Leetcode 208 - Medium ------------
+class TrieNode:
+    # initialize the trie node
+    # you can't have a trie or solve a trie-related question without first having
+    # a way to represent the nodes
+    def __init__(self):
+        # each node will have children but instead of initializing an array composed
+        # of 26 characters of the English alphabet but a hashmap doing the same thing
+        # will be easier
+        self.children = {}
+        # we need a way to determine when we've reached the end of a word
+        # we can do this by initializing a boolean to False but we can set it to true
+        # is a certain character is the end of the word
+        # notice how we're not actually storing the character itself in the trie node,
+        # that's gonna be implicit from the hashmap
+        # so if we were adding a lowercase character 'a', we'd have children['a'] = TrieNode(),
+        # this is how we're gonna be inserting a node
+        self.endOfWord = False
+
+class Trie:
+    def __init__(self):
+        """
+        Initialize your data structure here
+        """
+        # we only really need the root trie node which is going to potentially lead to 26
+        # other nodes each representative of the 26 letters of the English alphabet
+        self.root = TrieNode()
+
+    def insert(self, word: str) -> None:
+        """
+        Inserts a word into the trie
+        """
+        # initially start at the root
+        curr = self.root
+
+        # then we're gonna go character by character in the word
+        for c in word:
+            # we're basically going to check 2 things, if the character already exists or not
+            # when the character is not in the hashmap yet, or the children of the node we're
+            # looking at, then that means that it has not been inserted yet and so we're going
+            # to create a trie node for this character
+            if c not in curr.children:
+                curr.children[c] = TrieNode()
+            # update the current pointer by moving to the node represented by the character
+            # we're looking at
+            curr = curr.children[c]
+        # we've finished iterating through each character of the word we want to insert
+        # our current pointer points to the trie node representing the last character in the
+        # inserted word
+        # to signify that we're done we need to mark this last character as the end of the
+        # inserted word
+        curr.endOfWord = True
+        
+
+    def search(self, word: str) -> bool:
+        """
+        Returns if the word is in the trie
+        """
+        # initially start at the root
+        curr = self.root
+        # search through the word character by character
+        for c in word:
+            # if we reach a point in our iteration where the character is not among the list
+            # of children of the current node, then it means that there is no trie node
+            # dedicated to the character we're looking at and thus we return false
+            if c not in curr.children:
+                return False
+            # update the current pointer by moving to the node represented by the character
+            # we're looking at
+            curr = curr.children[c]
+        # we've reached the end of the word we're searching and we know that we've reached the
+        # end of the word if the character is the end of the word
+        return curr.endOfWord
+        
+
+    def startsWith(self, prefix: str) -> bool:
+        """
+        Returns is there is any word in the trie that starts with the given prefix
+        """
+        # initially start at the root
+        curr = self.root
+        # search through the prefix character by character
+        for c in prefix:
+            # if the character we're looking at is not among the children nodes of the current
+            # node, then it means there is no trie node dedicated to this character and hence
+            # we return False
+            if c not in curr.children:
+                return False
+            # update the current pointer by moving to the node represented by the character
+            # we're looking at
+            curr = curr.children[c]
+        # at the end we've looked at each character in the prefix and we now know for sure that
+        # there are a set of nodes with these set of characters from the prefix and hence we
+        # return true
+        return True
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)
