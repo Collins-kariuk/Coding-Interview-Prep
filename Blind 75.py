@@ -204,6 +204,7 @@ def maxDepth(root):
     # when we reach a null node, we return 0 since the depth of a null node is 0
     if root is None:
         return 0
+    # the recursive case
     # calculate the depth of the left part of the binary tree
     leftDepth = maxDepth(root.left)
     # calculate the depth of the right part of the binary tree
@@ -213,6 +214,27 @@ def maxDepth(root):
     # plus one because of the fact that we do not initially consider the height
     # of the root
     return max(leftDepth, rightDepth) + 1
+
+# --------------- 21. Same Tree - Leetcode 100 - Easy --------------
+def isSameTree(p, q):
+    # base case part 1
+    # when both nodes are null, we can consider them to be the
+    # same tree and hence we return true
+    if p == None and q == None:
+        return True
+    # base case part 2
+    # if one of the nodes is null and the other is not OR the nodes
+    # we're comparing are non-null but don't have the same value, they
+    # are not the same tree and so we return false
+    if (p == None or q == None) or (p.val != q.val):
+        return False
+    # the recursive case
+    # both the left and right sides of the tree need to be strictly equal,
+    # that is, if, say, the left subtrees of p and q are equal while their
+    # right subtrees are not, we do not consider them to be the same tree
+    # and so their logical AND returns False
+    return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
+
 
 # =================================================================== #
 
