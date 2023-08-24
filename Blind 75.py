@@ -88,7 +88,7 @@ def mergeTwoLists(l1, l2):
     # next node after the head
     return res.next
 
-# ------------- 18. Linked List Cycle - Leetcode 141 - Easy -----------------
+# ----------------- 18. Linked List Cycle - Leetcode 141 - Easy --------------------
 def hasCycle(head):
     # using slow and fast pointers
     # the gist is that one pointer advances faster than the other and if the linked
@@ -109,6 +109,64 @@ def hasCycle(head):
     # once the loop exits, we know for sure that the linked list is linear since
     # either fast or fast.next would be null
     return False
+
+
+# ----------------- 19. Reorder List - Leetcode 143 - Medium --------------------
+def reorderList(head):
+    """
+    Do not return anything, modify head in-place instead.
+    """
+    # find the middle point of the linked list
+    # the gist of the implementation is that we need to split the input linked list
+    # into 2 halves
+    # since we're alternating, we need pointers to heads of the 2 halves, the only
+    # challenge is that we need to reverse the second halve of the linked list for
+    # easier reordering as we can't "go back" in a singly linked list
+    slow = head
+    fast = head.next
+
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+
+    # reverse second half
+    # second half of the list
+    second = slow.next
+    # we split the linked list into 2 halves so instead of pointing the next pointer
+    # of the middle node to the head of the second half of the linked list, we point
+    # it to None thus effectively splitting the linked list into 2
+    slow.next = None
+    prev = None
+
+    # reversing the second half (see reversing linked list question)
+    while second:
+        temp = second.next
+        second.next = prev
+        prev = second
+        second = temp
+
+    # merge the 2 halves
+    first = head
+    # after the second while loop is done executing the head of the now reversed second
+    # half of the linked list will be at prev as second(the pointer of the second half
+    # of the linked list) will be at Null
+    second = prev
+    # we continue merging until one of the pointers, either first or second, is non-null
+    # but since we know that the second half could be shorter, our condition could be
+    # predicated on just the second pointer
+    while second:
+        # we store the references of the next nodes in separate variables since we know
+        # we are going to break the links as we traverse through both halves
+        temp1 = first.next
+        temp2 = second.next
+
+        first.next = second
+        second.next = temp1
+        
+        # advance our pointers forward in the respective halves
+        # this is easy since we saved the references to the old/prior nexts
+        first = temp1
+        second = temp2
         
     
 # =================================================================== #
