@@ -198,6 +198,22 @@ def invertTree(root):
 
     return root
 
+# ---------- 20. Maximum Depth of Binary Tree - Leetcode 104 - Easy -------------
+def maxDepth(root):
+    # the base case
+    # when we reach a null node, we return 0 since the depth of a null node is 0
+    if root is None:
+        return 0
+    # calculate the depth of the left part of the binary tree
+    leftDepth = maxDepth(root.left)
+    # calculate the depth of the right part of the binary tree
+    rightDepth = maxDepth(root.right)
+    # the maximum depth will be the larger of the depths of either the left or
+    # right parts of the binary tree
+    # plus one because of the fact that we do not initially consider the height
+    # of the root
+    return max(leftDepth, rightDepth) + 1
+
 # =================================================================== #
 
 ### GRAPHS ###
