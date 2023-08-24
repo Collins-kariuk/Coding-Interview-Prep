@@ -56,6 +56,37 @@ def reverseList(head):
     # the new head of the reversed linked list will be the node the prev
     # pointer is pointing to
     return prev
+
+# ------------- 17. Merge Two Sorted Lists - Leetcode 21 - Easy -----------------
+def mergeTwoLists(l1, l2):
+    # create a temp head node which will form the basis of the result linked list
+    res = ListNode()
+    # a pointer to the temp head
+    tail = res
+
+    # while both pointers to the input linked lists are non-null, continue looping
+    while l1 and l2:
+        # if at a point in the iteration, the value at the l1 node is less than the
+        # value at the l2 node, then we add the lesser l1 node value to our res
+        # linked list
+        if l1.val < l2.val:
+            tail.next = l1
+            # advanced the l1 pointer forward
+            l1 = l1.next
+        else:
+            tail.next = l2
+            l2 = l2.next
+        # we advance the pointer to the result linked list regardless
+        tail = tail.next
+
+    # the not-so-happy case when the lengths of the input linked lists are unequal
+    if l1:
+        tail.next = l1
+    else:
+        tail.next = l2
+    # since the default head node of our result list is 0, we need to return the
+    # next node after the head
+    return res.next
     
 # =================================================================== #
 
