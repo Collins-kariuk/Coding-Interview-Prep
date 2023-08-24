@@ -87,6 +87,29 @@ def mergeTwoLists(l1, l2):
     # since the default head node of our result list is 0, we need to return the
     # next node after the head
     return res.next
+
+# ------------- 18. Linked List Cycle - Leetcode 141 - Easy -----------------
+def hasCycle(head):
+    # using slow and fast pointers
+    # the gist is that one pointer advances faster than the other and if the linked
+    # list has a cycle, the fast one will eventually overlap the slow one and when
+    # that happens is when we know the pointer has a cycle
+    # we initially set the 2 pointers at the head of the input linked list
+    slow = head
+    fast = head
+    
+    while fast and fast.next:
+        # slow pointer moves slower than the fast pointer
+        slow = slow.next
+        fast = fast.next.next
+        # at a certain pointer in the iteration, the fast pointer will overlap the
+        # slow pointer and when this happens we know there's a cycle
+        if slow == fast:
+            return True
+    # once the loop exits, we know for sure that the linked list is linear since
+    # either fast or fast.next would be null
+    return False
+        
     
 # =================================================================== #
 
