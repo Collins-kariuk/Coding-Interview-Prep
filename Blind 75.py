@@ -925,3 +925,26 @@ def climbStairs(n):
     # after all the iterations, where the last one lands will be the distinct number of ways we can
     # climb the stairs
     return one
+
+# ------------------ 22. House Robber - Leetcode 198 - Medium ---------------------
+def rob(nums):
+    """
+    https://youtu.be/73r3KWiEvyk?t=361
+    """
+    # we initialize the rob values to 0 in case nums is an empty list
+    rob1 = 0
+    rob2 = 0
+
+    # [rob1, rob2, n, n+1, ...]
+    # essentially, if we are at value n, rob1 represents the result of robbing all
+    # houses till the (n-2)nd house but till the (n-1)st house for rob2
+    for n in nums:
+        # the first argument entails if we decide to rob the house we're at in the
+        # iteration and rob2 is if we decide not to rob the house
+        temp = max(n + rob1, rob2)
+        # our new rob1 will be where the prior rob2 was
+        rob1 = rob2
+        # our new rob2 will be the max just calculated
+        rob2 = temp
+    
+    return rob2
