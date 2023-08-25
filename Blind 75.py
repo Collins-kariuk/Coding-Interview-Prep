@@ -174,7 +174,7 @@ def reorderList(head):
 ### TREES ###
 
 class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
+    def __init__(self, val = 0, left = None, right = None):
         self.val = val
         self.left = left
         self.right = right
@@ -878,10 +878,50 @@ class WordDictionary:
 
         return dfs(0, self.root)
 
-        
-
-
 # Your WordDictionary object will be instantiated and called as such:
 # obj = WordDictionary()
 # obj.addWord(word)
 # param_2 = obj.search(word)
+
+
+# ========================================================================================== #
+
+### 1-D DYNAMIC PROGRAMMING ###
+# --------- 21. Climbing Stairs - Leetcode 70 - Easy ------------
+def climbStairs(n):
+    """
+    this question can easily be solved using DP
+    we can solve this using brute force utilizing DFS and a top-down approach meaning that we
+    start from the bottom of the stairs and work our way up to the nth stair and in each path
+    counting how many ways we arrive to the nth stair
+    however, the time complexity of this approach is bad since it's O(2^n) where n is the number
+    of stairs
+    in this top down approach, we repetitively do the same calculation, eg, we answer the
+    question "how many ways does it take to get to the nth stair from the second one?" twice
+    to mitigate this, we can using a DP-bottom-up approach where we start with the easier
+    questions (when n=5, say) "how many ways does it take to get to the 5th stair from the
+    fourth/fifth stair? Answer: 1"
+    we can then work ourselve to the top (zeroth stair) by saving the previous subproblem solutions
+    in their own variables which will take O(n) time complexity
+    if you trace the outputs of one and two below, you'll find that this is essentially a Fibonacci
+    sequence problem
+    """
+
+    # one and two represent the sort of base cases for this DP problem representing the number of
+    # ways it takes to get to the nth stair from the (n-1)st and nth stair respectively
+    one = 1
+    two = 1
+
+    # the bottom-up approach, working ourselves to the zero-th stair (from the nth stair)
+    for i in range(n - 1):
+        # well, since we definitively know the number of ways it takes to get to the nth stair from
+        # the (n-1)st and nth stair respectively, we can use this to our advantage as we calculate
+        # later number of ways
+        # our new two will be where the old one was (so we save it in a variable) and our new one
+        # will be whatever numbers of ways it took to get to the nth stair from the prior 2, one & two
+        temp = one
+        one = one + two
+        two = temp
+    # after all the iterations, where the last one lands will be the distinct number of ways we can
+    # climb the stairs
+    return one
