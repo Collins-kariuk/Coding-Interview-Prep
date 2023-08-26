@@ -948,3 +948,32 @@ def rob(nums):
         rob2 = temp
     
     return rob2
+
+# ------------------ 23. House Robber II - Leetcode 213 - Medium ---------------------
+def rob(nums):
+    """
+    the added twist to this version of house robber is that the first and last houses
+    are connected, i.e., the houses in the neighborhood are arranged in a circular shape
+    therefore, we can't rob the first and last houses together without alerting the police
+    one way to circumnavigate this extra inconvenience(?) is to consider 3 scenarios:
+    - calling the House Robber I code on nums less the first house, i.e., we don't rob the
+    first house
+    - calling the House Robber I code on nums less the last house, i.e., we don't rob the
+    last house
+    - an edge case materializes when we are only robbing one house, then the above 2 scenarios
+    result in an empty nums list (thus a result of 0) when actually we can rob the sole house
+    which would undoudtedly result in a bounty greater than 0 so we also consider nums[0] when
+    taking the max of these 3 scenarios
+    """
+    # see 22: House Robber
+    def rob1(nums):
+        rob1 = 0
+        rob2 = 0
+        # [rob1, rob2, n, n+1, ...]
+        for n in nums:
+            temp = max(n + rob1, rob2)
+            rob1 = rob2
+            rob2 = temp
+        return rob2
+
+    return max(nums[0], rob1(nums[1::]), rob1(nums[0:len(nums) - 1]))
