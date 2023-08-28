@@ -401,6 +401,21 @@ def topKFrequent(nums, k):
             # we need not go further when it is so
             if len(res) == k:
                 return res
+            
+# --------- 25. Valid Anagram - Leetcode 242 - Easy ------------
+def isAnagram(s, t):
+    def dictify(s):
+        wordCounter = {}
+        for char in s:
+            if char in wordCounter:
+                wordCounter[char] += 1
+            else:
+                wordCounter[char] = 1
+        return wordCounter
+
+    sDict = dictify(s)
+    tDict = dictify(t)
+    return sDict == tDict
 
 
 # =================================================================== #
