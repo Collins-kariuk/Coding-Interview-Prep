@@ -977,3 +977,34 @@ def rob(nums):
         return rob2
 
     return max(nums[0], rob1(nums[1::]), rob1(nums[0:len(nums) - 1]))
+
+# ------------------ 24. Longest Palindromic Substring - Leetcode 5 - Medium ---------------------
+# TODO: Don't quite understand why we don't first check if the length of the potential palindromic
+# substring is odd or even
+def longestPalindrome(s):
+    # initialize the result
+    res = ''
+    # initialize the variable that'll hold the length of the longest palindrome
+    resLen = 0
+
+    # loop through
+    for i in range(len(s)):
+        # odd length
+        l, r = i, i
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            if (r - l + 1) > resLen:
+                res = s[l:r + 1]
+                resLen = r - l + 1
+            l -= 1
+            r += 1
+        
+        # even length
+        l, r = i, i + 1
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            if (r - l + 1) > resLen:
+                res = s[l:r + 1]
+                resLen = r - l + 1
+            l -= 1
+            r += 1
+        
+        return res
