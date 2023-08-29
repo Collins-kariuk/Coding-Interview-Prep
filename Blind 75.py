@@ -204,36 +204,65 @@ def maxDepth(root):
     # when we reach a null node, we return 0 since the depth of a null node is 0
     if root is None:
         return 0
+
     # the recursive case
     # calculate the depth of the left part of the binary tree
     leftDepth = maxDepth(root.left)
     # calculate the depth of the right part of the binary tree
     rightDepth = maxDepth(root.right)
+
     # the maximum depth will be the larger of the depths of either the left or
     # right parts of the binary tree
     # plus one because of the fact that we do not initially consider the height
     # of the root
     return max(leftDepth, rightDepth) + 1
 
-# --------------- 21. Same Tree - Leetcode 100 - Easy --------------
+# --------------- 26. Same Tree - Leetcode 100 - Easy --------------
 def isSameTree(p, q):
     # base case part 1
     # when both nodes are null, we can consider them to be the
     # same tree and hence we return true
     if p == None and q == None:
         return True
+    
     # base case part 2
     # if one of the nodes is null and the other is not OR the nodes
     # we're comparing are non-null but don't have the same value, they
     # are not the same tree and so we return false
     if (p == None or q == None) or (p.val != q.val):
         return False
+    
     # the recursive case
     # both the left and right sides of the tree need to be strictly equal,
     # that is, if, say, the left subtrees of p and q are equal while their
     # right subtrees are not, we do not consider them to be the same tree
     # and so their logical AND returns False
     return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
+
+# --------------- 27. Subtree of Another Tree - Leetcode 572 - Easy --------------
+def isSubtree(root, subroot):
+    # check 26. Same Tree - Leetcode 100 - Easy
+    def isSameTree(p, q):
+        if p == None and q == None:
+            return True
+        if (p == None or q == None) or (p.val != q.val):
+            return False
+        return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
+    
+    # if the subroot is null, then technically it is a subtree of any other tree since
+    # you can always find a null node in the leaf children of any other tree
+    if not subroot:
+        return True
+    # if the root is null, then technically nothing, other than the null node (which
+    # we checked above), can be the subtree of the null node
+    if not root:
+        return False
+    
+    if isSameTree(root, subroot):
+        return True
+    
+    return (isSubtree(root.left, subroot) or
+            isSubtree(root.right, subroot))
 
 
 # =================================================================== #
