@@ -268,7 +268,7 @@ def isSubtree(root, subroot):
 # =================================================================== #
 
 ### GRAPHS ###
-from collections import deque
+from collections import defaultdict, deque
 
 # --------- 3. Number of Islands - Leetcode 200 - Medium ------------
 def numIslands(grid):
@@ -445,6 +445,35 @@ def isAnagram(s, t):
     sDict = dictify(s)
     tDict = dictify(t)
     return sDict == tDict
+
+# --------- 28. Group Anagrams - Leetcode 49 - Medium ------------
+def groupAnagrams(strs):
+    res = defaultdict(list)
+
+    # visit each string in strs
+    for s in strs:
+        # initialize a specific count list for that specific list
+        # since we have not started counting the number of occurrences
+        # of the characters in each string, we feel the count with zeros
+        # 26 for every letter in the alphabet
+        # count[0] -> 'a', count[1] -> 'b', count[2] -> 'c'...
+        # count[25] -> 'z'
+        count = [0] * 26
+
+        # visit each character in the string
+        for char in s:
+            # count the occurrence of each letter/character in the
+            # string
+            # using ord helps us assign each letter in the alphabet to
+            # its corresponding index in count
+            count[ord(char) - ord('a')] += 1
+        # append the string that corresponds to that particular count list
+        # to the value that corresponds to the specific count key in the
+        # default dictionary
+        res[tuple(count)].append(s)
+    
+    # we just want all the values in list forms
+    return list(res.values())
 
 
 # =================================================================== #
