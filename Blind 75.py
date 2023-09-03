@@ -1,4 +1,7 @@
 ### LINKED LISTS ###
+import collections
+
+
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -264,7 +267,6 @@ def isSubtree(root, subroot):
     return (isSubtree(root.left, subroot) or
             isSubtree(root.right, subroot))
 
-
 # --------------- 28. Lowest Common Ancestor of a Binary Search Tree - Leetcode 235 - Medium --------------
 def lowestCommonAncestor(root, p, q):
     # we always start at the root because it is always going to be a common ancestor for every node
@@ -282,7 +284,39 @@ def lowestCommonAncestor(root, p, q):
         # in either case we just return cur, the current root node
         else:
             return cur
-        
+
+# --------------- 29. Binary Tree Level Order Traversal - Leetcode 102 - Medium --------------
+def levelOrder(root):
+    # the list that'll hold the result
+    res = []
+    # initialize ques for Breadth First Search (BFS)
+    q = collections.deque()
+    # initialize queue with the given root node
+    q.append(root)
+
+    # run BFS while queue is nonempty
+    while q:
+        # get number of nodes that are in the queue at a given point/currently
+        # ensures that we go through the queue one level at a time
+        qLen = len(q)
+        level = []
+        # loop through every value in the queue currently
+        for i in range(qLen):
+            # pop nodes from the left of the queue (FIFO)
+            node = q.popleft()
+            # it's technically possible that the node could be null, so we have to check that the popped node is non-null before proceeding
+            if node:
+                # append the node's value to the current level
+                level.append(node.val)
+                # add the children of the popped node
+                q.append(node.left)
+                q.append(node.right)
+        # append every single level to the result
+        # make sure that the level list in non-empty
+        if level:
+            res.append(level)
+    return res
+
 
 # =================================================================== #
 
