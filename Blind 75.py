@@ -1,5 +1,4 @@
 ### LINKED LISTS ###
-
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -253,6 +252,7 @@ def isSubtree(root, subroot):
     # you can always find a null node in the leaf children of any other tree
     if not subroot:
         return True
+    
     # if the root is null, then technically nothing, other than the null node (which
     # we checked above), can be the subtree of the null node
     if not root:
@@ -264,6 +264,25 @@ def isSubtree(root, subroot):
     return (isSubtree(root.left, subroot) or
             isSubtree(root.right, subroot))
 
+
+# --------------- 28. Lowest Common Ancestor of a Binary Search Tree - Leetcode 235 - Medium --------------
+def lowestCommonAncestor(root, p, q):
+    # we always start at the root because it is always going to be a common ancestor for every node
+    cur = root
+    # proceed with the loop as long as the node we're looking at is not null
+    while cur:
+        # if both p and q's values are greater than the root's value, we restrict our search to the right subtree
+        if p.val > root.val and  q.val > root.val:
+            cur = cur.right
+        # if both p and q's values are less than the root's value, we restrict our search to the left subtree
+        elif p.val < root.val and  q.val < root.val:
+            cur = cur.left
+        # it means that either p or q's value is equal to the root OR that a split occured and p is in the left
+        # subtree and q is in the right subtree
+        # in either case we just return cur, the current root node
+        else:
+            return cur
+        
 
 # =================================================================== #
 
@@ -462,8 +481,7 @@ def groupAnagrams(strs):
 
         # visit each character in the string
         for char in s:
-            # count the occurrence of each letter/character in the
-            # string
+            # count the occurrence of each letter/character in the string
             # using ord helps us assign each letter in the alphabet to
             # its corresponding index in count
             count[ord(char) - ord('a')] += 1
