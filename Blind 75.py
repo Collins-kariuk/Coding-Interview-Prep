@@ -289,7 +289,7 @@ def lowestCommonAncestor(root, p, q):
 def levelOrder(root):
     # the list that'll hold the result
     res = []
-    # initialize ques for Breadth First Search (BFS)
+    # initialize queue for Breadth First Search (BFS)
     q = collections.deque()
     # initialize queue with the given root node
     q.append(root)
@@ -304,7 +304,8 @@ def levelOrder(root):
         for i in range(qLen):
             # pop nodes from the left of the queue (FIFO)
             node = q.popleft()
-            # it's technically possible that the node could be null, so we have to check that the popped node is non-null before proceeding
+            # it's technically possible that the node could be null, so we have to check that
+            # the popped node is non-null before proceeding
             if node:
                 # append the node's value to the current level
                 level.append(node.val)
@@ -757,6 +758,34 @@ def maxArea(height):
             r -= 1
     
     return res
+
+# ---------- 30. Valid Palindrome - Leetcode 125 - Easy -------------
+def isPalindrome(s):
+    # variable that'll store the reverse of input string
+    rev = ""
+    # adding the characters in s in reverse to rev
+    for c in s:
+        c = c.lower()
+        if c.isalnum():
+            rev = c + rev
+    # variable that'll store input string but stripped off all
+    # non-alphanumeric characters
+    sAlNum = ""
+    for c in s:
+        c = c.lower()
+        if c.isalnum():
+            sAlNum += c
+    # if palindrome, then will return true
+    return rev == sAlNum
+
+# One could make their own alphanumeric function utilizing the ord function
+# as so:
+def alphanum(c):
+    return (
+        ord("A") <= ord(c) <= ord("Z")
+        or ord("a") <= ord(c) <= ord("z")
+        or ord("0") <= ord(c) <= ord("9")
+        )
 
 
 # =================================================================== #
