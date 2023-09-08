@@ -1133,8 +1133,6 @@ def rob(nums):
     return max(nums[0], rob1(nums[1::]), rob1(nums[0:len(nums) - 1]))
 
 # ------------------ 24. Longest Palindromic Substring - Leetcode 5 - Medium ---------------------
-# TODO: Don't quite understand why we don't first check if the length of the potential palindromic
-# substring is odd or even
 def longestPalindrome(s):
     # initialize the result
     res = ''
@@ -1162,3 +1160,36 @@ def longestPalindrome(s):
             r += 1
         
         return res
+    
+# =================================================================== #
+### BACKTRACKING ###
+
+# ------------------ 31. Combination Sum - Leetcode 39 - Medium ---------------------
+def combinationSum(candidates, target):
+    # global variable that'll store the result
+    res = []
+    # a Depth First Search that we'll use to traverse the state space tree
+    # i maintains the candidates we're allowed to choose from; remember res sublists like [2,2,3] and [2,3,2] are not allowed since they're essentially the same; order matters
+    # cur keeps track of the values we've currently added to the combination
+    # we also want to be maintaining the total sum of the combination list because if it ever goes over the target then we hit a base case and we can't continue anymore
+
+    def dfs(i, cur, total):
+        # base case 1
+        if total == target:
+            # since we're only maintaining a single variable list for cur, we don't wanna actually append cur itself because we're going to continue to use this cur variable when we're doing the other combinations recursively
+            res.append(cur.copy())
+            return 
+        if i >= len(candidates) or total > target:
+            return
+        
+        # append the current candidate to cur
+        cur.append(candidates[i])
+        # call dfs on i and cur still but the total changes to included the newly appended candidates[i]
+        dfs(i, cur, total + candidates[i])
+        
+        # when we can't include the current candidate
+        cur.pop()
+        dfs(i + 1, cur, total)
+    
+    dfs(0, [], 0)
+    return res
