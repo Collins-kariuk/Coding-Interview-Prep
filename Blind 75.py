@@ -1169,25 +1169,32 @@ def combinationSum(candidates, target):
     # global variable that'll store the result
     res = []
     # a Depth First Search that we'll use to traverse the state space tree
-    # i maintains the candidates we're allowed to choose from; remember res sublists like [2,2,3] and [2,3,2] are not allowed since they're essentially the same; order matters
+    # i maintains the candidates we're allowed to choose from; remember res sublists
+    # like [2,2,3] and [2,3,2] are not allowed since they're essentially the same;
+    # order matters
     # cur keeps track of the values we've currently added to the combination
-    # we also want to be maintaining the total sum of the combination list because if it ever goes over the target then we hit a base case and we can't continue anymore
+    # we also want to be maintaining the total sum of the combination list because if
+    # it ever goes over the target then we hit a base case and we stop
 
     def dfs(i, cur, total):
         # base case 1
         if total == target:
-            # since we're only maintaining a single variable list for cur, we don't wanna actually append cur itself because we're going to continue to use this cur variable when we're doing the other combinations recursively
+            # since we're only maintaining a single variable list for cur, we don't
+            # want to actually append cur itself because we're going to continue to use
+            # this cur variable when we're doing the other combinations recursively
             res.append(cur.copy())
-            return 
+            return
         if i >= len(candidates) or total > target:
             return
         
         # append the current candidate to cur
         cur.append(candidates[i])
-        # call dfs on i and cur still but the total changes to included the newly appended candidates[i]
+        # call dfs on i and cur still but the total changes to included the newly
+        # appended candidates[i]
         dfs(i, cur, total + candidates[i])
         
         # when we can't include the current candidate
+        # we have to remove the previously added candidate
         cur.pop()
         dfs(i + 1, cur, total)
     
