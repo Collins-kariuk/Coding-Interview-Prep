@@ -1200,3 +1200,47 @@ def combinationSum(candidates, target):
     
     dfs(0, [], 0)
     return res
+
+# ------------------ 32. Word Search - Leetcode 79 - Medium ---------------------
+def exist(board, word):
+    # dimensions of the board
+    rows = len(board)
+    cols = len(board[0])
+    # add all positions we've visited in the board to make sure we don't revisit
+    # them later
+    path = set()
+
+    # r, c - position in the board that we're at
+    # i - current character within our target word we're looking for
+    def dfs(r, c, i):
+        # when we've traversed through the whole word, we know we've found the
+        # word and we can return True - that the word exists in the board
+        if i == len(word):
+            return True
+        if (r < 0 or
+            c < 0 or
+            r>= rows or
+            c >= cols or
+            word[i] != board[r,c]
+            or (r, c) in path):
+            return False
+        
+        path.add((r, c))
+        # run dfs on all 4 adjacent positions
+        res = (dfs(r + 1, c, i + 1) or
+               dfs(r - 1, c, i + 1) or 
+               dfs(r, c + 1, i + 1) or 
+               dfs(r, c - 1, i + 1))
+        
+        # remove the position we just added
+        path.remove(r, c)
+        return res
+    
+    # brute force by going through every single position in the grid
+    for r in range(rows):
+        for c in range(cols):
+            # if this returns true, we return true immediately, we only
+            # need to find one instance of the word
+            if dfs(r, c, 0):
+                return True
+    return False
