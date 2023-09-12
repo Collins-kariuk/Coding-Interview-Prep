@@ -1258,7 +1258,7 @@ def insert(intervals, newInterval):
         # we add the new interval to the result and then add the rest of the intervals 
         if newInterval[1] < intervals[i][0]:
             res.append(newInterval)
-            return res + intervals[i::]
+            return res + intervals[i:]
         # when the start of the new interval is greater than the end of the current
         # interval, we add the current interval to the result
         elif newInterval[0] > intervals[i][1]:
@@ -1266,7 +1266,8 @@ def insert(intervals, newInterval):
         # when the start of the new interval is less than or equal to the end of the
         # current interval, we merge the intervals
         else:
-            newInterval = [min(newInterval[0], intervals[i][0]), max(newInterval[1], intervals[i][1])]
+            newInterval = [min(newInterval[0], intervals[i][0]), 
+                           max(newInterval[1], intervals[i][1])]
         # when we reach the end of the intervals list, we add the new interval to the result
         res.append(newInterval)
         return res
