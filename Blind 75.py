@@ -1290,3 +1290,48 @@ def merge(intervals):
         else:
             res[-1][1] = max(res[-1][1], intervals[i][1])
     return res
+
+# ------------------ 35. Non-overlapping Intervals - Leetcode 435 - Medium ---------------------
+def eraseOverlapIntervals(intervals):
+    # sort the intervals by their start times
+    intervals.sort()
+    # variable that'll store the result
+    res = 0
+    # variable that'll store the index of the previous interval we're currently at
+    prevEnd = intervals[0][1]
+    # variable that'll store the index of the interval we're currently at
+    for start, end in intervals[1:]:
+        # when the start of the current interval is greater than or equal to the end of the previous
+        # interval's end, we update the previous interval's end to the current interval's end
+        if start >= prevEnd:
+            prevEnd = end
+        # when the start of the current interval is less than the end of the previous interval's end,
+        # we know that there's an overlap and we increment the result since at least one of the
+        # overlapping intervals need to go
+        else:
+            res += 1
+            # we choose the prevEnd to be the interval that ends first since we want it is less likely
+            # that that end will overlap with the next interval
+            # in the case of [[1,2],[1,3],[2,3],[3,4]], the prevEnd will be 2 and not 3
+            # by doing this we are eliminating the interval that ends later
+            prevEnd = min(prevEnd, end)
+    # the result at the end will be the number of intervals that need to be removed
+    return res
+
+
+
+    # # sort the intervals by their end times
+    # intervals.sort(key = lambda x: x[1])
+    # # variable that'll store the result
+    # res = 0
+    # # variable that'll store the index of the interval we're currently at
+    # for i in range(len(intervals)):
+    #     # when the end of the current interval is greater than or equal to the start of the
+    #     # next interval, we increment the result
+    #     if i > 0 and intervals[i][0] < intervals[i - 1][1]:
+    #         res += 1
+    #         # when the end of the current interval is less than the start of the next interval,
+    #         # we merge the intervals
+    #     else:
+    #         intervals[i][1] = max(intervals[i][1], intervals[i + 1][1])
+    # return res
