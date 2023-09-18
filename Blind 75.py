@@ -1317,21 +1317,3 @@ def eraseOverlapIntervals(intervals):
             prevEnd = min(prevEnd, end)
     # the result at the end will be the number of intervals that need to be removed
     return res
-
-
-
-    # # sort the intervals by their end times
-    # intervals.sort(key = lambda x: x[1])
-    # # variable that'll store the result
-    # res = 0
-    # # variable that'll store the index of the interval we're currently at
-    # for i in range(len(intervals)):
-    #     # when the end of the current interval is greater than or equal to the start of the
-    #     # next interval, we increment the result
-    #     if i > 0 and intervals[i][0] < intervals[i - 1][1]:
-    #         res += 1
-    #         # when the end of the current interval is less than the start of the next interval,
-    #         # we merge the intervals
-    #     else:
-    #         intervals[i][1] = max(intervals[i][1], intervals[i + 1][1])
-    # return res
