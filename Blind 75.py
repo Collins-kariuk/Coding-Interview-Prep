@@ -628,22 +628,34 @@ def lengthOfLongestSubstring(s):
     # result that'll hold the longest substring without repeating characters
     res = 0
 
-    # the right pointer that'll traverse/loop through the list as it checks for repeating
-    # characters
+    # loop through the input string
     for r in range(len(s)):
-        # when the character at the right pointer is in the set (meaning that character at that
-        # point in the loop is repeated) we remove characters starting from the left of the 
-        # substring with the repetition in it until that substring does not contain the current
-        # character in s[r]
+        # if the character at the right pointer is already in the set, it means
+        # that we've encountered a repeating character and we need to remove the
+        # character at the left pointer from the set and advance the left pointer
+        # rightwards
         while s[r] in charSet:
-            # we have to remove it in 2 ways
-            # 1. remove it from the set
+            # 1. remove the character at the left pointer from the set
+            # this is done because we need to keep track of the characters in the
+            # substring we're currently looking at
             charSet.remove(s[l])
             # 2. advance the left pointer rightwards
+            # this is done because we need to keep track of the characters in the
+            # substring we're currently looking at
+            # we also need to advance the left pointer rightwards because we need
+            # to remove the character at the left pointer from the set
             l += 1
-        # if the character at s[r] is not in the set, it means we've not encountered a
-        # repetition and we can add it to the set 
+        # add the character at the right pointer to the set
+        # this is done regardless of whether the character is repeated or not
+        # because we need to keep track of the characters in the substring
+        # we're currently looking at
         charSet.add(s[r])
+        # the maximum length of the substring without repeating characters will be the
+        # larger of the previous length and the current length
+        # the current length is just the difference between the right and left pointers
+        # plus one since we're dealing with indices
+        # the plus one is also because the left pointer is initially at the first element
+        # of the input string
         res = max(res, r - l + 1)
     
     return res
