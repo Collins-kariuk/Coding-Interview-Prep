@@ -539,7 +539,6 @@ class MedianFinder:
         """
         initialize your data structure here.
         """
-        
         # two heaps, large, small, minheap, maxheap
         # heaps should be equal size
         self.small = [] # maxheap
@@ -657,7 +656,6 @@ def lengthOfLongestSubstring(s):
         # the plus one is also because the left pointer is initially at the first element
         # of the input string
         res = max(res, r - l + 1)
-    
     return res
 
 # =================================================================== #
