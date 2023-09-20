@@ -37,3 +37,21 @@ class ContinuousMedianHandler:
         else:
             self.median = (-1 * self.small[0] + self.large[0]) / 2
         return self.median
+
+# --------- 2. Continuous Median - Hard ------------
+def sortKSortedArray(array, k):
+    minHeapWithKElements = heapq.heapify(array[:min(k + 1, len(array))])
+    nextIndexToInsertElement = 0
+
+    for idx in range(k + 1, len(array)):
+        minElement = heapq.heappop(minHeapWithKElements)
+        array[nextIndexToInsertElement] = minElement
+        nextIndexToInsertElement += 1
+        heapq.heappush(minHeapWithKElements, array[idx])
+    
+    while len(minHeapWithKElements) != 0:
+        minElement = heapq.heappop(minHeapWithKElements)
+        array[nextIndexToInsertElement] = minElement
+        nextIndexToInsertElement += 1
+    
+    return array
