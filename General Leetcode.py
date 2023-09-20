@@ -78,3 +78,29 @@ def isValid(s):
             return False
     # if the stack is empty, return True
     return len(stack) == 0
+
+# ---------- 3. Valid Anagram - Leetcode 242 - Easy -------------
+# Given two strings s and t , write a function to determine if t is an anagram of s.
+def isAnagram(s, t):
+    # the advantage of using a dictionary is that it is easy to keep track of the number of occurences of each character
+    # moreover, the advantage of using one dictionary is the reduction of space complexity
+    # create a dictionary that stores the number of occurences of each character in s
+    dic = {}
+    for c in s:
+        if c in dic:
+            dic[c] += 1
+        else:
+            dic[c] = 1
+    # iterate through t
+    # if the character is in the dictionary, decrease the number of occurences of the character by 1
+    # if the character is not in the dictionary, return False
+    for c in t:
+        if c in dic:
+            dic[c] -= 1
+        else:
+            return False
+    # if the number of occurences of each character in the dictionary is 0, return True
+    for key in dic:
+        if dic[key] != 0:
+            return False
+    return True
