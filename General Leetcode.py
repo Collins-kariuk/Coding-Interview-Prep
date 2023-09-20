@@ -47,3 +47,34 @@ def findMedianSortedArrays(nums1, nums2):
             r = i - 1
         else:
             l = i + 1
+
+# ---------- 2. Valid Parentheses - Leetcode 20 - Easy -------------
+# Given a string containing just the characters '(', ')', '{', '}', '[' and ']',
+# determine if the input string is valid.
+# An input string is valid if:
+# 1. Open brackets must be closed by the same type of brackets.
+# 2. Open brackets must be closed in the correct order.
+# Note that an empty string is also considered valid.
+def isValid(s):
+    # stack is a list that stores the opening brackets
+    stack = []
+    # iterate through the string
+    for c in s:
+        # if the character is an opening bracket, append it to the stack
+        if c == '(' or c == '[' or c == '{':
+            stack.append(c)
+        # if the character is a closing bracket, check if the stack is empty
+        # if the stack is empty, return False
+        # if the stack is not empty, check if the top of the stack is the corresponding opening bracket
+        # if the top of the stack is not the corresponding opening bracket, return False
+        # if the top of the stack is the corresponding opening bracket, pop the top of the stack
+        elif c == ')' and len(stack) > 0 and stack[-1] == '(':
+            stack.pop()
+        elif c == ']' and len(stack) > 0 and stack[-1] == '[':
+            stack.pop()
+        elif c == '}' and len(stack) > 0 and stack[-1] == '{':
+            stack.pop()
+        else:
+            return False
+    # if the stack is empty, return True
+    return len(stack) == 0
