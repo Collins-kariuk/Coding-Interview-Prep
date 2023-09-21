@@ -104,3 +104,42 @@ def isAnagram(s, t):
         if dic[key] != 0:
             return False
     return True
+
+# ---------- 4. Decode String - Leetcode 394 - Medium -------------
+# Given an encoded string, return its decoded string.
+# The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times.
+# Note that k is guaranteed to be a positive integer.
+# You may assume that the input string is always valid; No extra white spaces, square brackets are well-formed, etc.
+def decodeString(s):
+    # stack is a list that stores the characters
+    # the advantage of using a stack is that it is easy to keep track of the characters
+    stack = []
+    
+    # iterate through the string
+    for i in range(len(s)):
+        # if the character is not ']', append it to the stack
+        if s[i] != ']':
+            stack.append(s[i])
+        else:
+            # if the character is ']', pop the stack until '[' is reached
+            substring = ''
+            # substring is the string inside the (potentially inner) square brackets
+            while stack[-1] != '[':
+                # append the popped character to the substring
+                # notice that we don't need to reverse the substring because we are popping the stack
+                # from the end to the beginning and we are appending the popped character to the beginning of the substring
+                # by not doing substring += stack.pop()
+                substring = stack.pop() + substring
+            # pop '['
+            stack.pop()
+
+            # k is the number of times the substring is repeated
+            k = ''
+            # pop the stack until a non-digit character is reached
+            while len(stack) > 0 and stack[-1].isdigit():
+                # append the popped character to k
+                k = stack.pop() + k
+            # append the repeated substring to the stack
+            stack.append(substring * int(k))
+    # return the decoded string
+    return ''.join(stack)
