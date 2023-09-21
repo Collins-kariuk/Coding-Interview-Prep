@@ -1095,13 +1095,14 @@ def rob(nums):
     """
     https://youtu.be/73r3KWiEvyk?t=361
     """
-    # we initialize the rob values to 0 in case nums is an empty list
+    # initialize variables that'll store the bounty as we progress through nums
+    # notice that rob2 will hold the maximum bounty as we progress through nums
     rob1 = 0
     rob2 = 0
 
-    # [rob1, rob2, n, n+1, ...]
+    # [rob1, rob2, n, n + 1, ...]
     # essentially, if we are at value n, rob1 represents the result of robbing all
-    # houses till the (n-2)nd house but till the (n-1)st house for rob2
+    # houses till the (n - 2)nd house but till the (n - 1)st house for rob2
     for n in nums:
         # the first argument entails if we decide to rob the house we're at in the
         # iteration and rob2 is if we decide not to rob the house
@@ -1109,8 +1110,10 @@ def rob(nums):
         # our new rob1 will be where the prior rob2 was
         rob1 = rob2
         # our new rob2 will be the max just calculated
+        # this means that rob2 signifies the maximum bounty we can get till the nth
+        # house
         rob2 = temp
-    
+    # the maximum bounty we can get till the last house
     return rob2
 
 # ------------------ 23. House Robber II - Leetcode 213 - Medium ---------------------
