@@ -1313,7 +1313,7 @@ def merge(intervals):
 # ------------------ 35. Non-overlapping Intervals - Leetcode 435 - Medium ---------------------
 def eraseOverlapIntervals(intervals):
     # sort the intervals by their start times
-    intervals.sort()
+    intervals.sort(key = lambda x:x[0])
     # variable that'll store the result
     res = 0
     # variable that'll store the index of the previous interval we're currently at
@@ -1322,16 +1322,19 @@ def eraseOverlapIntervals(intervals):
     for start, end in intervals[1:]:
         # when the start of the current interval is greater than or equal to the end of the previous
         # interval's end, we update the previous interval's end to the current interval's end
+        # this essentially means that there is no overlap between the intervals and we can safely set
+        # the previous interval's end to the current interval's end for further comparison along the
+        # rest of the intervals in the intervals list
         if start >= prevEnd:
             prevEnd = end
         # when the start of the current interval is less than the end of the previous interval's end,
         # we know that there's an overlap and we increment the result since at least one of the
-        # overlapping intervals need to go
+        # overlapping intervals needs to go
         else:
             res += 1
             # we choose the prevEnd to be the interval that ends first since we want it is less likely
             # that that end will overlap with the next interval
-            # in the case of [[1,2],[1,3],[2,3],[3,4]], the prevEnd will be 2 and not 3
+            # in the case of [[1, 2], [1, 3], [2, 3], [3, 4]], the prevEnd will be 2 and not 3
             # by doing this we are eliminating the interval that ends later
             prevEnd = min(prevEnd, end)
     # the result at the end will be the number of intervals that need to be removed
