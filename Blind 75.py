@@ -1289,19 +1289,25 @@ def insert(intervals, newInterval):
 # ------------------ 34. Merge Intervals - Leetcode 56 - Medium ---------------------
 def merge(intervals):
     # sort the intervals by their start times
-    intervals.sort(key = lambda x: x[0])
+    # intervals.sort() also works
+    intervals.sort(key = lambda x:x[0])
     # variable that'll store the result
     res = []
+    # add the first interval to the result to initiate the comparison process
+    res.append(intervals[0])
     # variable that'll store the index of the interval we're currently at
     for i in range(len(intervals)):
         # when the end of the current interval is less than the start of the next interval,
         # we add the current interval to the result
-        if len(res) == 0 or res[-1][1] < intervals[i][0]:
+        # this is because the intervals are supposed to be sorted and non-overlapping
+        # in the case of [[1,2],[3,4]], for instance, 2 < 3
+        if res[-1][1] < intervals[i][0]:
             res.append(intervals[i])
         # when the end of the current interval is greater than or equal to the start of the
         # next interval, we merge the intervals
         else:
             res[-1][1] = max(res[-1][1], intervals[i][1])
+    # the result at the end will be the merged intervals
     return res
 
 # ------------------ 35. Non-overlapping Intervals - Leetcode 435 - Medium ---------------------
