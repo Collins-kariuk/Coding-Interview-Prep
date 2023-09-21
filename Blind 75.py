@@ -1258,7 +1258,6 @@ def exist(board, word):
 
 # ==================================================================================== #
 ### INTERVALS ###
-
 # ------------------ 33. Insert Interval - Leetcode 57 - Medium ---------------------
 def insert(intervals, newInterval):
     # variable that'll store the result
@@ -1266,12 +1265,16 @@ def insert(intervals, newInterval):
     # variable that'll store the index of the interval we're currently at
     for i in range(len(intervals)):
         # when the end of the new interval is less than the start of the current interval,
-        # we add the new interval to the result and then add the rest of the intervals 
+        # we add the new interval to the result and then add the rest of the intervals
+        # because the new interval will not affect the rest of the intervals since the intervals
+        # are sorted and are non-overlapping as indicated in the example [[1, 3], [6, 9]], for
+        # instance, 3 < 6
         if newInterval[1] < intervals[i][0]:
             res.append(newInterval)
             return res + intervals[i:]
-        # when the start of the new interval is greater than the end of the current
-        # interval, we add the current interval to the result
+        # when the start of the new interval is greater than the end of the current interval, it
+        # means that the new interval is completely to the right of the current interval and thus
+        # we can add the current interval to the result
         elif newInterval[0] > intervals[i][1]:
             res.append(intervals[i])
         # when the start of the new interval is less than or equal to the end of the
@@ -1279,9 +1282,9 @@ def insert(intervals, newInterval):
         else:
             newInterval = [min(newInterval[0], intervals[i][0]), 
                            max(newInterval[1], intervals[i][1])]
-        # when we reach the end of the intervals list, we add the new interval to the result
-        res.append(newInterval)
-        return res
+    # when we reach the end of the intervals list, we add the new interval to the result
+    res.append(newInterval)
+    return res
 
 # ------------------ 34. Merge Intervals - Leetcode 56 - Medium ---------------------
 def merge(intervals):
