@@ -333,7 +333,7 @@ def numIslands(grid):
         # initialize the number of islands
         islands = 0
 
-        # set DS that'll store the visited islands
+        # set that'll store the visited islands
         visited = set()
 
         # number of rows and columns in the grid
@@ -346,23 +346,19 @@ def numIslands(grid):
             by marking already visited islands so as to not
             forget which ones have already been visited
             """
-            # bfs is an iterative algorithm that needs a DS,
-            # which is normally a queue
+            # bfs is an iterative algorithm that needs a DS, which is normally a queue
             q = deque()
             # we add the island to the visited pile
             visited.add((r, c))
-            # append the island we're at in the iteration in the
-            # our bfs queue
+            # append the island we're at in the iteration in the our bfs queue
             q.append((r, c))
 
-            # traverse through the queue as long as it's non-empty
-            # "expanding our island"
+            # traverse through the queue as long as it's non-empty thus "expanding our island"
             while q:
                 # the subgrid coord at the top of our queue
                 row, col = q.popleft()
-                # check the adjacent positions of the subgrid we're
-                # looking at
-                # generic LEFT, RIGHT, UP, and DOWN directions
+                # check the adjacent positions of the subgrid we're looking at generic LEFT, RIGHT, UP,
+                # and DOWN directions
                 directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
 
                 for dr, dc in directions:
@@ -381,13 +377,11 @@ def numIslands(grid):
         # looping through each individual grid
         for r in range(rows):
             for c in range(cols):
-                # if the subgrid is land and is not among the visited,
-                # do a breadth-first-search on it and increment the
-                # number of islands
+                # if the subgrid is land and is not among the visited, do a breadth-first-search on it and
+                # increment the number of islands
                 if grid[r][c] == "1" and (r, c) not in visited:
                     bfs(r, c)
                     islands += 1
-        
 
         # the final number of islands
         return islands
