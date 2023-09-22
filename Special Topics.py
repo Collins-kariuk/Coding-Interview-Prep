@@ -1,89 +1,41 @@
-### ------ BFS algorithm in Python --------- ###
-
 import collections
+from collections import defaultdict
 
-def bfs(graph, root):
-		# initialize set that'll hold all visited nodes
-		visited = set()
-		# initialize queue that'll hold unvisited nodes
-		# waiting to be visited
-		queue = collections.deque([root])
-		# we start by adding the root to the visited pile
-		visited.add(root)
+class Graph:
+    def __init__(self):
+        self.graph = defaultdict(list)
 
-		# as long as the queue is non-empty, we run this
-		while queue:
-				# dequeue a vertex from queue
-				# step 2 a bove (take the front item of the queue and add it to the visited list)
-				vertex = queue.popleft()
-				print(str(vertex) + " ", end = "")
-				
-				# if not visited, mark it as visited and
-				# enqueue it
-				for neighbour in graph[vertex]:
-						if neighbour not in visited:
-								visited.add(neighbour)
-								queue.append(neighbour)
+    def add_edge(self, u, v):
+        self.graph[u].append(v)
 
-if __name__ == '__main__':
-    graph = {0: [1, 2], 1: [2], 2: [3], 3: [1, 2]}
-    print("Following is Breadth First Traversal: ")
-    bfs(graph, 0)
-    
+    def bfs(self, start):
+        # Create a queue for BFS
+        queue = collections.deque()
+        
+        # Mark the start node as visited and enqueue it
+        visited = [False] * len(self.graph)
+        queue.append(start)
+        visited[start] = True
+        
+        while queue:
+            # Dequeue a vertex from the queue and print it
+            vertex = queue.pop(0)
+            print(vertex, end = " ")
 
-### ------ Tries in Python --------- ###
-class Node:
-	def __init__(self):
-		self.key = None
-		self.value = None
-		self.children = {}
-	
-class Trie:
-	def __init__(self):
-		self.root = Node()
-	
-	def insert(self, word, value):
-		currentWord = word
-		currentNode = self.root
+            # Get all adjacent vertices of the dequeued vertex
+            for neighbor in self.graph[vertex]:
+                if not visited[neighbor]:
+                    queue.append(neighbor)
+                    visited[neighbor] = True
 
-		while len(currentWord) > 0:
-			if currentWord[0] in currentNode.children:
-				currentNode = currentNode.children[currentWord[0]]
-				currentWord = currentWord[1:]
-			else:
-				newNode = Node()
-				newNode.key = currentWord[0]
-				if len(currentWord) == 1:
-					newNode.value = value
-				currentNode.children[currentWord[0]] = newNode
-				currentNode = newNode
-				currentWord = currentWord[1:]
-		
-	def lookup(self, word):
-		currentWord = word
-		currentNode = self.root
-		while len(currentWord) > 0:
-			if currentWord[0] in currentNode.children:
-				currentNode = currentNode.children[currentWord[0]]
-				currentWord = currentWord[1:]
-			else:
-				return "Not in trie"
-		
-		if currentNode.value == None:
-			return "None"
-		return currentNode.value
-	
-	def printAllNodes(self):
-		nodes = [self.root]
-		while len(nodes) > 0:
-			for letter in nodes[0].children:
-				nodes.append(nodes[0].children[letter])
-            # print(nodes.pop(0).key)
+# Example usage:
+g = Graph()
+g.add_edge(0, 1)
+g.add_edge(0, 2)
+g.add_edge(1, 2)
+g.add_edge(2, 0)
+g.add_edge(2, 3)
+g.add_edge(3, 3)
 
-def makeTrie(words):
-    trie = Trie()
-    for word, value in words.items():
-        trie.insert(word, value)
-    return trie
-
-		
+print("Breadth-First Traversal starting from vertex 2:")
+g.bfs(2)
