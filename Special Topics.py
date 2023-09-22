@@ -1,3 +1,22 @@
+### BREADTH-FIRST SEARCH ###
+"""
+Breadth-First Search (BFS) is an algorithm used to traverse or search through data structures like trees and graphs.
+It explores all the vertices (or nodes) at the current level before moving on to the next level.
+BFS is often used to find the shortest path between two nodes in an unweighted graph and can also
+be used for various other tasks like finding connected components.
+
+Step-by-step algorithm:
+
+1. Create a queue (usually implemented using a list) to keep track of nodes to be explored.
+2. Start from the initial node or vertex and enqueue it into the queue.
+3. Mark the initial node as visited (to avoid revisiting it).
+4. While the queue is not empty, do the following:
+    a. Dequeue a node from the front of the queue.
+    b. Process the dequeued node (e.g., print it or perform some operation).
+    c. Enqueue all adjacent unvisited nodes of the dequeued node into the queue.
+    d. Mark each adjacent node as visited.
+"""
+
 import collections
 from collections import defaultdict
 
