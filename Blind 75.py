@@ -342,9 +342,8 @@ def numIslands(grid):
 
         def bfs(r, c):
             """
-            a breadth first search to check the number of islands
-            by marking already visited islands so as to not
-            forget which ones have already been visited
+            a breadth first search to check the number of islands by marking already visited islands so as
+            to not forget which ones have already been visited
             """
             # bfs is an iterative algorithm that needs a DS, which is normally a queue
             q = deque()
@@ -1213,8 +1212,7 @@ def exist(board, word):
     # dimensions of the board
     rows = len(board)
     cols = len(board[0])
-    # add all positions we've visited in the board to make sure we don't revisit
-    # them later
+    # add all positions we've visited in the board to make sure we don't revisit them later
     path = set()
 
     # r, c - position in the board that we're at
@@ -1224,6 +1222,10 @@ def exist(board, word):
         # word and we can return True - that the word exists in the board
         if i == len(word):
             return True
+        # when we've gone out of bounds or when the current character we're looking
+        # at is not the same as the character in the board, or if we've already visited
+        # the position we're currently at, then we know that the word does not exist
+        # we return False
         if (r < 0 or
             c < 0 or
             r>= rows or
@@ -1231,15 +1233,20 @@ def exist(board, word):
             word[i] != board[r,c]
             or (r, c) in path):
             return False
-        
+        # add the position we're currently at to the path
         path.add((r, c))
-        # run dfs on all 4 adjacent positions
+        # we want to check the positions to the right, left, top, and bottom of the
+        # position we're currently at so we run dfs on those positions
         res = (dfs(r + 1, c, i + 1) or
                dfs(r - 1, c, i + 1) or 
                dfs(r, c + 1, i + 1) or 
                dfs(r, c - 1, i + 1))
-        
-        # remove the position we just added
+        # remove the position we're currently at from the path
+        # the reason why we are removing the position we're currently at from the path
+        # is because we are returning the result of the dfs calls above and if we don't
+        # remove the position we're currently at from the path, then the dfs calls above
+        # will always return true since the position we're currently at will always be
+        # in the path
         path.remove(r, c)
         return res
     
