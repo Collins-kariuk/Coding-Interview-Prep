@@ -552,7 +552,52 @@ def groupAnagrams(strs):
     return list(res.values())
 
 
+# --------- 37. Product of Array Except Self - Leetcode 238 - Medium ------------
+def productExceptSelf(nums):
+    # the gist of the solution is that we need to calculate the product of all
+    # the numbers to the left of a number and the product of all the numbers
+    # to the right of a number
+    # we can do this by using 2 arrays, one that stores the product of all the
+    # numbers to the left of a number and another that stores the product of
+    # all the numbers to the right of a number
+    # we then multiply the corresponding elements in the 2 arrays to get the
+    # product of all the numbers except the number at the current index
+
+    # initialize the 2 prefix and postfix arrays
+    pre = [1]
+    post = [1]
+
+    # calculate the prefix array
+    preMult = 1
+    for i in range(len(nums)):
+        preMult *= nums[i]
+        pre.append(preMult)
+    # remove the last element since it's just a 1
+    pre.pop()
+
+    # calculate the postfix array
+    postMult = 1
+    # we loop backwards
+    for i in range(len(nums) - 1, 0, -1):
+        postMult *= nums[i]
+        post.append(postMult)
+
+    # reverse the postfix array
+    post = post[::-1]
+
+    # first of all, initialize the result array to be all zeros because we
+    # need to multiply the corresponding elements in the prefix and postfix
+    # arrays and to index into the result array, we need to have something in
+    # the result array so the zeros are the placeholders
+    res = [0] * len(pre)
+    for i in range(len(pre)):
+        res[i] = pre[i] * post[i]
+
+    return res
+
+
 # =================================================================== #
+
 
 ### HEAPS OR PRIORITY QUEUES ###
 # --------- 5. Find Median from Data Stream - Leetcode 295 - Hard ------------

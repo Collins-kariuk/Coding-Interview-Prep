@@ -92,4 +92,3 @@ def findMaxAverage(nums, k):
         maxSum = max(maxSum, currSum)
 
     return maxSum / k
-
