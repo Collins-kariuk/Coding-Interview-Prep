@@ -596,6 +596,11 @@ def productExceptSelf(nums):
     return res
 
 
+# --------- 38. Longest Consecutive Sequence - Leetcode 128 - Medium ------------
+def longestConsecutive(nums):
+    pass
+
+
 # =================================================================== #
 
 
