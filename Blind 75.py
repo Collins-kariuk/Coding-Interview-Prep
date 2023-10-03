@@ -1,4 +1,6 @@
 ### LINKED LISTS ###
+import heapq
+from collections import defaultdict, deque
 import collections
 
 
@@ -8,32 +10,36 @@ class ListNode:
         self.next = next
 
 # --------- 1. Remove Nth Node from End of List - Leetcode 19 - Medium ------------
+
+
 def removeNthFromEnd(head, n):
     # Create a dummy node and attach it to the head of the input list.
-    dummy = ListNode(val = 0, next = head)
-    
+    dummy = ListNode(val=0, next=head)
+
     # Initialize 2 pointers, first and second, to point to the dummy node.
     first = dummy
     second = dummy
-    
+
     # Advances first pointer so that the gap between first and second is n nodes
     # apart
     for i in range(n + 1):
         first = first.next
-        
-    # While the first pointer does not equal null move both first and second to 
+
+    # While the first pointer does not equal null move both first and second to
     # maintain the gap and get nth node from the end
     while (first != None):
         first = first.next
         second = second.next
-    
+
     # Delete the node being pointed to by second.
     second.next = second.next.next
-    
+
     # Return dummy.next
     return dummy.next
 
 # --------- 14. Reverse Linked List - Leetcode 209 - Easy ------------
+
+
 def reverseList(head):
     # intialize the 2 needed pointers required to traverse through the
     # linked list
@@ -49,17 +55,19 @@ def reverseList(head):
         # changing the "direction of the arrow" or where the current node
         # points to
         curr.next = prev
-        # advancing the previous pointer to be where the current pointer is 
+        # advancing the previous pointer to be where the current pointer is
         prev = curr
         # advancing the current pointer to the placeholder we conviently
         # saved earlier
         curr = placeholder
-    
+
     # the new head of the reversed linked list will be the node the prev
     # pointer is pointing to
     return prev
 
 # ------------- 17. Merge Two Sorted Lists - Leetcode 21 - Easy -----------------
+
+
 def mergeTwoLists(l1, l2):
     # create a temp head node which will form the basis of the result linked list
     res = ListNode()
@@ -91,6 +99,8 @@ def mergeTwoLists(l1, l2):
     return res.next
 
 # ----------------- 18. Linked List Cycle - Leetcode 141 - Easy --------------------
+
+
 def hasCycle(head):
     # using slow and fast pointers
     # the gist is that one pointer advances faster than the other and if the linked
@@ -99,7 +109,7 @@ def hasCycle(head):
     # we initially set the 2 pointers at the head of the input linked list
     slow = head
     fast = head
-    
+
     while fast and fast.next:
         # slow pointer moves slower than the fast pointer
         slow = slow.next
@@ -164,24 +174,26 @@ def reorderList(head):
 
         first.next = second
         second.next = temp1
-        
+
         # advance our pointers forward in the respective halves
         # this is easy since we saved the references to the old/prior nexts
         first = temp1
         second = temp2
-        
-    
+
+
 # =================================================================== #
 
 ### TREES ###
 
 class TreeNode:
-    def __init__(self, val = 0, left = None, right = None):
+    def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
 
 # --------- 2. Invert Binary Tree - Leetcode 226 - Easy ------------
+
+
 def invertTree(root):
     # check whether the root contains value and if not return none
     if root == None:
@@ -201,6 +213,8 @@ def invertTree(root):
     return root
 
 # ---------- 20. Maximum Depth of Binary Tree - Leetcode 104 - Easy -------------
+
+
 def maxDepth(root):
     # the base case
     # when we reach a null node, we return 0 since the depth of a null node is 0
@@ -220,20 +234,22 @@ def maxDepth(root):
     return max(leftDepth, rightDepth) + 1
 
 # --------------- 26. Same Tree - Leetcode 100 - Easy --------------
+
+
 def isSameTree(p, q):
     # base case part 1
     # when both nodes are null, we can consider them to be the
     # same tree and hence we return true
     if p == None and q == None:
         return True
-    
+
     # base case part 2
     # if one of the nodes is null and the other is not OR the nodes
     # we're comparing are non-null but don't have the same value, they
     # are not the same tree and so we return false
     if (p == None or q == None) or (p.val != q.val):
         return False
-    
+
     # the recursive case
     # both the left and right sides of the tree need to be strictly equal,
     # that is, if, say, the left subtrees of p and q are equal while their
@@ -242,6 +258,8 @@ def isSameTree(p, q):
     return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
 
 # --------------- 27. Subtree of Another Tree - Leetcode 572 - Easy --------------
+
+
 def isSubtree(root, subroot):
     # check 26. Same Tree - Leetcode 100 - Easy
     def isSameTree(p, q):
@@ -250,34 +268,36 @@ def isSubtree(root, subroot):
         if (p == None or q == None) or (p.val != q.val):
             return False
         return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
-    
+
     # if the subroot is null, then technically it is a subtree of any other tree since
     # you can always find a null node in the leaf children of any other tree
     if not subroot:
         return True
-    
+
     # if the root is null, then technically nothing, other than the null node (which
     # we checked above), can be the subtree of the null node
     if not root:
         return False
-    
+
     if isSameTree(root, subroot):
         return True
-    
+
     return (isSubtree(root.left, subroot) or
             isSubtree(root.right, subroot))
 
 # --------------- 28. Lowest Common Ancestor of a Binary Search Tree - Leetcode 235 - Medium --------------
+
+
 def lowestCommonAncestor(root, p, q):
     # we always start at the root because it is always going to be a common ancestor for every node
     cur = root
     # proceed with the loop as long as the node we're looking at is not null
     while cur:
         # if both p and q's values are greater than the root's value, we restrict our search to the right subtree
-        if p.val > root.val and  q.val > root.val:
+        if p.val > root.val and q.val > root.val:
             cur = cur.right
         # if both p and q's values are less than the root's value, we restrict our search to the left subtree
-        elif p.val < root.val and  q.val < root.val:
+        elif p.val < root.val and q.val < root.val:
             cur = cur.left
         # it means that either p or q's value is equal to the root OR that a split occured and p is in the left
         # subtree and q is in the right subtree
@@ -286,6 +306,8 @@ def lowestCommonAncestor(root, p, q):
             return cur
 
 # --------------- 29. Binary Tree Level Order Traversal - Leetcode 102 - Medium --------------
+
+
 def levelOrder(root):
     # the list that'll hold the result
     res = []
@@ -322,68 +344,68 @@ def levelOrder(root):
 # =================================================================== #
 
 ### GRAPHS ###
-from collections import defaultdict, deque
 
 # --------- 3. Number of Islands - Leetcode 200 - Medium ------------
+
 def numIslands(grid):
-        # when the grid is empty
-        if len(grid) == 0:
-            return 0
-        
-        # initialize the number of islands
-        islands = 0
+    # when the grid is empty
+    if len(grid) == 0:
+        return 0
 
-        # set that'll store the visited islands
-        visited = set()
+    # initialize the number of islands
+    islands = 0
 
-        # number of rows and columns in the grid
-        rows = len(grid)
-        cols = len(grid[0])
+    # set that'll store the visited islands
+    visited = set()
 
-        def bfs(r, c):
-            """
-            a breadth first search to check the number of islands by marking already visited islands so as
-            to not forget which ones have already been visited
-            """
-            # bfs is an iterative algorithm that needs a DS, which is normally a queue
-            q = deque()
-            # we add the island to the visited pile
-            visited.add((r, c))
-            # append the island we're at in the iteration in the our bfs queue
-            q.append((r, c))
+    # number of rows and columns in the grid
+    rows = len(grid)
+    cols = len(grid[0])
 
-            # traverse through the queue as long as it's non-empty thus "expanding our island"
-            while q:
-                # the subgrid coord at the top of our queue
-                row, col = q.popleft()
-                # check the adjacent positions of the subgrid we're looking at generic LEFT, RIGHT, UP,
-                # and DOWN directions
-                directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+    def bfs(r, c):
+        """
+        a breadth first search to check the number of islands by marking already visited islands so as
+        to not forget which ones have already been visited
+        """
+        # bfs is an iterative algorithm that needs a DS, which is normally a queue
+        q = deque()
+        # we add the island to the visited pile
+        visited.add((r, c))
+        # append the island we're at in the iteration in the our bfs queue
+        q.append((r, c))
 
-                for dr, dc in directions:
-                    # specific coordinates of neighbors
-                    r = row + dr
-                    c = col + dc
-                    # check that the coordinates are in bounds
-                    # check that it's land
-                    # check that it's not visited yet
-                    if r in range(rows) and c in range(cols) and grid[r][c] == '1' and (r, c) not in visited:
-                        # add to queue because we also have to run bfs on this cell as well
-                        q.append((r, c))
-                        # mark it as visited so that we don't visit it twice
-                        visited.add((r, c))
+        # traverse through the queue as long as it's non-empty thus "expanding our island"
+        while q:
+            # the subgrid coord at the top of our queue
+            row, col = q.popleft()
+            # check the adjacent positions of the subgrid we're looking at generic LEFT, RIGHT, UP,
+            # and DOWN directions
+            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
 
-        # looping through each individual grid
-        for r in range(rows):
-            for c in range(cols):
-                # if the subgrid is land and is not among the visited, do a breadth-first-search on it and
-                # increment the number of islands
-                if grid[r][c] == "1" and (r, c) not in visited:
-                    bfs(r, c)
-                    islands += 1
+            for dr, dc in directions:
+                # specific coordinates of neighbors
+                r = row + dr
+                c = col + dc
+                # check that the coordinates are in bounds
+                # check that it's land
+                # check that it's not visited yet
+                if r in range(rows) and c in range(cols) and grid[r][c] == '1' and (r, c) not in visited:
+                    # add to queue because we also have to run bfs on this cell as well
+                    q.append((r, c))
+                    # mark it as visited so that we don't visit it twice
+                    visited.add((r, c))
 
-        # the final number of islands
-        return islands
+    # looping through each individual grid
+    for r in range(rows):
+        for c in range(cols):
+            # if the subgrid is land and is not among the visited, do a breadth-first-search on it and
+            # increment the number of islands
+            if grid[r][c] == "1" and (r, c) not in visited:
+                bfs(r, c)
+                islands += 1
+
+    # the final number of islands
+    return islands
 
 
 # =================================================================== #
@@ -411,12 +433,14 @@ def containsDuplicate(nums):
     return False
 
 # ---------------- 9. Two Sum - Leetcode 1 - Easy -------------------
+
+
 def twoSum(nums, target):
-    # dictionary that'll store already visited numbers in nums alongside 
+    # dictionary that'll store already visited numbers in nums alongside
     # their indices as key:value pairs. conveniently, the values will be
     # the index of each number
     twoSumDict = {}
-    
+
     # looping through nums, where each number in each iteration will act
     # as num1
     for i in range(len(nums)):
@@ -433,6 +457,8 @@ def twoSum(nums, target):
             twoSumDict[nums[i]] = i
 
 # ---------------- 11. Top K Frequent Elements - Leetcode 347 - Medium -------------------
+
+
 def topKFrequent(nums, k):
     # function to count the frequency of numbers in a list of numbers
     def dictify(nums):
@@ -462,7 +488,7 @@ def topKFrequent(nums, k):
     # loop through the numbers and their respective counts in the dictionary
     for num, count in count.items():
         frequencies[count].append(num)
-    
+
     # initialize our results array
     res = []
     # loop through the nested list that is frequencies
@@ -477,8 +503,10 @@ def topKFrequent(nums, k):
             # we need not go further when it is so
             if len(res) == k:
                 return res
-            
+
 # --------- 25. Valid Anagram - Leetcode 242 - Easy ------------
+
+
 def isAnagram(s, t):
     def dictify(s):
         wordCounter = {}
@@ -494,6 +522,8 @@ def isAnagram(s, t):
     return sDict == tDict
 
 # --------- 28. Group Anagrams - Leetcode 49 - Medium ------------
+
+
 def groupAnagrams(strs):
     res = defaultdict(list)
 
@@ -517,7 +547,7 @@ def groupAnagrams(strs):
         # to the value that corresponds to the specific count key in the
         # default dictionary
         res[tuple(count)].append(s)
-    
+
     # we just want all the values in list forms
     return list(res.values())
 
@@ -526,7 +556,8 @@ def groupAnagrams(strs):
 
 ### HEAPS OR PRIORITY QUEUES ###
 # --------- 5. Find Median from Data Stream - Leetcode 295 - Hard ------------
-import heapq
+
+
 class MedianFinder:
     def __init__(self):
         """
@@ -534,8 +565,8 @@ class MedianFinder:
         """
         # two heaps, large, small, minheap, maxheap
         # heaps should be equal size
-        self.small = [] # maxheap
-        self.large = [] # minHeap (Python's default)
+        self.small = []  # maxheap
+        self.large = []  # minHeap (Python's default)
 
     def addNum(self, num: int) -> None:
         # when the large heap is non-empty AND the number to be added is
@@ -581,6 +612,8 @@ class MedianFinder:
 
 ### SLIDING WINDOW ###
 # --------- 6. Best Time to Buy and Sell Stock - Leetcode 121 - Easy ------------
+
+
 def maxProfit(prices):
     # initialize pointer
     l = 0
@@ -612,6 +645,8 @@ def maxProfit(prices):
     return maxProfit
 
 # --------- 7. Longest Substring Without Repeating Characters - Leetcode 3 - Medium ------------
+
+
 def lengthOfLongestSubstring(s):
     # create a set that'll store all unique non-repeating characters
     charSet = set()
@@ -655,6 +690,8 @@ def lengthOfLongestSubstring(s):
 
 ### BINARY SEARCH ###
 # --------- 8. Find Minimum in Rotated Sorted Array - Leetcode 153 - Medium ------------
+
+
 def findMin(nums):
     # variable that'll store the current minimum
     res = nums[0]
@@ -667,7 +704,7 @@ def findMin(nums):
     while l <= r:
         # if the number at the left pointer is less than the one at
         # the right pointer, it means that nums is already sorted and
-        # we can safely return the number at the left pointer or the 
+        # we can safely return the number at the left pointer or the
         # current minimum, whichever is smaller
         if nums[l] < nums[r]:
             res = min(res, nums[l])
@@ -678,8 +715,8 @@ def findMin(nums):
         # before further comparison, the number at the middle pointer will serve as
         # the minimum
         res = min(res, nums[mid])
-        # if the number at the middle is greater than or equal than the number at 
-        # the left pointer, it means that we need to look at the right part of nums 
+        # if the number at the middle is greater than or equal than the number at
+        # the left pointer, it means that we need to look at the right part of nums
         # because it means that the left part of the sublist is already sorted and
         # because of the rotation, it makes no sense to look at the left part of
         # nums since it will always be larger than the right part of nums, so we
@@ -692,12 +729,14 @@ def findMin(nums):
     return res
 
 # ---------- 10. Search in Rotated Sorted Array - Leetcode 33 - Medium -------------
+
+
 def search(nums, target):
     # initialize your pointers
     l = 0
     r = len(nums) - 1
 
-    # as long as the pointers don't cross each other, continue with the 
+    # as long as the pointers don't cross each other, continue with the
     while l <= r:
         # calculated the middle pointer
         mid = (l + r) // 2
@@ -706,11 +745,11 @@ def search(nums, target):
             return mid
 
         # left sorted portion
-        # if the number at the middle is less than the number at the left pointer, 
+        # if the number at the middle is less than the number at the left pointer,
         # we are at the left sorted portion
         if nums[l] <= nums[mid]:
-            # if the target greater than the number at the middle OR if the target is 
-            # less than the number at the left pointer, there is no point in looking 
+            # if the target greater than the number at the middle OR if the target is
+            # less than the number at the left pointer, there is no point in looking
             # at the left sorted portion, so we update our pointers to concentrate our
             # search on the right sorted portion
             if target > nums[mid] or target < nums[l]:
@@ -719,7 +758,7 @@ def search(nums, target):
             # our pointers to concentrate on this region
             else:
                 r = mid - 1
-        
+
         # right sorted portion
         else:
             if target < nums[mid] or target > nums[r]:
@@ -727,7 +766,7 @@ def search(nums, target):
             else:
                 l = mid + 1
     # when the target is not in our list of numbers, we just return -1
-    return -1 
+    return -1
 
 
 # =================================================================== #
@@ -759,10 +798,12 @@ def maxArea(height):
             l += 1
         else:
             r -= 1
-    
+
     return res
 
 # ---------- 30. Valid Palindrome - Leetcode 125 - Easy -------------
+
+
 def isPalindrome(s):
     # variable that'll store the reverse of input string
     rev = ""
@@ -783,12 +824,14 @@ def isPalindrome(s):
 
 # One could make their own alphanumeric function utilizing the ord function
 # as so:
+
+
 def alphanum(c):
     return (
         ord("A") <= ord(c) <= ord("Z")
         or ord("a") <= ord(c) <= ord("z")
         or ord("0") <= ord(c) <= ord("9")
-        )
+    )
 
 
 # =================================================================== #
@@ -799,31 +842,31 @@ def isValid(s):
     # stack to store potentially matching open parens
     stack = []
     # dictionary with closing to open parentheses as key:val pairs
-    closeToOpen = {')':'(', ']':'[', '}':'{'}
+    closeToOpen = {')': '(', ']': '[', '}': '{'}
 
     # looping through the characters in string
     for char in s:
         # what to do when the character we're looking at is a closing parens
         if char in closeToOpen:
-            # when the stack is non-empty and the last character in the stack 
-            # or the character at the top of the stack (which is supposed to 
+            # when the stack is non-empty and the last character in the stack
+            # or the character at the top of the stack (which is supposed to
             # be an opening parens) matches the opening parens counterpart of
             # the closing parens we are looking at, then we remove the matching
             # opening parens at the top of the stack
             if len(stack) != 0 and stack[-1] == closeToOpen[char]:
                 stack.pop()
             # when the stack is empty or if the open parens character at the top
-            # of the stack does not match the open parens counterpart of the closing 
-            # parens we're looking at, then it means that the input string is not a 
+            # of the stack does not match the open parens counterpart of the closing
+            # parens we're looking at, then it means that the input string is not a
             # valid parens
             # in the case of the stack being empty, a sample input string would be
             # '(()))[]{}' whereby the time we get to the third closing ) parens, the
-            # stack will be empty since 2 pops of ( will have been made in prior 
+            # stack will be empty since 2 pops of ( will have been made in prior
             # iterations
-            # in the case of the open parens character at the top of the stack not 
-            # matching the open parens counterpart of the closing parens we're looking 
-            # at, a sample string would be '[{]}' whereby the stack will be non-empty 
-            # but by the time we get to the third character, the closing parens ], the 
+            # in the case of the open parens character at the top of the stack not
+            # matching the open parens counterpart of the closing parens we're looking
+            # at, a sample string would be '[{]}' whereby the stack will be non-empty
+            # but by the time we get to the third character, the closing parens ], the
             # character at the top of the stack will be the prior { which does not match
             # the open parens counterpart of ]
             else:
@@ -860,6 +903,7 @@ class TrieNode:
         # this is how we're gonna be inserting a node
         self.endOfWord = False
 
+
 class Trie:
     def __init__(self):
         """
@@ -888,14 +932,13 @@ class Trie:
             # update the current pointer by moving to the node represented by the character
             # we're looking at
             curr = curr.children[c]
-        
+
         # we've finished iterating through each character of the word we want to insert
         # our current pointer points to the trie node representing the last character in the
         # inserted word
         # to signify that we're done we need to mark this last character as the end of the
         # inserted word
         curr.endOfWord = True
-        
 
     def search(self, word: str) -> bool:
         """
@@ -915,11 +958,10 @@ class Trie:
             # update the current pointer by moving to the node represented by the character
             # we're looking at
             curr = curr.children[c]
-        
+
         # we've reached the end of the word we're searching and we know that we've reached the
         # end of the word if the character is the end of the word
         return curr.endOfWord
-        
 
     def startsWith(self, prefix: str) -> bool:
         """
@@ -939,7 +981,7 @@ class Trie:
             # update the current pointer by moving to the node represented by the character
             # we're looking at
             curr = curr.children[c]
-        
+
         # at the end we've looked at each character in the prefix and we now know for sure that
         # there are a set of nodes with these set of characters from the prefix and hence we
         # return true
@@ -953,7 +995,9 @@ class Trie:
 
 # --------- 16. Design Add and Search Words Data Structure - Leetcode 211 - Medium ------------
 
-#TODO: NOT FULLY UNDERSTOOD
+# TODO: NOT FULLY UNDERSTOOD
+
+
 class TrieNode:
     # initialize the trie node
     # you can't have a trie or solve a trie-related question without first having
@@ -972,6 +1016,7 @@ class TrieNode:
         # this is how we're gonna be inserting a node
         self.endOfWord = False
 
+
 class WordDictionary:
 
     def __init__(self):
@@ -979,7 +1024,7 @@ class WordDictionary:
         initialize your data structure here
         """
         self.root = TrieNode()
-    
+
     def addWord(self, word: str) -> None:
         # initially start at the (empty) root
         curr = self.root
@@ -995,7 +1040,7 @@ class WordDictionary:
             # update the current pointer by moving to the node represented by the character
             # we're looking at
             curr = curr.children[c]
-        
+
         # we've finished iterating through each character of the word we want to insert
         # our current pointer points to the trie node representing the last character in the
         # inserted word
@@ -1057,7 +1102,7 @@ def climbStairs(n):
     mitigate this, we can using a DP-bottom-up approach where we start with the easier questions
     (when n = 5, say) "how many ways does it take to get to the 5th stair from the fourth/fifth
     stair?
-    
+
     Answer: 1" we can then work ourselve to the top (zeroth stair) by saving the previous subproblem
     solutions in their own variables which will take O(n) time complexity if you trace the outputs
     of one and two below, you'll find that this is essentially a Fibonacci sequence problem
@@ -1084,6 +1129,8 @@ def climbStairs(n):
     return one
 
 # ------------------ 22. House Robber - Leetcode 198 - Medium ---------------------
+
+
 def rob(nums):
     """
     https://youtu.be/73r3KWiEvyk?t=361
@@ -1110,6 +1157,8 @@ def rob(nums):
     return rob2
 
 # ------------------ 23. House Robber II - Leetcode 213 - Medium ---------------------
+
+
 def rob(nums):
     """
     The added twist to this version of house robber is that the first and last houses
@@ -1139,6 +1188,8 @@ def rob(nums):
     return max(nums[0], rob1(nums[1:]), rob1(nums[0:len(nums) - 1]))
 
 # ------------------ 24. Longest Palindromic Substring - Leetcode 5 - Medium ---------------------
+
+
 def longestPalindrome(s):
     # initialize the result
     res = ''
@@ -1155,7 +1206,7 @@ def longestPalindrome(s):
                 resLen = r - l + 1
             l -= 1
             r += 1
-        
+
         # even length
         l, r = i, i + 1
         while l >= 0 and r < len(s) and s[l] == s[r]:
@@ -1164,13 +1215,15 @@ def longestPalindrome(s):
                 resLen = r - l + 1
             l -= 1
             r += 1
-        
+
         return res
-    
+
 # =================================================================== #
 ### BACKTRACKING ###
 
 # ------------------ 31. Combination Sum - Leetcode 39 - Medium ---------------------
+
+
 def combinationSum(candidates, target):
     # global variable that'll store the result
     res = []
@@ -1192,22 +1245,24 @@ def combinationSum(candidates, target):
             return
         if i >= len(candidates) or total > target:
             return
-        
+
         # append the current candidate to cur
         cur.append(candidates[i])
         # call dfs on i and cur still but the total changes to included the newly
         # appended candidates[i]
         dfs(i, cur, total + candidates[i])
-        
+
         # when we can't include the current candidate
         # we have to remove the previously added candidate
         cur.pop()
         dfs(i + 1, cur, total)
-    
+
     dfs(0, [], 0)
     return res
 
 # ------------------ 32. Word Search - Leetcode 79 - Medium ---------------------
+
+
 def exist(board, word):
     # dimensions of the board
     rows = len(board)
@@ -1228,18 +1283,18 @@ def exist(board, word):
         # we return False
         if (r < 0 or
             c < 0 or
-            r>= rows or
+            r >= rows or
             c >= cols or
-            word[i] != board[r,c]
-            or (r, c) in path):
+            word[i] != board[r, c]
+                or (r, c) in path):
             return False
         # add the position we're currently at to the path
         path.add((r, c))
         # we want to check the positions to the right, left, top, and bottom of the
         # position we're currently at so we run dfs on those positions
         res = (dfs(r + 1, c, i + 1) or
-               dfs(r - 1, c, i + 1) or 
-               dfs(r, c + 1, i + 1) or 
+               dfs(r - 1, c, i + 1) or
+               dfs(r, c + 1, i + 1) or
                dfs(r, c - 1, i + 1))
         # remove the position we're currently at from the path
         # the reason why we are removing the position we're currently at from the path
@@ -1249,7 +1304,7 @@ def exist(board, word):
         # in the path
         path.remove(r, c)
         return res
-    
+
     # brute force by going through every single position in the grid
     for r in range(rows):
         for c in range(cols):
@@ -1284,17 +1339,19 @@ def insert(intervals, newInterval):
         # when the start of the new interval is less than or equal to the end of the
         # current interval, we merge the intervals
         else:
-            newInterval = [min(newInterval[0], intervals[i][0]), 
+            newInterval = [min(newInterval[0], intervals[i][0]),
                            max(newInterval[1], intervals[i][1])]
     # when we reach the end of the intervals list, we add the new interval to the result
     res.append(newInterval)
     return res
 
 # ------------------ 34. Merge Intervals - Leetcode 56 - Medium ---------------------
+
+
 def merge(intervals):
     # sort the intervals by their start times
     # intervals.sort() also works
-    intervals.sort(key = lambda x:x[0])
+    intervals.sort(key=lambda x: x[0])
     # variable that'll store the result
     res = []
     # add the first interval to the result to initiate the comparison process
@@ -1315,9 +1372,11 @@ def merge(intervals):
     return res
 
 # ------------------ 35. Non-overlapping Intervals - Leetcode 435 - Medium ---------------------
+
+
 def eraseOverlapIntervals(intervals):
     # sort the intervals by their start times
-    intervals.sort(key = lambda x:x[0])
+    intervals.sort(key=lambda x: x[0])
     # variable that'll store the result
     res = 0
     # variable that'll store the index of the previous interval we're currently at
