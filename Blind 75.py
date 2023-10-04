@@ -598,7 +598,31 @@ def productExceptSelf(nums):
 
 # --------- 38. Longest Consecutive Sequence - Leetcode 128 - Medium ------------
 def longestConsecutive(nums):
-    pass
+    # convert the list to a set to eliminate duplicates
+    numSet = set(nums)
+    # variable that'll store the longest consecutive sequence
+    longest = 0
+
+    # loop through the numbers
+    for n in nums:
+        # check whether the number before the current number is the start of a new sequence
+        # if it is, then we can calculate the length of that particular sequence
+        # we do this by checking whether the number before the current number is in the set
+        # if it is, then we know that the current number is not the start of a new sequence
+        # and we can safely skip it
+        if n - 1 not in numSet:
+            # variable that'll store the length of the current sequence
+            length = 0
+            # we calculate the length of the current sequence by checking whether the number
+            # after the current number is in the set and if it is, we increment the length
+            # notice that since we initialize length to 0, we ensure that we count the
+            # current start of the sequence as well
+            while n + length in numSet:
+                length += 1
+            # we update the longest sequence if the current sequence is longer
+            longest = max(length, longest)
+
+    return longest
 
 
 # =================================================================== #
