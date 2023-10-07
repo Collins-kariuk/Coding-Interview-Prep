@@ -437,18 +437,16 @@ def containsDuplicate(nums):
 
 def twoSum(nums, target):
     # dictionary that'll store already visited numbers in nums alongside
-    # their indices as key:value pairs. conveniently, the values will be
-    # the index of each number
+    # their indices as key:value pairs
+    # conveniently, the values will be the index of each number
     twoSumDict = {}
 
-    # looping through nums, where each number in each iteration will act
-    # as num1
+    # looping through nums, where each number in each iteration will act as num1
     for i in range(len(nums)):
-        # the second number, num2, that when added to num1 will produce
-        # target
+        # the second number, num2, that when added to num1 will produce target
         num2 = target - nums[i]
-        # when num2 is already in the dictionary, it means we've already
-        # found our 2 numbers and we can return their indices as a list
+        # when num2 is already in the dictionary, it means we've already found
+        # our 2 numbers and we can return their indices as a list
         if num2 in twoSumDict:
             return [i, twoSumDict[num2]]
         # otherwise we add the number, at the current iteration, into the
@@ -906,6 +904,66 @@ def alphanum(c):
         or ord("a") <= ord(c) <= ord("z")
         or ord("0") <= ord(c) <= ord("9")
     )
+
+
+# ---------- 39. 3Sum - Leetcode 15 - Medium -------------
+def threeSum(nums):
+    # sort the numbers
+    nums.sort()
+    # initialize the result array
+    res = []
+
+    # loop through the numbers
+    for i in range(len(nums)):
+        # when the number is greater than 0, we can safely break out of the loop
+        # because we know that the numbers that follow will be greater than 0
+        # and so the sum of 3 numbers will never be 0
+        if nums[i] > 0:
+            break
+        # when the number is equal to the number before it, we can safely skip it
+        # because we've already considered it in a previous iteration
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+
+        # initialize the left and right pointers
+        l = i + 1
+        r = len(nums) - 1
+
+        # continue with the loop as long as the pointers don't cross each other
+        while l < r:
+            # calculate the sum of the 3 numbers
+            currSum = nums[i] + nums[l] + nums[r]
+            # when the sum is less than 0, we increment the left pointer by one
+            # so as to increase the sum
+            if currSum < 0:
+                l += 1
+            # when the sum is greater than 0, we decrement the right pointer by
+            # one so as to decrease the sum
+            elif currSum > 0:
+                r -= 1
+            # when the sum is equal to 0, we append the 3 numbers to the result
+            # array
+            else:
+                res.append([nums[i], nums[l], nums[r]])
+                # we then increment the left pointer by one and decrement the
+                # right pointer by one so as to look for other combinations
+                # that sum up to 0
+                l += 1
+                r -= 1
+                # when the number at the left pointer is equal to the number
+                # before it, we increment the left pointer by one so as to skip it
+                # if we don't check whether the number at the left pointer is equal
+                # to the number before it, we'll end up with duplicate doublets for
+                # our mini 2Sum problem which we do not want since the question asks
+                # for unique triplets
+                while l < r and nums[l] == nums[l - 1]:
+                    l += 1
+                # when the number at the right pointer is equal to the number
+                # before it, we decrement the right pointer by one so as to
+                # skip it
+                while l < r and nums[r] == nums[r + 1]:
+                    r -= 1
+    return res
 
 
 # =================================================================== #
