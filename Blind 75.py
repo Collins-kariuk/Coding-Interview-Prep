@@ -758,6 +758,43 @@ def lengthOfLongestSubstring(s):
         res = max(res, r - l + 1)
     return res
 
+
+# --------- 40. Longest Repeating Character Replacement - Leetcode 424 - Medium ------------
+def characterReplacement(s, k):
+    # initialize a dictionary that'll store the running occurrences
+    count = {}
+    res = 0
+    # initialize left pointer
+    l = 0
+
+    # loop through the input string with the iterator acting as the right pointer
+    for r in range(len(s)):
+        # increment the count of the character at the right pointer in your dictionary
+        count[s[r]] = count.get(s[r], 0) + 1
+        # check whether a character replacement can even be made
+        # the logic of this is that if the length of the current substring minus the
+        # maximum count of a character in the current substring is greater than k, then
+        # we know that we can't make a character replacement
+        # we know that we can't make a character replacement because the length of the
+        # current substring minus the maximum count of a character in the current substring
+        # is the number of characters that are NOT the most frequent character in the current
+        # substring
+        # it makes sense to replace the characters that are NOT the most frequent character
+        # in the current substring because we can replace them with the most frequent character
+        # replacements (k) in the current substring and still have a valid substring
+        while r - l + 1 - max(count.values()) > k:
+            # when this occurs, we need to decrement the count of the character at the left
+            # pointer in the dictionary since we're going to move the left pointer rightwards
+            # in order to make a valid substring that can be made with k character replacements
+            # (is less than k)
+            count[s[l]] -= 1
+            l += 1
+        # the maximum length of the substring with repeating characters will be the larger of
+        # the previous length and the current length
+        res = max(res, r - l + 1)
+    return res
+
+
 # =================================================================== #
 
 ### BINARY SEARCH ###
@@ -907,6 +944,8 @@ def alphanum(c):
 
 
 # ---------- 39. 3Sum - Leetcode 15 - Medium -------------
+
+
 def threeSum(nums):
     # sort the numbers
     nums.sort()
@@ -1328,9 +1367,10 @@ def longestPalindrome(s):
     # initialize the variable that'll hold the length of the longest palindrome
     resLen = 0
 
-    # loop through
+    # loop through the input string
     for i in range(len(s)):
         # odd length
+        # we want to check the positions to the left and right of the position we're
         l, r = i, i
         while l >= 0 and r < len(s) and s[l] == s[r]:
             if (r - l + 1) > resLen:
