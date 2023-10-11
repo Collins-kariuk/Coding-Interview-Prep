@@ -182,6 +182,39 @@ def reorderList(head):
         second = temp2
 
 
+# ------------- 42. Merge k Sorted Lists - Leetcode 23 - Hard -----------------
+def mergeKLists(lists):
+    # the gist of the solution is that we merge the lists 2 at a time
+    # we do this until we have one merged list
+    # divide and conquer
+
+    # the edge cases
+    # if the input list is empty, we return None
+    if not lists or len(lists) == 0:
+        return None
+    
+    # while the length of the input list is greater than 1, we merge the lists 2 at a time
+    while len(lists) > 1:
+        # the list that'll store the merged lists
+        mergedLists = []
+
+        # we merge the lists 2 at a time
+        for i in range(0, len(lists), 2):
+            l1 = lists[i]
+            # the length of the input list could be odd and so we need to check whether
+            # the index we're trying to access is in bounds
+            if i + 1 < len(lists):
+                l2 = lists[i + 1]
+            else:
+                l2 = None
+            # we append the merged lists to the list that'll store the merged lists
+            mergedLists.append(mergeTwoLists(l1, l2))
+        # we update the input list to be the list that stores the merged lists
+        lists = mergedLists
+    # we return the first element of the input list since it'll be the merged list
+    return lists[0]
+
+
 # =================================================================== #
 
 ### TREES ###
