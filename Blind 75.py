@@ -14,40 +14,38 @@ class ListNode:
 
 def removeNthFromEnd(head, n):
     # Create a dummy node and attach it to the head of the input list.
-    dummy = ListNode(val=0, next=head)
+    dummy = ListNode(val = 0, next = head)
 
     # Initialize 2 pointers, first and second, to point to the dummy node.
     first = dummy
     second = dummy
 
-    # Advances first pointer so that the gap between first and second is n nodes
-    # apart
+    # Advances first pointer so that the gap between first and second is n nodes apart
     for i in range(n + 1):
         first = first.next
 
-    # While the first pointer does not equal null move both first and second to
-    # maintain the gap and get nth node from the end
+    # While the first pointer does not equal null move both first and second to maintain
+    # the gap and get nth node from the end
     while (first != None):
         first = first.next
         second = second.next
 
-    # Delete the node being pointed to by second.
+    # Delete the node being pointed to by second
     second.next = second.next.next
 
-    # Return dummy.next
+    # Return the head of the input list
     return dummy.next
 
 # --------- 14. Reverse Linked List - Leetcode 209 - Easy ------------
 
 
 def reverseList(head):
-    # intialize the 2 needed pointers required to traverse through the
-    # linked list
+    # intialize the 2 needed pointers required to traverse through the linked list
     prev = None
     curr = head
 
-    # continue with the loop as long as the current pointer does not
-    # point at a null node
+    # continue with the loop as long as the current pointer does not point at a
+    # null node
     while curr:
         # save the reference to the next node after the current one since
         # it the next iteration it will serve as the current node
@@ -69,33 +67,32 @@ def reverseList(head):
 
 
 def mergeTwoLists(l1, l2):
-    # create a temp head node which will form the basis of the result linked list
+    # initialize a temp head that'll serve as a placeholder
     res = ListNode()
     # a pointer to the temp head
     tail = res
 
     # while both pointers to the input linked lists are non-null, continue looping
     while l1 and l2:
-        # if at a point in the iteration, the value at the l1 node is less than the
-        # value at the l2 node, then we add the lesser l1 node value to our res
-        # linked list
+        # if the value of the node in l1 is less than the value of the node in l2
+        # we add the node in l1 to the result linked list
         if l1.val < l2.val:
             tail.next = l1
-            # advanced the l1 pointer forward
             l1 = l1.next
         else:
+            # otherwise we add the node in l2 to the result linked list
             tail.next = l2
             l2 = l2.next
         # we advance the pointer to the result linked list regardless
         tail = tail.next
 
-    # the not-so-happy case when the lengths of the input linked lists are unequal
-    if l1:
+    # if either of the pointers to the input linked lists are null, we add the
+    # non-null linked list to the end of the result linked list
+    if l1 is not None and l2 is None:
         tail.next = l1
     else:
         tail.next = l2
-    # since the default head node of our result list is 0, we need to return the
-    # next node after the head
+    # we return the next node of the temp head since the temp head is just a placeholder
     return res.next
 
 # ----------------- 18. Linked List Cycle - Leetcode 141 - Easy --------------------
@@ -110,6 +107,10 @@ def hasCycle(head):
     slow = head
     fast = head
 
+    # we continue with the loop as long as the fast pointer is non-null and the
+    # next pointer of the fast pointer is non-null
+    # we include fast.next because if we don't, we'll get a null pointer exception
+    # when we try to access fast.next.next
     while fast and fast.next:
         # slow pointer moves slower than the fast pointer
         slow = slow.next
@@ -160,7 +161,7 @@ def reorderList(head):
     # merge the 2 halves
     first = head
     # after the second while loop is done executing the head of the now reversed second
-    # half of the linked list will be at prev as second(the pointer of the second half
+    # half of the linked list will be at prev as second (the pointer of the second half
     # of the linked list) will be at Null
     second = prev
     # we continue merging until one of the pointers, either first or second, is non-null
@@ -847,7 +848,7 @@ def minWindow(s, t):
         # of c in t, so we need to check that as well
         if c in countT and window[c] == countT[c]:
             have += 1
-        
+
         # while we have all the characters that we need in the current window
         while have == need:
             # update our potential result
@@ -876,8 +877,6 @@ def minWindow(s, t):
         return s[l:r + 1]
     else:
         return ""
-
-
 
 
 # =================================================================== #
