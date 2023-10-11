@@ -797,48 +797,85 @@ def characterReplacement(s, k):
 
 # --------- 41. Minimum Window Substring - Leetcode 76 - Hard ------------
 def minWindow(s, t):
+    # edge case when the input string is empty
     if t == "":
         return ""
 
+    # initialize a dictionary that'll store the running occurrences
+    # of characters in t
     countT = {}
+    # initialize a dictionary that'll store the running occurrences
+    # of characters in the current window
     window = {}
 
+    # count the occurrences of characters in t
     for c in t:
         countT[c] = 1 + countT.get(c, 0)
 
+    # initialize variables that'll store the number of characters that we
+    # have in the current window and the number of characters that we need
+    # in the current window
     have = 0
+    # the number of characters that we need in the current window is just the
+    # length of the dictionary that stores the running occurrences of
+    # characters in t
     need = len(countT)
 
+    # initialize variables that'll store the result
     res = 0
     res = [-1, -1]
+    # initially, the length of the result is infinity since we haven't found
+    # a valid substring yet
     resLen = float("infinity")
+    # initialize left pointer
     l = 0
 
+    # loop through the input string with the iterator acting as the right pointer
     for r in range(len(s)):
+        # save the character at the right pointer in a variable
         c = s[r]
+        # increment the count of the character at the right pointer (saved in the variable above) in your dictionary
         window[c] = 1 + window.get(c, 0)
 
+        # check whether the character at the right pointer is in the dictionary that stores the running occurrences
+        # of characters in t AND whether the number of occurrences of the character at the right pointer in the
+        # current window is equal to the number of occurrences of the character at the right pointer in t
+        # if both conditions are satisfied, it means that we have a character that we need in the current window
+        # and we can increment the number of characters that we have in the current window
+        # note that c could be in the dictionary that stores the running occurrences of characters in t but
+        # the number of occurrences of c in the current window could be less than the number of occurrences
+        # of c in t, so we need to check that as well
         if c in countT and window[c] == countT[c]:
             have += 1
         
+        # while we have all the characters that we need in the current window
         while have == need:
             # update our potential result
             if (r - l + 1) < resLen:
+                # the potential result is encapsulated within the bounds of the indices of these pointers in res
                 res = [l, r]
+                # update the length of the potential result
                 resLen = r - l + 1
-            # pop from the left of our window
+            # pop from the left of our window and update the number of characters that we have in the current window
+            # notice that by popping from the left of our window, there is potential to lose a character that we need
+            # in the current window, so we need to check that as well
+            # we perform this check by checking whether the count of the character at the left pointer in the window
+            # we've popped from is less than the count of the character at the left pointer in t
+            # recall that for have to be equal to need, the number of occurrences of the character each character in t
+            # in the current window must be equal to the number of occurrences of the character in t
             window[s[l]] -= 1
             if s[l] in countT and window[s[l]] < countT[s[l]]:
                 have -= 1
+            # advance the left pointer rightwards to look at other potential substrings
             l += 1
-
-    l = res
-    r = res
-    return s[l:r + 1] if resLen != float("infinity") else ""
-
-
-
-
+    # the result is the substring that is encapsulated within the bounds of the indices of these pointers in res
+    l, r = res
+    # if the length of the result is not infinity, it means that we've found a valid substring
+    # otherwise, we return an empty string
+    if resLen != float("infinity"):
+        return s[l:r + 1]
+    else:
+        return ""
 
 
 
