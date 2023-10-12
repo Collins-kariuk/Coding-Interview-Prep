@@ -387,7 +387,29 @@ def levelOrder(root):
 
 # --------------- 43. Validate Binary Search Tree - Leetcode 98 - Medium --------------
 def isValidBST(root):
-    pass
+    # the gist of the solution is that we need to check whether the current node's value
+    # is between the minimum and maximum values
+    # we do this by recursively calling the function on the left and right subtrees
+    # and updating the minimum and maximum values as we go along
+    def helper(node, minVal, maxVal):
+        # the base case
+        # if the node is null, we return True
+        if not node:
+            return True
+        # if the node's value is less than the minimum value or greater than the maximum
+        # value, we return False
+        if node.val <= minVal or node.val >= maxVal:
+            return False
+        # the recursive case
+        # we call the function on the left and right subtrees
+        # we update the minimum and maximum values as we go along
+        return helper(node.left, minVal, node.val) and helper(node.right, node.val, maxVal)
+
+    # we start the recursive function call with the root node
+    # we set the minimum and maximum values to be the minimum and maximum values of a
+    # 32-bit signed integer
+    return helper(root, -2**31, 2**31 - 1)
+    
 
 
 
