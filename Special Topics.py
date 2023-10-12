@@ -20,6 +20,7 @@ Step-by-step algorithm:
 import collections
 from collections import defaultdict
 
+
 class Graph:
     def __init__(self):
         self.graph = defaultdict(list)
@@ -30,22 +31,23 @@ class Graph:
     def bfs(self, start):
         # Create a queue for BFS
         queue = collections.deque()
-        
+
         # Mark the start node as visited and enqueue it
         visited = [False] * len(self.graph)
         queue.append(start)
         visited[start] = True
-        
+
         while queue:
             # Dequeue a vertex from the queue and print it
             vertex = queue.pop(0)
-            print(vertex, end = " ")
+            print(vertex, end=" ")
 
             # Get all adjacent vertices of the dequeued vertex
             for neighbor in self.graph[vertex]:
                 if not visited[neighbor]:
                     queue.append(neighbor)
                     visited[neighbor] = True
+
 
 # Example usage:
 g = Graph()
@@ -76,7 +78,7 @@ Here's a step-by-step explanation of the DFS algorithm in Python:
 5. If no unvisited adjacent node exists, backtrack to the previous node.
 6. Repeat steps 2 to 5 until all nodes have been visited.
 """
-from collections import defaultdict
+
 
 class Graph:
     def __init__(self):
@@ -94,6 +96,7 @@ class Graph:
         for neighbor in self.graph[node]:
             if not visited[neighbor]:
                 self.dfs(neighbor, visited)
+
 
 # Example usage:
 g = Graph()

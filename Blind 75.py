@@ -14,7 +14,7 @@ class ListNode:
 
 def removeNthFromEnd(head, n):
     # Create a dummy node and attach it to the head of the input list.
-    dummy = ListNode(val = 0, next = head)
+    dummy = ListNode(val=0, next=head)
 
     # Initialize 2 pointers, first and second, to point to the dummy node.
     first = dummy
@@ -192,7 +192,7 @@ def mergeKLists(lists):
     # if the input list is empty, we return None
     if not lists or len(lists) == 0:
         return None
-    
+
     # while the length of the input list is greater than 1, we merge the lists 2 at a time
     while len(lists) > 1:
         # the list that'll store the merged lists
@@ -206,6 +206,8 @@ def mergeKLists(lists):
             if i + 1 < len(lists):
                 l2 = lists[i + 1]
             else:
+                # if it's not in bounds, we just set the second list to be None
+                # which is still fine since we can merge a list with None
                 l2 = None
             # we append the merged lists to the list that'll store the merged lists
             mergedLists.append(mergeTwoLists(l1, l2))
@@ -234,8 +236,7 @@ def invertTree(root):
         return None
 
     # swap the left and right children
-    # you have to store the left child in a variable first
-    # to not lose it
+    # you have to store the left child in a variable first to not lose it
     temp = root.left
     root.left = root.right
     root.right = temp
@@ -260,11 +261,8 @@ def maxDepth(root):
     leftDepth = maxDepth(root.left)
     # calculate the depth of the right part of the binary tree
     rightDepth = maxDepth(root.right)
-
-    # the maximum depth will be the larger of the depths of either the left or
-    # right parts of the binary tree
-    # plus one because of the fact that we do not initially consider the height
-    # of the root
+    # the maximum depth of the binary tree will be the larger of the left and right
+    # depths plus 1 since we're counting the current node as well, i.e., the root
     return max(leftDepth, rightDepth) + 1
 
 # --------------- 26. Same Tree - Leetcode 100 - Easy --------------
@@ -278,9 +276,11 @@ def isSameTree(p, q):
         return True
 
     # base case part 2
-    # if one of the nodes is null and the other is not OR the nodes
-    # we're comparing are non-null but don't have the same value, they
-    # are not the same tree and so we return false
+    # when one of the nodes is null and the other is not, we
+    # can consider them to be different trees and hence we
+    # return false OR when the values of the nodes are not
+    # equal, we can consider them to be different trees and
+    # hence we return false
     if (p == None or q == None) or (p.val != q.val):
         return False
 
@@ -307,15 +307,22 @@ def isSubtree(root, subroot):
     # you can always find a null node in the leaf children of any other tree
     if not subroot:
         return True
-
-    # if the root is null, then technically nothing, other than the null node (which
-    # we checked above), can be the subtree of the null node
+    
+    # if the root is null, then it can't possibly have a subtree other than itself (null),
+    # which we checked above, so we return False
     if not root:
         return False
-
+    
+    # if the root and subroot are the same, then we return True
     if isSameTree(root, subroot):
         return True
 
+    # otherwise we recursively check the left and right subtrees of the root
+    # to see if they contain the subroot
+    # this works because we know that the subroot is not the same as the root
+    # and so we can check the left and right subtrees of the root to see if
+    # they contain the subroot because even if the subroot is not the same as
+    # the root, it could be the same as the left or right subtrees of the root
     return (isSubtree(root.left, subroot) or
             isSubtree(root.right, subroot))
 
@@ -333,6 +340,8 @@ def lowestCommonAncestor(root, p, q):
         # if both p and q's values are less than the root's value, we restrict our search to the left subtree
         elif p.val < root.val and q.val < root.val:
             cur = cur.left
+        # if neither of the above conditions are met, it means that we've found the lowest common ancestor
+        # and so we return it
         # it means that either p or q's value is equal to the root OR that a split occured and p is in the left
         # subtree and q is in the right subtree
         # in either case we just return cur, the current root node
@@ -343,20 +352,21 @@ def lowestCommonAncestor(root, p, q):
 
 
 def levelOrder(root):
-    # the list that'll hold the result
+    # initialize the result
     res = []
     # initialize queue for Breadth First Search (BFS)
     q = collections.deque()
-    # initialize queue with the given root node
+    # add the root to the queue
     q.append(root)
 
     # run BFS while queue is nonempty
     while q:
+        # get the length of the queue
         # get number of nodes that are in the queue at a given point/currently
         # ensures that we go through the queue one level at a time
         qLen = len(q)
         level = []
-        # loop through every value in the queue currently
+        # loop through every value currently in the queue
         for i in range(qLen):
             # pop nodes from the left of the queue (FIFO)
             node = q.popleft()
@@ -368,11 +378,17 @@ def levelOrder(root):
                 # add the children of the popped node
                 q.append(node.left)
                 q.append(node.right)
-        # append every single level to the result
-        # make sure that the level list in non-empty
+        # if the level is non-empty, we append it to the result
         if level:
             res.append(level)
+    # return the result
     return res
+
+
+# --------------- 43. Validate Binary Search Tree - Leetcode 98 - Medium --------------
+def isValidBST(root):
+    pass
+
 
 
 # =================================================================== #
