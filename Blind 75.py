@@ -409,8 +409,47 @@ def isValidBST(root):
     # we set the minimum and maximum values to be the minimum and maximum values of a
     # 32-bit signed integer
     return helper(root, -2**31, 2**31 - 1)
-    
 
+
+# --------------- 44. Kth Smallest Element - Leetcode 230 - Medium --------------
+def kthSmallest(root, k):
+    # the gist of the solution is that we need to do an inorder traversal of the binary
+    # search tree and return the kth element
+    # we do this iteratively using a stack
+
+    # initialize a counter to keep track of the number of nodes we've visited so far
+    # which we'll see if the number of nodes we're going to pop off the stack
+    n = 0
+    # initialize a stack to keep track of the nodes we've visited so far
+    stack = []
+    # initialize a pointer to the root node
+    cur = root
+
+    # we continue with the loop as long as the current node is non-null or the stack
+    # is non-empty
+    while cur is not None or len(stack) != 0:
+        # we traverse to the leftmost node
+        while cur is not None:
+            # as we traverse to the leftmost node, we add the nodes we visit to the stack
+            stack.append(cur)
+            # we keep traversing to the leftmost node
+            cur = cur.left
+        
+        # we pop the topmost node off the stack when we hit a left null node
+        # assigning the top element of the stack to cur allows us to travel back to the
+        # parent node of the left null node and carry on with the inorder traversal
+        # by doing the same thing we did with the left subtree with the right subtree
+        cur = stack.pop()
+        # we increment the counter since we've hit a null node
+        n += 1
+
+        # we check whether we've hit the kth node
+        # this allows us to return the value of the kth node as soon as we hit it
+        if n == k:
+            return cur.val
+        
+        # we traverse to the right subtree
+        cur = cur.right   
 
 
 # =================================================================== #
