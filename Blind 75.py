@@ -449,7 +449,47 @@ def kthSmallest(root, k):
             return cur.val
         
         # we traverse to the right subtree
-        cur = cur.right   
+        cur = cur.right
+
+
+# --------------- 45. Construct Binary Tree from Preorder and Inorder Traversal - Leetcode 105 - Medium --------------
+def buildTree(preorder, inorder):
+    # the gist of the solution is that we need to build the tree recursively
+    # we do this by using the preorder traversal to find the root node and
+    # the inorder traversal to find the left and right subtrees of the root node
+    # we do this recursively until we've built the entire tree
+
+    # the base case is when either the preorder or inorder traversal is empty
+    # in which case we return None
+    if len(preorder) == 0 or len(inorder) == 0:
+        return None
+    
+    # the root node is the first element in the preorder traversal (a given)
+    root = TreeNode(preorder[0])
+    # find the index of the root node in the inorder traversal list
+    mid = inorder.index(preorder[0])
+
+    # recursively build the left and right subtrees of the root node
+    # Notice that everything from the beginning of the inorder
+    # traversal we're at till the middle index form the nodes of the left subtree
+    # (though we don't include the middle index) and everything from the middle to
+    # the end of the inorder list form the nodes of the right subtree and so we can
+    # use this to our advantage because at any given time, we know the number of nodes
+    # in the left and right subtrees and so we can use this to find the left and right
+    # subtrees in the preorder traversal list (this handles the understanding of the
+    # recursive calls for inorder)
+
+    # for the preorder traversal, we know that the first element is the root node and
+    # so we can use this to our advantage to find the left and right subtrees in the
+    # preorder traversal list since the next element after the root node is the root
+    # node of the left subtree and since we know however many number of nodes that are
+    # in the left subtree (0:mid+1), we can use that to find the root node of the right
+    # subtree (mid+1::) (this handles the understanding of the recursive calls for preorder)
+
+    root.left = buildTree(preorder[1:mid + 1], inorder[0:mid])
+    root.right = buildTree(preorder[mid + 1::], inorder[mid + 1::])
+
+    return root
 
 
 # =================================================================== #
