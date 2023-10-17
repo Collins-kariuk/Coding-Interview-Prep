@@ -307,12 +307,12 @@ def isSubtree(root, subroot):
     # you can always find a null node in the leaf children of any other tree
     if not subroot:
         return True
-    
+
     # if the root is null, then it can't possibly have a subtree other than itself (null),
     # which we checked above, so we return False
     if not root:
         return False
-    
+
     # if the root and subroot are the same, then we return True
     if isSameTree(root, subroot):
         return True
@@ -434,7 +434,7 @@ def kthSmallest(root, k):
             stack.append(cur)
             # we keep traversing to the leftmost node
             cur = cur.left
-        
+
         # we pop the topmost node off the stack when we hit a left null node
         # assigning the top element of the stack to cur allows us to travel back to the
         # parent node of the left null node and carry on with the inorder traversal
@@ -447,7 +447,7 @@ def kthSmallest(root, k):
         # this allows us to return the value of the kth node as soon as we hit it
         if n == k:
             return cur.val
-        
+
         # we traverse to the right subtree
         cur = cur.right
 
@@ -463,7 +463,7 @@ def buildTree(preorder, inorder):
     # in which case we return None
     if len(preorder) == 0 or len(inorder) == 0:
         return None
-    
+
     # the root node is the first element in the preorder traversal (a given)
     root = TreeNode(preorder[0])
     # find the index of the root node in the inorder traversal list
@@ -492,11 +492,52 @@ def buildTree(preorder, inorder):
     return root
 
 
+# --------------- 46. Binary Tree Maximum Path Sum - Leetcode 124 - Hard --------------
+def maxPathSum(root):
+    # the gist of the solution is that we need to find the maximum path sum we do this
+    # by recursively calling the function on the left and right subtrees and updating
+    # the maximum path sum as we go along we also need to check whether the maximum
+    # path sum includes the root node or not
+
+    # initially,we set the maximum path sum to be the value of the root node we're
+    # looking at
+    res = [root.val]
+
+    # return max path sum without splitting
+    def dfs(root):
+        # base case: when we hit a null node, we return 0
+        if root is None:
+            return 0
+
+        # recursive case: run the DFS on the left and right subtrees
+        leftMax = dfs(root.left)
+        rightMax = dfs(root.right)
+
+        # the maximum sum we can get without splitting from the input left and right
+        # nodes, respectively we need to check whether the maximum sum we can get
+        # without splitting from the input left and right nodes, respectively, is
+        # negative or not because if it is, we don't want to include it in our maximum
+        # path sum
+        leftMax = max(leftMax, 0)
+        rightMax = max(rightMax, 0)
+
+        # compute the max path sum WITH splitting from the input node
+        res[0] = max(res[0], root.val + leftMax + rightMax)
+
+        # return the max path sum WITHOUT splitting from the input node
+        return root.val + max(leftMax, rightMax)
+
+    # run the DFS on the root node
+    dfs(root)
+    # return the maximum path sum
+    return res[0]
+
 # =================================================================== #
 
 ### GRAPHS ###
 
 # --------- 3. Number of Islands - Leetcode 200 - Medium ------------
+
 
 def numIslands(grid):
     # when the grid is empty

@@ -90,9 +90,9 @@ class Graph:
     def dfs(self, node, visited):
         # Mark the current node as visited and print it
         visited[node] = True
-        print(node, end=" ")
+        print(node, end = " ")
 
-        # Recur for all adjacent vertices
+        # Recurse for all adjacent vertices
         for neighbor in self.graph[node]:
             if not visited[neighbor]:
                 self.dfs(neighbor, visited)
