@@ -40,7 +40,7 @@ class Graph:
         while queue:
             # Dequeue a vertex from the queue and print it
             vertex = queue.pop(0)
-            print(vertex, end=" ")
+            print(vertex, end = " ")
 
             # Get all adjacent vertices of the dequeued vertex
             for neighbor in self.graph[vertex]:
@@ -58,7 +58,7 @@ g.add_edge(2, 0)
 g.add_edge(2, 3)
 g.add_edge(3, 3)
 
-# print("Breadth-First Traversal starting from vertex 2:")
+# print("Breadth-First Traversal starting from vertex 2: ")
 # g.bfs(2)
 
 

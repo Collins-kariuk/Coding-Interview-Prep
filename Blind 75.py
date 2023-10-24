@@ -600,6 +600,51 @@ def numIslands(grid):
     return islands
 
 
+# --------- 47. Clone Graph - Leetcode 133 - Medium ------------
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+
+def cloneGraph(node):
+    # the gist of the solution is that we need to clone the graph recursively
+    # we do this by using a dictionary to keep track of the nodes we've visited
+    # and their corresponding clones
+    # we do this recursively until we've cloned the entire graph
+    # the key:value pairs in this dictionary is oldNode:cloneNode
+    oldToNew = {}
+
+    # the recursive function which is a depth-first-search
+    def dfs(node):
+        # the base case
+        # if the node we're looking at is already in the dictionary, we return
+        # its clone, which is its value in the dictionary
+        if node in oldToNew:
+            return oldToNew[node]
+        
+        # the recursive case
+        # we create a clone of the node we're looking at
+        # note that the creation of the copy of the node is incomplete because in addition to assigning a value to the node, we also need to assign its neighbors
+        copy = Node(node.val)
+        # we add the node we're looking at to the dictionary mapping old nodes to new nodes
+        oldToNew[node] = copy
+
+        # we loop through the neighbors of the node we're looking at
+        for neighbor in node.neighbors:
+            # we add the neighbors of the node we're looking at to the neighbors of the copy of the node we're looking at
+            copy.neighbors.append(dfs(neighbor))
+        # the depth-first-search returns the copy of the node we're looking at if it's not in the dictionary
+        return copy
+    
+    # we start the recursive function call with the input node
+    if node is not None:
+        return dfs(node)
+    # edge case is when the node is null
+    else:
+        return None
+            
+
+
 # =================================================================== #
 
 ### ARRAYS & HASHING ###
