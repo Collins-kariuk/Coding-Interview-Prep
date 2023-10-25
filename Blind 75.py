@@ -556,7 +556,7 @@ def numIslands(grid):
 
     def bfs(r, c):
         """
-        a breadth first search to check the number of islands by marking already visited islands so as
+        a breadth-first-search to check the number of islands by marking already visited islands so as
         to not forget which ones have already been visited
         """
         # bfs is an iterative algorithm that needs a DS, which is normally a queue
@@ -602,9 +602,10 @@ def numIslands(grid):
 
 # --------- 47. Clone Graph - Leetcode 133 - Medium ------------
 class Node:
-    def __init__(self, val = 0, neighbors = None):
+    def __init__(self, val=0, neighbors=None):
         self.val = val
         self.neighbors = neighbors if neighbors is not None else []
+
 
 def cloneGraph(node):
     # the gist of the solution is that we need to clone the graph recursively
@@ -621,7 +622,7 @@ def cloneGraph(node):
         # its clone, which is its value in the dictionary
         if node in oldToNew:
             return oldToNew[node]
-        
+
         # the recursive case
         # we create a clone of the node we're looking at
         # note that the creation of the copy of the node is incomplete because in addition to assigning a value to the node, we also need to assign its neighbors
@@ -635,14 +636,85 @@ def cloneGraph(node):
             copy.neighbors.append(dfs(neighbor))
         # the depth-first-search returns the copy of the node we're looking at if it's not in the dictionary
         return copy
-    
+
     # we start the recursive function call with the input node
     if node is not None:
         return dfs(node)
     # edge case is when the node is null
     else:
         return None
-            
+
+
+# --------- 48. Pacific Atlantic Water Flow - Leetcode 417 - Medium ------------
+def pacificAtlantic(heights):
+    # the gist of the solution is that we need to find the cells that can flow to both the Pacific and Atlantic oceans
+    # we do this by using 2 sets to keep track of the cells that can flow to the Pacific and Atlantic oceans, respectively
+    # we do this by using a depth-first-search to find the cells that can flow to the Pacific and Atlantic oceans, respectively
+    # we do this recursively until we've found all the cells that can flow to the Pacific and Atlantic oceans, respectively
+
+    # store the number of rows and columns in the input matrix
+    ROWS = len(heights)
+    COLS = len(heights[0])
+
+    # initialize the sets that'll store the cells that can flow to the Pacific and Atlantic oceans, respectively
+    pacific = set()
+    atlantic = set()
+
+    # the recursive function which is a depth-first-search that finds the cells that can flow to the Pacific and Atlantic
+    # oceans, respectively
+    def dfs(r, c, visit, prevHeight):
+        """
+        r: row
+        c: column
+        visit: set that'll store the cells that can flow to the Pacific and Atlantic oceans, respectively (depending on how
+        the dfs function is called outside of itself, i.e., visit is a generic name for pacific and atlantic)
+        prevHeight: the height of the previous cell
+        """
+        # the base case:
+        # - When we've already visited the cell
+        # - When the cell is out of bounds
+        # - When the height of the cell is less than the height of the previous cell. For this, notice that we're starting
+        # from the oceans and proceeding inwards inland, so our scenario changes from wishing that the neighboring cell have
+        # a smaller height value to wanting the neighboring cell to have a larger height value
+        if ((r, c) in visit or r < 0 or c < 0 or r == ROWS or c == COLS or heights[r][c] < prevHeight):
+            return
+        
+        # add the cell to the set that'll store the cells that can flow to the Pacific and Atlantic oceans, respectively
+        visit.add((r, c))
+        # call dfs on the neighboring cells (WEST, EAST, SOUTH, NORTH)
+        dfs(r + 1, c, visit, heights[r][c])
+        dfs(r - 1, c, visit, heights[r][c])
+        dfs(r, c + 1, visit, heights[r][c])
+        dfs(r, c - 1, visit, heights[r][c])
+
+    # we start the recursive function call with the input node
+    # notice that the first and last rows will border the Pacific and Atlantic oceans, respectively and so we can run a DFS
+    # from each cell in these rows to figure out which cells (inwardly) can flow to the Pacific and Atlantic oceans, respectively
+    for c in range(COLS):
+        # call the dfs function on the first and last rows
+        # since water can flow between cells of equal heights, the value for prevHeight is set to the height of the first
+        # and last cells in the first and last rows, respectively
+        dfs(0, c, pacific, heights[0][c])
+        dfs(ROWS - 1, c, atlantic, heights[ROWS - 1][c])
+
+    # also notice that the first column and last column will border the Pacific and Atlantic oceans, respectively and so we
+    # can run a DFS from each cell in these columns to figure out which cells (inwardly) can flow to the Pacific and Atlantic
+    # oceans, respectively
+    for r in range(ROWS):
+        dfs(r, 0, pacific, heights[r][0])
+        dfs(r, COLS - 1, atlantic, heights[r][COLS - 1])
+
+    # initialize the result
+    res = []
+
+    # loop through the cells in the input matrix
+    for r in range(ROWS):
+        for c in range(COLS):
+            # figure out which cells can flow to both the Pacific and Atlantic oceans, i.e., which (r, c) pairs are in both
+            # the pacific and atlantic sets and add them to the result
+            if (r, c) in pacific and (r, c) in atlantic:
+                res.append([r, c])
+    return res
 
 
 # =================================================================== #
