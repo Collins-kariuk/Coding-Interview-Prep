@@ -678,7 +678,7 @@ def pacificAtlantic(heights):
         # a smaller height value to wanting the neighboring cell to have a larger height value
         if ((r, c) in visit or r < 0 or c < 0 or r == ROWS or c == COLS or heights[r][c] < prevHeight):
             return
-        
+
         # add the cell to the set that'll store the cells that can flow to the Pacific and Atlantic oceans, respectively
         visit.add((r, c))
         # call dfs on the neighboring cells (WEST, EAST, SOUTH, NORTH)
@@ -715,6 +715,64 @@ def pacificAtlantic(heights):
             if (r, c) in pacific and (r, c) in atlantic:
                 res.append([r, c])
     return res
+
+# --------- 48. Course Schedule - Leetcode 207 - Medium ------------
+
+
+def canFinish(numCourses, prerequisites):
+    # the gist of the solution is that we need to check whether the courses can be completed
+    # we do this by using a dictionary to keep track of the prerequisites of each course
+    # we do this by using a set to keep track of the courses we've visited
+    # we do this recursively until we've checked whether the courses can be completed
+
+    # initialize a dictionary that'll store the prerequisites of each course
+    prereqMap = {i: [] for i in range(numCourses)}
+
+    # loop through the prerequisites and add them to the dictionary to the corresponding course
+    # that it's a prerequisite for
+    for crs, prereq in prerequisites:
+        prereqMap[crs].append(prereq)
+
+    # initialize a set that'll store the courses we've visited
+    visitSet = set()
+
+    # the recursive function which is a depth-first-search that checks whether the courses can be completed
+    def dfs(crs):
+        # if the course is in the set of courses we've visited, it means that we've encountered a cycle
+        # and so we return False
+        if crs in visitSet:
+            return False
+        # if the course has no prerequisites, we return True since it means that we've reached the end
+        # and we can take the course
+        if prereqMap[crs] == []:
+            return True
+
+        # add the course to the set of courses we've visited
+        # visit set contains all courses allong the current DFS path
+        visitSet.add(crs)
+        # run dfs on the prerequisites of the course
+        for prereq in prereqMap[crs]:
+            # if the prerequisites of the course cannot be completed, we return False immediately
+            # we don't need to check the other prerequisites of the course
+            if not dfs(prereq):
+                return False
+        # remove the course from the set of courses we've visited
+        # we've already checked the prerequisites of the course and so we can remove it from the set
+        # i.e., we've finished visiting the course
+        visitSet.remove(crs)
+        # we set the prerequisites of the course to be an empty list since we've already checked them
+        # and so we don't need to check them again
+        prereqMap[crs] = []
+        return True
+
+    # loop through the courses and run dfs on them
+    # the reason we need to loop through the courses is because there could be multiple courses
+    # that are not connected, i.e., separate disconnected directed graphs
+    for crs in range(numCourses):
+        # if one of the courses cannot be completed, we return False immediately
+        if not dfs(crs):
+            return False
+    return True
 
 
 # =================================================================== #
