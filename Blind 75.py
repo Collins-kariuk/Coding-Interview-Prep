@@ -1885,6 +1885,8 @@ def countPalindromes(s, l, r):
 # ------------------ 51. Decode Ways - Leetcode 91 - Medium ---------------------
 
 # recursive approach
+
+
 def numDecodingsRecursive(s):
     # time complexity: O(2^n)
     # space complexity: O(n)
@@ -1943,6 +1945,64 @@ def numDecodingsDynamic(s):
             dp[i] += dp[i + 2]
 
     return dp[0]
+
+
+# ------------------ 52. Maximum Product Subarray - Leetcode 152 - Medium ---------------------
+def maxProduct(nums):
+    # the gist of this problem is that we want to keep track of the maximum and minimum
+    # products at each index of the input array
+    # the reason why we want to keep track of the minimum product is because the minimum
+    # product can become the maximum product when it is multiplied by a negative number
+    # and vice versa
+    # the reason why we want to keep track of the maximum product is because the maximum
+    # product can become the minimum product when it is multiplied by a negative number
+    # and vice versa
+    # we want to keep track of the maximum product at each index because we want to
+    # return the maximum product of the whole array
+
+    # initialize the result - the reason why we're initializing the result to the maximum
+    # value of the input array is because the input array could be all negative numbers
+    # and so the maximum product would be the smallest negative number
+    res = max(nums)
+    # initialize the current minimum product and current maximum product to be 1
+    currentMin = 1
+    currentMax = 1
+
+    # loop through the input array
+    for n in nums:
+        # the edge case is when the number we're looking at is 0
+        # when the number we're looking at is 0, we want to reset the current minimum
+        # and current maximum products to 1 because we want to start over
+        # the reason why we're not resetting the res variable to 0 is because the res
+        # variable could be the maximum value of the input array and so we don't want
+        # to reset it to 0
+        if n == 0:
+            currentMin = 1
+            currentMax = 1
+            continue
+        # store the current maximum product in a temporary variable because we want to
+        # use it to calculate the current minimum product
+        temp = currentMax
+        # the current maximum product is the maximum of the following:
+        # - the current number; if the current number is greater than the current maximum
+        # product, then the current maximum product will be the current number
+        # - the current number multiplied by the current maximum product
+        # - the current number multiplied by the current minimum product; if the current
+        # number is negative, then the current minimum product will be negative and so
+        # multiplying the current number by the current minimum product will give us the
+        # current maximum product
+        currentMax = max(n * currentMax, n * currentMin, n)
+        # the current minimum product is the minimum of the following:
+        # - the current number; if the current number is less than the current minimum
+        # product, then the current minimum product will be the current number
+        # - the current number multiplied by the current maximum product; if the current
+        # number is negative, then the current maximum product will be negative and so
+        # multiplying the current number by the current maximum product will give us the
+        # current minimum product
+        currentMin = min(n * temp, n * currentMin, n)
+        res = max(res, currentMax)
+
+    return res
 
 
 # =================================================================== #
