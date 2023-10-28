@@ -1882,6 +1882,68 @@ def countPalindromes(s, l, r):
         r += 1
     return res
 
+# ------------------ 51. Decode Ways - Leetcode 91 - Medium ---------------------
+
+# recursive approach
+def numDecodingsRecursive(s):
+    # time complexity: O(2^n)
+    # space complexity: O(n)
+    # this is the base case when the input string is empty
+    dp = {len(s): 1}
+
+    # i represents the index of the input string we're currently at
+    def dfs(i):
+        # base case 2
+        # we can return the number of ways to decode the input string when we've
+        # reached the end of the input string or if i has already been calculated/cached in dp
+        if i in dp:
+            return dp[i]
+        # base case 3
+        # we cannot decode an input string that starts with a 0
+        if s[i] == '0':
+            return 0
+
+        # recursive case
+        # we want to check the number of ways to decode the input string when we
+        # include the current character we're looking at and when we DON'T include
+        # the current character we're looking at
+        res = dfs(i + 1)
+        # when we can include the current character we're looking at
+        # we want to check if we can include the next character as well
+        # digits ranging from 10 to 19 and 20 to 26 (which is why we're checking whether
+        # s[i + 1] in '0123456') are valid
+
+        # basically, we run dfs on i + 1 when we're checking a single character only
+        # say, for instance, we're looking at s = '123', dfs(i + 1) essentially asks, looking at i = 0,
+        # what are the number of ways to decode the input string '23'? which is 2
+        # dfs(i + 2) essentially asks, looking at i = 0 (i.e., the number 12 given by the constraints
+        # in the if statement below), what are the number of ways to decode the input string '3'? which is 1
+        if (i + 1 < len(s) and (s[i] == '1' or (s[i] == '2' and s[i + 1] in '0123456'))):
+            res += dfs(i + 2)
+
+        # cache the result
+        dp[i] = res
+        return res
+
+    return dfs(0)
+
+# dynamic programming approach
+
+
+def numDecodingsDynamic(s):
+    dp = {len(s): 1}
+
+    for i in range(len(s) - 1, -1, -1):
+        if s[i] == '0':
+            dp[i] = 0
+        else:
+            dp[i] = dp[i + 1]
+
+        if (i + 1 < len(s) and (s[i] == '1' or (s[i] == '2' and s[i + 1] in '0123456'))):
+            dp[i] += dp[i + 2]
+
+    return dp[0]
+
 
 # =================================================================== #
 ### BACKTRACKING ###
@@ -1894,7 +1956,7 @@ def combinationSum(candidates, target):
     res = []
     # a Depth First Search that we'll use to traverse the state space tree
     # i maintains the candidates we're allowed to choose from; remember res sublists
-    # like [2,2,3] and [2,3,2] are not allowed since they're essentially the same;
+    # like [2, 2, 3] and [2, 3, 2] are not allowed since they're essentially the same;
     # order matters
     # cur keeps track of the values we've currently added to the combination
     # we also want to be maintaining the total sum of the combination list because if
