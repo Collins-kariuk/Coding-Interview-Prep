@@ -1841,6 +1841,48 @@ def longestPalindrome(s):
 
         return res
 
+
+# ------------------ 50. Palindromic Substrings - Leetcode 647 - Medium ---------------------
+def countSubstrings(s):
+    # O(n^2) time complexity
+    # the overall result
+    res = 0
+
+    # loop through the input string
+    for i in range(len(s)):
+        # odd length palindromes implementation
+        l = i
+        r = i
+        # count the number of odd length palindromes
+        res += countPalindromes(s, l, r)
+
+        # even length palindromes implementation
+        l = i
+        r = i + 1
+        # add the number of even length palindromes to the odd length palindromes already
+        # calculated above
+        res += countPalindromes(s, l, r)
+
+    return res
+
+
+def countPalindromes(s, l, r):
+    """
+    Helper function that counts the number of palindromes given the indices of the
+    left and right pointers
+    """
+    # the individual result depending on whether we call this function on the odd or even
+    # length implementation
+    res = 0
+    # starting from the middle and working our way outwards, check whether substring is
+    # a palindrome
+    while l >= 0 and r < len(s) and s[l] == s[r]:
+        res += 1
+        l -= 1
+        r += 1
+    return res
+
+
 # =================================================================== #
 ### BACKTRACKING ###
 
