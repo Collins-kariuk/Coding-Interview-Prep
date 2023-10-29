@@ -179,6 +179,7 @@ def addTwoNumbers(l1, l2):
         val = v1 + v2 + carry
         carry = val // 10
 
+        # update val
         val = val % 10
 
         cur.next = ListNode(val)
@@ -218,3 +219,23 @@ def romanToInt(s):
     # notice that we don't need to check if the last roman numeral is smaller than the
     # second last roman numeral because the for loop will stop at the second last roman numeral
     return totalInt + romanToInt[s[-1]]
+
+
+# ---------- 7. Longest Common Prefix - Leetcode 14 - Easy -------------
+def longestCommonPrefix(inputList):
+    # if the list is empty, return an empty string
+    res = ""
+    # iterate through the characters of the first string
+    # notice that we can iterate through the characters of the first string because
+    # the longest common prefix of the list is the same as the longest common prefix of the first string
+    # and the longest common prefix is limited to the length of the shortest string too
+    for i in range(len(inputList[0])):
+        # iterate through the strings in the list
+        for string in inputList:
+            # if the index is out of range or the character is not the same, return the result
+            if i >= len(string) or string[i] != inputList[0][i]:
+                return res
+        # if the character is the same for all strings, append the character to the result
+        res += inputList[0][i]
+    # return the result
+    return res
