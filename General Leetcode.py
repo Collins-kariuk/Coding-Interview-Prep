@@ -13,7 +13,7 @@ def findMedianSortedArrays(nums1, nums2):
     # if A is longer than B, swap them
     if len(B) < len(A):
         A, B = B, A
-    
+
     # perform binary search on A
     l, r = 0, len(A) - 1
     while True:
@@ -55,6 +55,8 @@ def findMedianSortedArrays(nums1, nums2):
 # 1. Open brackets must be closed by the same type of brackets.
 # 2. Open brackets must be closed in the correct order.
 # Note that an empty string is also considered valid.
+
+
 def isValid(s):
     # stack is a list that stores the opening brackets
     stack = []
@@ -81,6 +83,8 @@ def isValid(s):
 
 # ---------- 3. Valid Anagram - Leetcode 242 - Easy -------------
 # Given two strings s and t , write a function to determine if t is an anagram of s.
+
+
 def isAnagram(s, t):
     # the advantage of using a dictionary is that it is easy to keep track of the number of occurences of each character
     # moreover, the advantage of using one dictionary is the reduction of space complexity
@@ -110,11 +114,13 @@ def isAnagram(s, t):
 # The encoding rule is: k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times.
 # Note that k is guaranteed to be a positive integer.
 # You may assume that the input string is always valid; No extra white spaces, square brackets are well-formed, etc.
+
+
 def decodeString(s):
     # stack is a list that stores the characters
     # the advantage of using a stack is that it is easy to keep track of the characters
     stack = []
-    
+
     # iterate through the string
     for i in range(len(s)):
         # if the character is not ']', append it to the stack
@@ -143,3 +149,50 @@ def decodeString(s):
             stack.append(substring * int(k))
     # return the decoded string
     return ''.join(stack)
+
+
+# ---------- 5. Add Two Numbers - Leetcode 2 - Medium -------------
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def addTwoNumbers(l1, l2):
+    # dummy is a dummy node
+    dummy = ListNode(0)
+    # cur is a pointer that points to the current node
+    cur = dummy
+    carry = 0
+
+    while l1 or l2 or carry > 0:
+        if l1 is None:
+            v1 = 0
+        else:
+            v1 = l1.val
+
+        if l2 is None:
+            v2 = 0
+        else:
+            v2 = l2.val
+
+        # new digit
+        val = v1 + v2 + carry
+        carry = val // 10
+
+        val = val % 10
+
+        cur.next = ListNode(val)
+
+        # update pointers
+        cur = cur.next
+        if l1 is None:
+            l1 = None
+        else:
+            l1 = l1.next
+
+        if l2 is None:
+            l2 = None
+        else:
+            l2 = l2.next
+
+    return dummy.next
