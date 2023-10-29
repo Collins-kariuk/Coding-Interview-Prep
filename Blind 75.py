@@ -1822,6 +1822,7 @@ def longestPalindrome(s):
     for i in range(len(s)):
         # odd length
         # we want to check the positions to the left and right of the position we're
+        # currently at
         l, r = i, i
         while l >= 0 and r < len(s) and s[l] == s[r]:
             if (r - l + 1) > resLen:
@@ -2005,6 +2006,8 @@ def maxProduct(nums):
     return res
 
 # ------------------ 53. Coin Change - Leetcode 322 - Medium ---------------------
+
+
 def coinChange(coins, amount):
     # we want to keep track of the minimum number of coins needed to make up the amount
     # at each index of the dp array
@@ -2038,7 +2041,7 @@ def coinChange(coins, amount):
                 # index of the dp array that is the difference between the current amount
                 # and the current coin
                 dp[a] = min(dp[a], 1 + dp[a - coin])
- 
+
     # when the amount is greater than the maximum number of coins needed to make up the
     # amount, then we return -1, it means that the amount cannot be made up by the coins
     # in the coins array and so we return -1
@@ -2046,8 +2049,6 @@ def coinChange(coins, amount):
         return dp[amount]
     else:
         return -1
-
-
 
 
 # =================================================================== #
