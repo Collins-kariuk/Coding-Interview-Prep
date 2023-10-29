@@ -1405,11 +1405,11 @@ def threeSum(nums):
     # loop through the numbers
     for i in range(len(nums)):
         # when the number is greater than 0, we can safely break out of the loop
-        # because we know that the numbers that follow will be greater than 0
+        # because we know that the numbers that follow will be GREATER THAN 0
         # and so the sum of 3 numbers will never be 0
         if nums[i] > 0:
             break
-        # when the number is equal to the number before it, we can safely skip it
+        # when the number is equal to the number before it, we can safely SKIP IT
         # because we've already considered it in a previous iteration
         if i > 0 and nums[i] == nums[i - 1]:
             continue
