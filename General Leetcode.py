@@ -17,15 +17,15 @@ def findMedianSortedArrays(nums1, nums2):
     # perform binary search on A
     l, r = 0, len(A) - 1
     while True:
-        # i is the index of the middle element of A
+        # i is the index of the MIDDLE ELEMENT OF A
         i = (l + r) // 2
-        # j is the index of the middle element of B
+        # j is the index of the MIDDLE ELEMENT OF B
         # partition A and B such that the number of elements in the left partition
         # is equal to the number of elements in the right partition
         j = half - i - 2
 
-        # Aleft is the left element of A
-        # Aright is the right element of A
+        # Aleft is the left element of A (the rightmost element on the left of the partition)
+        # Aright is the right element of A (the leftmost element on the right of the partition)
         Aleft = A[i] if i >= 0 else float("-infinity")
         Aright = A[i + 1] if (i + 1) < len(A) else float("infinity")
         # Bleft is the left element of B
@@ -41,8 +41,7 @@ def findMedianSortedArrays(nums1, nums2):
             # if the total length is even, return the average of the middle two elements
             return (max(Aleft, Bleft) + min(Aright, Bright)) / 2
         # if the partition is not correct, move the partition
-        # in this case, the left partition of A is too big
-        # decrease A's left partition
+        # in this case, the left partition of A is too big decrease A's left partition
         elif Aleft > Bright:
             r = i - 1
         else:
