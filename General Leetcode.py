@@ -157,6 +157,7 @@ class ListNode:
         self.val = val
         self.next = next
 
+
 def addTwoNumbers(l1, l2):
     # dummy is a dummy node
     dummy = ListNode(0)
@@ -196,3 +197,25 @@ def addTwoNumbers(l1, l2):
             l2 = l2.next
 
     return dummy.next
+
+
+# ---------- 6. Roman to Integer - Leetcode 13 - Easy -------------
+def romanToInt(s):
+    # romanToInt is a dictionary that stores the integer value of each roman numeral
+    romanToInt = {'I': 1, 'V': 5, 'X': 10,
+                  'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+    # totalInt is the total integer value of the roman numeral
+    totalInt = 0
+    # iterate through the string
+    for i in range(len(s) - 1):
+        # if the current roman numeral is smaller than the next roman numeral, subtract
+        # the current roman numeral from the total integer value otherwise, add the current
+        # roman numeral to the total integer value
+        if i + 1 < len(s) and romanToInt[s[i]] < romanToInt[s[i + 1]]:
+            totalInt -= romanToInt[s[i]]
+        else:
+            totalInt += romanToInt[s[i]]
+    # add the last roman numeral to the total integer value
+    # notice that we don't need to check if the last roman numeral is smaller than the
+    # second last roman numeral because the for loop will stop at the second last roman numeral
+    return totalInt + romanToInt[s[-1]]
