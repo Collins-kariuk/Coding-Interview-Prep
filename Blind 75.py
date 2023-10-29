@@ -2004,6 +2004,51 @@ def maxProduct(nums):
 
     return res
 
+# ------------------ 53. Coin Change - Leetcode 322 - Medium ---------------------
+def coinChange(coins, amount):
+    # we want to keep track of the minimum number of coins needed to make up the amount
+    # at each index of the dp array
+    # the reason why we're initializing the dp array to amount + 1 is because the maximum
+    # number of coins needed to make up the amount is amount
+
+    # basically, we want to keep track of the minimum number of coins needed to make up
+    # the amount at each index of the dp array and we are going to use the coins array
+    # to calculate the minimum number of coins needed to make up the amount at each index
+    # of the dp array via a bottom up approach
+    dp = [amount + 1] * (amount + 1)
+
+    # the minimum number of coins needed to make up the amount 0 is 0
+    dp[0] = 0
+
+    # loop through the dp array
+    for a in range(1, amount + 1):
+        # loop through the coins array for each amount
+        for coin in coins:
+            # when the coin is less than or equal to the amount
+            # we want to check the minimum number of coins needed to make up the amount
+            # at each index of the dp array
+            # we need a - coin to be greater than or equal to 0 because we don't want to
+            # be accessing negative indices of the dp array
+            if a - coin >= 0:
+                # the minimum number of coins needed to make up the amount at each index
+                # of the dp array is the minimum of the following:
+                # - the current minimum number of coins needed to make up the amount at
+                # the current index of the dp array
+                # - 1 + the minimum number of coins needed to make up the amount at the
+                # index of the dp array that is the difference between the current amount
+                # and the current coin
+                dp[a] = min(dp[a], 1 + dp[a - coin])
+ 
+    # when the amount is greater than the maximum number of coins needed to make up the
+    # amount, then we return -1, it means that the amount cannot be made up by the coins
+    # in the coins array and so we return -1
+    if dp[amount] != amount + 1:
+        return dp[amount]
+    else:
+        return -1
+
+
+
 
 # =================================================================== #
 ### BACKTRACKING ###
