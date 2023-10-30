@@ -239,3 +239,34 @@ def longestCommonPrefix(inputList):
         res += inputList[0][i]
     # return the result
     return res
+
+
+# ---------- 8. Letter Combinations of a Phone Number - Leetcode 17 - Medium -------------
+def letterCombinations(digits):
+    # initialise the results list
+    res = []
+    # create a map of the numbers 2-9 to the digits under them
+    numberDigit = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', '6': 'mno',
+                   '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
+
+    # we are going to use a backtracking algorithm. The parameter i is going to tell us which character in our digit
+    # string we are currently at and curStr (current string) which refers to the current string we're building.
+    def backtrack(i, curStr):
+        # the base case. The length of our current string is supposed to be equal to the length of the digits string
+        # and if it is we just append that string to the res list. Another example of the base case would be if i >=
+        # len(digits) since curStr and digits are supposed to be of the same length.
+        if len(curStr) == len(digits):
+            res.append(curStr)
+            return
+        # loop through the corresponding character values of each digit in digits. Call backtrack once more,
+        # this time adding the char to our current string and adding one to i to move forward to the next digit.
+        # Adding 1 to i means that we don't create combinations of characters from the same digit like with '2',
+        # 'aa'. Adding c to our current string ensures that the base case will eventually be reached too.
+        for c in numberDigit[digits[i]]:
+            backtrack(i + 1, curStr + c)
+
+    # We need digits to be of non-zero length
+    if len(digits) != 0:
+        backtrack(0, "")
+    # return the result
+    return res
