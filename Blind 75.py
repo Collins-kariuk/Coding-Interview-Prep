@@ -1476,7 +1476,7 @@ def isPalindrome(self, s: str) -> bool:
             l += 1
         while l < r and not self.alphanum(s[r]):
             r -= 1
-        # check whether the characters at the left and right pointers are equal 
+        # check whether the characters at the left and right pointers are equal
         # return False immediately if they are not
         if s[l].lower() != s[r].lower():
             return False
@@ -1594,10 +1594,28 @@ def isValid(s):
     return len(stack) == 0
 
 
+# another implementation using no hashmap
+def isValid(s):
+    stack = []
+    for c in s:
+        if c == '(' or c == '[' or c == '{':
+            stack.append(c)
+        elif c == ')' and len(stack) > 0 and stack[-1] == '(':
+            stack.pop()
+        elif c == ']' and len(stack) > 0 and stack[-1] == '[':
+            stack.pop()
+        elif c == '}' and len(stack) > 0 and stack[-1] == '{':
+            stack.pop()
+        else:
+            return False
+    return len(stack) == 0
+
 # ======================================================================================== #
 
 ### TRIES ###
 # --------- 15. Implement Trie (Prefix Tree) - Leetcode 208 - Medium ------------
+
+
 class TrieNode:
     # initialize the trie node
     # you can't have a trie or solve a trie-related question without first having
