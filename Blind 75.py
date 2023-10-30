@@ -953,16 +953,18 @@ def groupAnagrams(strs):
 
 # --------- 37. Product of Array Except Self - Leetcode 238 - Medium ------------
 def productExceptSelf(nums):
-    # the gist of the solution is that we need to calculate the product of all
-    # the numbers to the left of a number and the product of all the numbers
-    # to the right of a number
-    # we can do this by using 2 arrays, one that stores the product of all the
-    # numbers to the left of a number and another that stores the product of
-    # all the numbers to the right of a number
-    # we then multiply the corresponding elements in the 2 arrays to get the
-    # product of all the numbers except the number at the current index
+    """
+    the gist of the solution is that we need to calculate the product of all
+    the numbers to the left of a number and the product of all the numbers
+    to the right of a number
+    we can do this by using 2 arrays, one that stores the product of all the
+    numbers to the left of a number and another that stores the product of
+    all the numbers to the right of a number
+    we then multiply the corresponding elements in the 2 arrays to get the
+    product of all the numbers except the number at the current index
+    """
 
-    # initialize the 2 prefix and postfix arrays
+    # initialize the prefix and postfix arrays
     pre = [1]
     post = [1]
 
@@ -971,7 +973,7 @@ def productExceptSelf(nums):
     for i in range(len(nums)):
         preMult *= nums[i]
         pre.append(preMult)
-    # remove the last element since it's just a 1
+    # we remove the last element since it's not needed in the calculation
     pre.pop()
 
     # calculate the postfix array
