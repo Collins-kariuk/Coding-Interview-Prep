@@ -799,6 +799,16 @@ def containsDuplicate(nums):
     # nums to have a duplicate
     return False
 
+# using a set
+def containsDuplicate(nums):
+    hashset = set()
+
+    for n in nums:
+        if n in hashset:
+            return True
+        hashset.add(n)
+    return False
+
 # ---------------- 9. Two Sum - Leetcode 1 - Easy -------------------
 
 
