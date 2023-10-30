@@ -800,6 +800,8 @@ def containsDuplicate(nums):
     return False
 
 # using a set
+
+
 def containsDuplicate(nums):
     hashset = set()
 
@@ -895,6 +897,22 @@ def isAnagram(s, t):
     sDict = dictify(s)
     tDict = dictify(t)
     return sDict == tDict
+
+
+def isAnagram(s, t):
+    # if the lengths of the strings are not equal, they can't be anagrams
+    if len(s) != len(t):
+        return False
+
+    # initialize 2 dictionaries that'll store the number of occurrences of each
+    # character in the strings
+    countS, countT = {}, {}
+
+    # loop through the strings and count the number of occurrences of each character
+    for i in range(len(s)):
+        countS[s[i]] = 1 + countS.get(s[i], 0)
+        countT[t[i]] = 1 + countT.get(t[i], 0)
+    return countS == countT
 
 # --------- 28. Group Anagrams - Leetcode 49 - Medium ------------
 
