@@ -850,6 +850,11 @@ def topKFrequent(nums, k):
     # dictionary containing key:value pairs of the frequency of the occurrences of numbers
     # in nums
     count = dictify(nums)
+
+    # another way to initialize the dictionary
+    # for n in nums:
+    #         count[n] = 1 + count.get(n, 0)
+
     # our "bucket"
     # essentially, frequencies acts as a measure of the question, "how many elements occur
     # i number of times?" where i is dictated by the length of nums
@@ -861,6 +866,7 @@ def topKFrequent(nums, k):
     # be a good use of memory since the largest number in nums could be quite a large number,
     # say 1,000,000
     frequencies = [[] for i in range(len(nums) + 1)]
+    # frequencies = [[]] * (len(nums) + 1)
 
     # loop through the numbers and their respective counts in the dictionary
     for num, count in count.items():
