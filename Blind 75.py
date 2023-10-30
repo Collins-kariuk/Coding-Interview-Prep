@@ -1552,7 +1552,7 @@ def threeSum(nums):
 ### STACK ###
 # ---------- 13. Valid Parentheses - Leetcode 20 - Easy -------------
 def isValid(s):
-    # stack to store potentially matching open parens
+    # stack to store potentially matching open parentheses
     stack = []
     # dictionary with closing to open parentheses as key:val pairs
     closeToOpen = {')': '(', ']': '[', '}': '{'}
