@@ -1439,21 +1439,17 @@ def maxArea(height):
 
 
 def isPalindrome(s):
-    # variable that'll store the reverse of input string
+    # rev stores the reverse of the input string
     rev = ""
-    # adding the characters in s in reverse to rev
-    for c in s:
-        c = c.lower()
-        if c.isalnum():
-            rev = c + rev
-    # variable that'll store input string but stripped off all
-    # non-alphanumeric characters
+    # sAlNum stores the alphanumeric characters of the input string
     sAlNum = ""
     for c in s:
         c = c.lower()
         if c.isalnum():
+            rev = c + rev
             sAlNum += c
-    # if palindrome, then will return true
+    # return whether the reverse of the alphanumeric characters of the input string
+    # is equal to the alphanumeric characters of the input string
     return rev == sAlNum
 
 # One could make their own alphanumeric function utilizing the ord function
@@ -1466,6 +1462,27 @@ def alphanum(c):
         or ord("a") <= ord(c) <= ord("z")
         or ord("0") <= ord(c) <= ord("9")
     )
+
+# a true two pointer solution
+
+
+def isPalindrome(self, s: str) -> bool:
+    l = 0
+    r = len(s) - 1
+
+    while l < r:
+        # skip non-alphanumeric characters
+        while l < r and not self.alphanum(s[l]):
+            l += 1
+        while l < r and not self.alphanum(s[r]):
+            r -= 1
+        # check whether the characters at the left and right pointers are equal 
+        # return False immediately if they are not
+        if s[l].lower() != s[r].lower():
+            return False
+        l += 1
+        r -= 1
+    return True
 
 
 # ---------- 39. 3Sum - Leetcode 15 - Medium -------------
