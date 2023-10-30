@@ -270,3 +270,17 @@ def letterCombinations(digits):
         backtrack(0, "")
     # return the result
     return res
+
+# ---------- 9. Two Sum II - Input Array is Sorted - Leetcode 167 - Medium -------------
+def twoSum(numbers, target):
+    l = 0
+    r = len(numbers) - 1
+
+    while l < r:
+        currentSum = numbers[l] + numbers[r]
+        if currentSum == target:
+            return [l + 1, r + 1]
+        elif currentSum < target:
+            l += 1
+        else:
+            r -= 1
