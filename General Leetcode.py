@@ -289,4 +289,75 @@ def twoSum(numbers, target):
             l += 1
         else:
             r -= 1
-            
+
+
+# ---------- 10. 4Sum - Leetcode 18 - Medium -------------
+def fourSum(nums, target):
+    # sort the array
+    nums.sort()
+    # initialise the result list
+    res = []
+    # initialise the quadruplets list which will store the current quadruplet
+    quadruplets = []
+
+    # kSum is a recursive function that finds the kSum of the array
+    def kSum(k, start, target):
+        """
+        @param k: the number of elements in the sum -
+        notice that k is updated in each recursive call as it's decreased by 1
+        @param start: the starting index of the array
+        @param target: the target sum -
+        notice that the target sum is updated in each recursive call
+        """
+
+        # the recursive case
+        if k != 2:
+            # iterate through the array until len(nums) - k + 1
+            # we do this to ensure that there are enough elements in the array to form a kSum
+            # for instance, if k = 4, then when we find the first number (nums[i]) in the quadruplet,
+            # we need to find three more numbers in the array to form a quadruplet
+            for i in range(start, len(nums) - k + 1):
+                # we don't want any duplicates in the quadruplets list so we skip the duplicates in the array
+                # we also need to check that i > start because if i == start, then we are at the first index of the array
+                # and we don't want to check if the previous element is a duplicate because there is no previous element
+                if i > start and nums[i] == nums[i - 1]:
+                    continue
+                # append the current number to the quadruplets list
+                quadruplets.append(nums[i])
+                # recursively call kSum with k - 1, i + 1 and target - nums[i], effectively moving it down to the next
+                # number in the array
+                kSum(k - 1, i + 1, target - nums[i])
+                # pop the last element of the quadruplets list because we want to find the next quadruplet with the first
+                # digit in the quadruplet potentially being different that the digit at start, i.e., by popping we're
+                # giving other digits in nums a chance to be the first digit in the quadruplet
+                quadruplets.pop()
+
+        # the base case
+        l = start
+        r = len(nums) - 1
+
+        # we've figured out the first two terms of the quadruplet and now the kSum has hit the base case and
+        # reduces to Two Sum II but with a slight modification
+        while l < r:
+            # if the current sum is equal to the target, append the two values at the two pointers to the
+            # quadruplets list
+            currentSum = nums[l] + nums[r]
+            if currentSum == target:
+                res.append(quadruplets[:] + [nums[l], nums[r]])
+                # it does not matter which pointer we update, as long as we update one of them, it is fine
+                # since we don't want to end up with the same doublet
+                l += 1
+                while l < r and nums[l] == nums[l - 1]:
+                    l += 1
+            # if the current sum is less than the target, increase the left pointer since we want the sum to
+            # be bigger and increase to target
+            elif currentSum < target:
+                l += 1
+            # if the current sum is greater than the target, decrease the right pointer since we want the
+            # sum to be smaller and decrease to target
+            else:
+                r -= 1
+    # call kSum
+    # initially start starts at the first index of the array (0)
+    kSum(4, 0, target)
+    return res
