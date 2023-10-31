@@ -127,14 +127,15 @@ def hasCycle(head):
 # ----------------- 19. Reorder List - Leetcode 143 - Medium --------------------
 def reorderList(head):
     """
-    Do not return anything, modify head in-place instead.
+    Do not return anything, modify head in-place instead
+    the gist of the implementation is that we need to split the input linked list
+    into 2 halves
+    since we're alternating, we need pointers to heads of the 2 halves, the only
+    challenge is that we need to reverse the second half of the linked list for
+    easier reordering as we can't "go back" in a singly linked list
     """
+
     # find the middle point of the linked list
-    # the gist of the implementation is that we need to split the input linked list
-    # into 2 halves
-    # since we're alternating, we need pointers to heads of the 2 halves, the only
-    # challenge is that we need to reverse the second halve of the linked list for
-    # easier reordering as we can't "go back" in a singly linked list
     slow = head
     fast = head.next
 
