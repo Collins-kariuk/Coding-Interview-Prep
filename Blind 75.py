@@ -188,9 +188,11 @@ def reorderList(head):
 
 # ------------- 42. Merge k Sorted Lists - Leetcode 23 - Hard -----------------
 def mergeKLists(lists):
-    # the gist of the solution is that we merge the lists 2 at a time
-    # we do this until we have one merged list
-    # divide and conquer
+    """
+    the gist of the solution is that we merge the lists 2 at a time
+    we do this until we have one merged list
+    divide and conquer
+    """
 
     # the edge cases
     # if the input list is empty, we return None
@@ -210,8 +212,8 @@ def mergeKLists(lists):
             if i + 1 < len(lists):
                 l2 = lists[i + 1]
             else:
-                # if it's not in bounds, we just set the second list to be None
-                # which is still fine since we can merge a list with None
+                # if it's not in bounds, we just set the second list to be None which is
+                # still fine since we can merge a list with None
                 l2 = None
             # we append the merged lists to the list that'll store the merged lists
             mergedLists.append(mergeTwoLists(l1, l2))
