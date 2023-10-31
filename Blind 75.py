@@ -14,7 +14,7 @@ class ListNode:
 
 def removeNthFromEnd(head, n):
     # Create a dummy node and attach it to the head of the input list.
-    dummy = ListNode(val = 0, next = head)
+    dummy = ListNode(val=0, next=head)
 
     # Initialize 2 pointers, first and second, to point to the dummy node.
     first = dummy
@@ -99,11 +99,14 @@ def mergeTwoLists(l1, l2):
 
 
 def hasCycle(head):
+    """
+    the gist is that one pointer advances faster than the other and if the linked
+    list has a cycle, the fast one will eventually overlap the slow one and when
+    that happens is when we know the pointer has a cycle
+    we initially set the 2 pointers at the head of the input linked list
+    """
+
     # using slow and fast pointers
-    # the gist is that one pointer advances faster than the other and if the linked
-    # list has a cycle, the fast one will eventually overlap the slow one and when
-    # that happens is when we know the pointer has a cycle
-    # we initially set the 2 pointers at the head of the input linked list
     slow = head
     fast = head
 
