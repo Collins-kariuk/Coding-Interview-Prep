@@ -1336,10 +1336,9 @@ def findMin(nums):
 
     # continue looping as long left and right pointers don't cross each other
     while l <= r:
-        # if the number at the left pointer is less than the one at
-        # the right pointer, it means that nums is already sorted and
-        # we can safely return the number at the left pointer or the
-        # current minimum, whichever is smaller
+        # if the number at the left pointer is less than the one at the right pointer,
+        # it means that nums is already sorted and we can safely return the number at
+        # the left pointer or the current minimum, whichever is smaller
         if nums[l] < nums[r]:
             res = min(res, nums[l])
             break
