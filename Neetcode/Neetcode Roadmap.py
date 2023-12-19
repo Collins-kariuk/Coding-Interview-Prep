@@ -79,3 +79,37 @@ def twoSum(nums, target):
             return [i, twoSumDict[num2]]
         else:
             twoSumDict[nums[i]] = i
+
+
+# --------- 4. Group Anagrams - Leetcode 49 - Medium ------------
+def groupAnagrams(strs):
+    """
+    COMPLEXITY:
+    The space complexity of the groupAnagrams function is O(n), where n is the length of the input list strs.
+    This is because the function uses a dictionary, anagramDict, to store the anagrams as keys and their corresponding indices as values.
+    The size of the dictionary depends on the number of unique anagrams in strs, which can be at most n.
+
+    The time complexity of the groupAnagrams function is O(n), where n is the length of the input list strs.
+    This is because the function iterates over each element in strs once, performing constant-time operations such as dictionary lookups and updates.
+    The worst-case scenario occurs when all the strings in strs are anagrams of each other, resulting in a linear time complexity.
+
+    Therefore, the space complexity and time complexity of the groupAnagrams function are both O(n).
+    """
+
+    # The purpose of the anagramDict dictionary is to store anagrams.
+    # The dictionary is used to store words as KEYS and their corresponding anagrams as VALUES.
+    # This allows for efficient lookup and retrieval of anagrams based on a given word.
+    anagramDict = {}
+    for s in strs:
+        # sorts the string
+        # you first need to convert the string to a list of characters, sort the list, and then convert the sorted list back to a string.
+        sortedS = "".join(sorted(s))
+
+        # If sortedS is already a key in anagramDict, the code appends the value of another variable s to the list associated with that key.
+        # If sortedS is not a key in anagramDict, the code creates a new key-value pair in anagramDict, where the key is sortedS and the value is a list containing only the value of s.
+        if sortedS in anagramDict:
+            anagramDict[sortedS].append(s)
+        else:
+            anagramDict[sortedS] = [s]
+    # returns a list of all the values in anagramDict.
+    return list(anagramDict.values())
