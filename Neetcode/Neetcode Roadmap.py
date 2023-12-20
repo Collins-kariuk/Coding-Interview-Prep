@@ -89,11 +89,12 @@ def groupAnagrams(strs):
     This is because the function uses a dictionary, anagramDict, to store the anagrams as keys and their corresponding indices as values.
     The size of the dictionary depends on the number of unique anagrams in strs, which can be at most n.
 
-    The time complexity of the groupAnagrams function is O(n), where n is the length of the input list strs.
-    This is because the function iterates over each element in strs once, performing constant-time operations such as dictionary lookups and updates.
-    The worst-case scenario occurs when all the strings in strs are anagrams of each other, resulting in a linear time complexity.
-
-    Therefore, the space complexity and time complexity of the groupAnagrams function are both O(n).
+    The time complexity of the sorted function is O(n log n), where n is the length of the input string s.
+    This is because the sorted function uses a SORTING algorithm that has a time complexity of O(n log n) in the average case.
+    Therefore, the overall time complexity of the groupAnagrams function is O(n * m log m), where n is the LENGTH OF THE INPUT LIST strs and
+    m is the MAXIMUM LENGTH OF A STRING in strs.
+    This is because the function iterates over each element in strs and performs the sorted function on each string, which has a time complexity
+    of O(m log m).
     """
 
     # The purpose of the anagramDict dictionary is to store anagrams.
@@ -113,3 +114,44 @@ def groupAnagrams(strs):
             anagramDict[sortedS] = [s]
     # returns a list of all the values in anagramDict.
     return list(anagramDict.values())
+
+
+# --------- 5. Top K Frequent Elements - Leetcode 347 - Medium ------------
+def topKFrequent(nums, k):
+    """
+    COMPLEXITY:
+    The space complexity of the topKFrequent function is O(n), where n is the length of the input list nums.
+    This is because the function uses a dictionary, numDict, to store the elements of nums as keys and their corresponding frequencies as values.
+    The size of the dictionary depends on the number of unique elements in nums, which can be at most n.
+
+    The time complexity of the topKFrequent function is O(n), where n is the length of the input list nums.
+    This is because the function iterates over each element in nums once, performing constant-time operations such as dictionary lookups and updates.
+    The worst-case scenario occurs when all the elements in nums are unique, resulting in a linear time complexity.
+
+    Therefore, the space complexity and time complexity of the topKFrequent function are both O(n).
+    """
+    numDict = {}
+    for num in nums:
+        if num in numDict:
+            numDict[num] += 1
+        else:
+            numDict[num] = 1
+
+    # a modified version of bucket sort
+    frequencies = [[] for i in range(len(nums) + 1)]
+
+    # frequencies is a list of lists, where each inner list contains all the numbers that occur with a certain frequency.
+    # For example, if the number 2 occurs 3 times in nums, then frequencies[3] will contain the number 2.
+    for number, frequencyOfNumber in numDict.items():
+        frequencies[frequencyOfNumber].append(number)
+
+    # The code iterates over the list frequencies in reverse order, starting from the last index.
+    # This ensures that the numbers with the highest frequencies are added to the result list first.
+    # The code then iterates over each number in the inner list and appends it to the result list.
+    # The code returns the result list once it has k elements.
+    res = []
+    for i in range(len(frequencies) - 1, 0, -1):
+        for num in frequencies[i]:
+            res.append(num)
+            if len(res) == k:
+                return res
