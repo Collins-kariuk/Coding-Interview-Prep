@@ -246,7 +246,21 @@ def isValidSudoku(board):
 def encode(strs):
     """
     Encodes a list of strings to a single string.
+
+    COMPLEXITY: 
+
+    The res variable is initialized as an empty string ('').
+    The encoded strings are concatenated to the res variable using the += operator.
+    Since strings are immutable in Python, each concatenation operation creates a new string object.
+    Therefore, the SPACE COMPLEXITY of the encode function is O(n), where n is the TOTAL LENGTH of all the input strings.
+
+    The encode function iterates over each string in the strs list.
+    For each string, it calculates the length using the len function, which has a TIME COMPLEXITY of O(1).
+    It then performs string concatenation, which has a TIME COMPLEXITY of O(k), where k is the length of the current string.
+    Since there are n STRINGS IN THE STRS LIST, the overall TIME COMPLEXITY of the encode function is O(n * k),
+    where k is the AVERAGE LENGTH OF A STRING.
     """
+
     res = ''
     # the encoding of a certain word should be a string that starts with a number that
     # represents the length of the string followed by a hash sign then the word itself
@@ -258,7 +272,17 @@ def encode(strs):
 def decode(strs):
     """
     Decodes a single string to a list of strings.
+
+    COMPLEXITY:
+
+    The SPACE COMPLEXITY of the decode function is O(n), where n is the LENGTH OF THE INPUT STRING STRS.
+    This is because the function creates a list res to store the decoded strings, and the size of this list will be proportional to the length of the input string.
+
+    The TIME COMPLEXITY of the decode function is O(n), where n is the LENGTH OF THE INPUT STRING STRS.
+    This is because the function iterates through the input string once, decoding each string and appending it to the result list.
+    The length of the input string determines the number of iterations required, resulting in a linear time complexity.
     """
+
     res = []
     i = 0
 
