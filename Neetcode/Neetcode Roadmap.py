@@ -235,3 +235,47 @@ def productExceptSelf(nums):
         res[i] = pre[i] * post[i]
 
     return res
+
+
+# --------- 7. Valid Sudoku - Leetcode 36 - Medium ------------
+def isValidSudoku(board):
+    pass
+
+
+# --------- 8. Encode and Decode Strings - Lintcode 659 - Medium ------------
+def encode(strs):
+    """
+    Encodes a list of strings to a single string.
+    """
+    res = ''
+    # the encoding of a certain word should be a string that starts with a number that
+    # represents the length of the string followed by a hash sign then the word itself
+    for string in strs:
+        res += str(len(string)) + '#' + string
+    return res
+
+
+def decode(strs):
+    """
+    Decodes a single string to a list of strings.
+    """
+    res = []
+    i = 0
+
+    # iterate through the string
+    while i < len(strs):
+        # another iterator/pointer which is used to find the length of the string, i.e.,
+        # useful in finding the leading digits that signify the length of the string
+        j = i
+        # could have that the string has a length greater than 9
+        while strs[j] != '#':
+            j += 1
+        # length is the length of the string we are going to append to the result
+        length = int(strs[i:j])
+        # append the string to the result
+        # we don't include the j (#) as part of the string which is why we start at j + 1
+        res.append(strs[j + 1:j + length + 1])
+        # the start of the next string
+        # after this assignment, i will point to the first digit of the length of the next string
+        i = j + length + 1
+    return res
