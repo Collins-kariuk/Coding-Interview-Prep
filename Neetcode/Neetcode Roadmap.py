@@ -303,3 +303,33 @@ def decode(strs):
         # after this assignment, i will point to the first digit of the length of the next string
         i = j + length + 1
     return res
+
+
+# --------- 9. Longest Consecutive Sequence - Leetcode 128 - Medium ------------
+def longestConsecutive(nums):
+    # convert to set to eliminate duplicates
+    numSet = set(nums)
+    longest = 0
+
+    for n in nums:
+        # Check whether the number before the current number is the start of a new sequence
+        # if it is, then we can calculate the length of that particular sequence
+
+        # We do this by checking whether the number before the current number is in the set
+        # if it is, then we know that the current number is not the start of a new sequence
+        # and we can safely skip it
+        if n - 1 not in numSet:
+            # to store the length of the current sequence
+            curLength = 0
+
+            # We calculate the length of the current sequence by checking whether the number
+            # after the current number is in the set and if it is, we increment the length
+            # Notice that since we initialize length to 0, we ensure that we count the
+            # current start of the sequence as well
+            while n + curLength in numSet:
+                curLength += 1
+            
+            # we update the longest sequence if the current sequence is longer
+            longest = max(curLength, longest)
+
+    return longest
