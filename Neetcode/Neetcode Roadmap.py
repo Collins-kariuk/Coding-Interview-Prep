@@ -1,6 +1,9 @@
 ## ARRAYS AND HASHING #####
 
 # --------- 1. Contains Duplicate - Leetcode 217 - Easy ------------
+import collections
+from collections import defaultdict, deque
+import heapq
 from collections import defaultdict
 
 
@@ -239,7 +242,43 @@ def productExceptSelf(nums):
 
 # --------- 7. Valid Sudoku - Leetcode 36 - Medium ------------
 def isValidSudoku(board):
-    pass
+    """
+    COMPLEXITY:
+
+    The space complexity of the isValidSudoku function is O(1) because the space used by the cols, rows, and squares dictionaries
+    is CONSTANT and does not depend on the size of the input.
+
+    The time complexity of the isValidSudoku function is O(1) because the function iterates through a FIXED-SIZE 9x9 Sudoku board.
+    The number of iterations is constant and does not depend on the size of the input. Therefore, the time complexity is constant.
+    """
+
+    # initialize the rows, cols, and squares dictionaries
+    # the keys are the row/col/square numbers and the values are sets
+    # the sets will contain the numbers that are in that particular row/col/square (will be populated as we iterate through the
+    # board so we can check for duplicates in later iterations)
+    cols = collections.defaultdict(set) # cols might look like {0: {5, 7}, 1: {1, 2, 3}, 2: {4, 6}}
+    rows = collections.defaultdict(set) # rows might look like {0: {5, 7}, 1: {1, 2, 3}, 2: {4, 6}}
+    # key = (r // 3, c // 3) so squares might look like {(0, 0): {5, 7}, (0, 1): {1, 2, 3}, (0, 2): {4, 6}}
+    squares = collections.defaultdict(set)
+
+    # iterate through the board
+    for r in range(9):
+        for c in range(9):
+            # we don't care about the empty cells
+            if board[r][c] == ".":
+                continue
+            # check if the number is already in the row/col/square
+            # remember that the square is determined by the row and column number
+            # for example, the square that contains the number in row 2 and column 3 is (2 // 3, 3 // 3) = (0, 1)
+            if (board[r][c] in rows[r] or
+                board[r][c] in cols[c] or
+                board[r][c] in squares[(r // 3, c // 3)]):
+                return False
+            # if the number is not in the row/col/square, add it to the respective set
+            rows[r].add(board[r][c])
+            cols[c].add(board[r][c])
+            squares[(r // 3, c // 3)].add(board[r][c])
+    return True
 
 
 # --------- 8. Encode and Decode Strings - Lintcode 659 - Medium ------------
@@ -328,7 +367,7 @@ def longestConsecutive(nums):
             # current start of the sequence as well
             while n + curLength in numSet:
                 curLength += 1
-            
+
             # we update the longest sequence if the current sequence is longer
             longest = max(curLength, longest)
 
