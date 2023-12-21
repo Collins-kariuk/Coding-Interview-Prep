@@ -155,3 +155,83 @@ def topKFrequent(nums, k):
             res.append(num)
             if len(res) == k:
                 return res
+
+
+# --------- 6. Product of Array Except Self - Leetcode 238 - Medium ------------
+def productExceptSelf(nums):
+    """
+    COMPLEXITY:
+
+    The SPACE complexity is O(n), where n is the length of the input list nums.
+    This is because the function uses two lists, leftProducts and rightProducts, to store the products of all the elements to the left and right of each element in nums.
+    The size of these lists is equal to the length of nums, which is n.
+
+    The TIME complexity of the productExceptSelf function is O(n), where n is the length of the input list nums.
+    This is because the function iterates over each element in nums twice, performing constant-time operations such as list lookups and updates.
+    Therefore, the space complexity and time complexity of the productExceptSelf function are both O(n).
+    """
+
+    # leftProducts[i] contains the product of all the elements to the left of nums[i] (excluding nums[i]).
+    leftProducts = [1] * len(nums)
+    for i in range(1, len(nums)):
+        leftProducts[i] = leftProducts[i - 1] * nums[i - 1]
+
+    # rightProducts[i] contains the product of all the elements to the right of nums[i] (excluding nums[i]).
+    rightProducts = [1] * len(nums)
+    for i in range(len(nums) - 2, -1, -1):
+        rightProducts[i] = rightProducts[i + 1] * nums[i + 1]
+
+    # The code iterates over each element in nums and multiplies the corresponding elements in leftProducts and rightProducts.
+    # The code returns the result list once it has been populated.
+    res = []
+    for i in range(len(nums)):
+        res.append(leftProducts[i] * rightProducts[i])
+    return res
+
+
+# solution I came up with
+def productExceptSelf(nums):
+    """
+    the gist of the solution is that we need to calculate the product of all
+    the numbers to the left of a number and the product of all the numbers
+    to the right of a number
+    we can do this by using 2 arrays, one that stores the product of all the
+    numbers to the left of a number and another that stores the product of
+    all the numbers to the right of a number
+    we then multiply the corresponding elements in the 2 arrays to get the
+    product of all the numbers except the number at the current index
+    """
+
+    # initialize the prefix and postfix arrays
+    pre = [1]
+    post = [1]
+
+    # calculate the prefix array
+    preMult = 1
+    for i in range(len(nums)):
+        preMult *= nums[i]
+        pre.append(preMult)
+
+    # we remove the last element since it's not needed in the calculation
+    pre.pop()
+    print(" final pre", pre)
+    # calculate the postfix array
+    postMult = 1
+    # we loop backwards
+    for i in range(len(nums) - 1, 0, -1):
+        postMult *= nums[i]
+        post.append(postMult)
+    print("post before reversing", post)
+    # reverse the postfix array
+    post = post[::-1]
+    print("post after reversing", post)
+
+    # first of all, initialize the result array to be all zeros because we
+    # need to multiply the corresponding elements in the prefix and postfix
+    # arrays and to index into the result array, we need to have something in
+    # the result array so the zeros are the placeholders
+    res = [0] * len(pre)
+    for i in range(len(pre)):
+        res[i] = pre[i] * post[i]
+
+    return res
