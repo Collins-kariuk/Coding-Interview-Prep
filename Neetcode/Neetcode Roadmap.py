@@ -256,8 +256,10 @@ def isValidSudoku(board):
     # the keys are the row/col/square numbers and the values are sets
     # the sets will contain the numbers that are in that particular row/col/square (will be populated as we iterate through the
     # board so we can check for duplicates in later iterations)
-    cols = collections.defaultdict(set) # cols might look like {0: {5, 7}, 1: {1, 2, 3}, 2: {4, 6}}
-    rows = collections.defaultdict(set) # rows might look like {0: {5, 7}, 1: {1, 2, 3}, 2: {4, 6}}
+    # cols might look like {0: {5, 7}, 1: {1, 2, 3}, 2: {4, 6}}
+    cols = collections.defaultdict(set)
+    # rows might look like {0: {5, 7}, 1: {1, 2, 3}, 2: {4, 6}}
+    rows = collections.defaultdict(set)
     # key = (r // 3, c // 3) so squares might look like {(0, 0): {5, 7}, (0, 1): {1, 2, 3}, (0, 2): {4, 6}}
     squares = collections.defaultdict(set)
 
@@ -272,7 +274,7 @@ def isValidSudoku(board):
             # for example, the square that contains the number in row 2 and column 3 is (2 // 3, 3 // 3) = (0, 1)
             if (board[r][c] in rows[r] or
                 board[r][c] in cols[c] or
-                board[r][c] in squares[(r // 3, c // 3)]):
+                    board[r][c] in squares[(r // 3, c // 3)]):
                 return False
             # if the number is not in the row/col/square, add it to the respective set
             rows[r].add(board[r][c])
@@ -346,6 +348,19 @@ def decode(strs):
 
 # --------- 9. Longest Consecutive Sequence - Leetcode 128 - Medium ------------
 def longestConsecutive(nums):
+    """
+    COMPLEXITY:
+
+    The space complexity of the longestConsecutive function is O(n), where n is the LENGTH OF THE INPUT LIST nums.
+    This is because the function creates a set numSet to store the unique elements of nums.
+    The size of the set will be proportional to the length of the input list.
+
+    The time complexity of the longestConsecutive function is O(n), where n is the LENGTH OF THE INPUT LIST nums.
+    This is because the function iterates through the elements of nums once, performing constant-time operations for each element.
+    The while loop inside the for loop MAY ITERATE MULTIPLE TIMES, but the total number of iterations is BOUNDED by the length of nums.
+    Therefore, the time complexity is linear.
+    """
+
     # convert to set to eliminate duplicates
     numSet = set(nums)
     longest = 0
