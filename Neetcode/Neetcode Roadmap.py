@@ -421,3 +421,36 @@ def isPalindrome(s):
     # populate the reversedOriginal list with only alphanumeric characters
     reversedOriginal = original[::-1]
     return original == reversedOriginal
+
+
+# --------- 11. Two Sum II - Input Array Is Sorted - Leetcode 167 - Medium ------------
+def twoSumSorted(numbers, target):
+    """
+    COMPLEXITY:
+
+    The space complexity of the twoSumSorted function is O(1) because it uses a constant amount of extra space regardless of the input size.
+    It only uses a few variables to store the pointers and the current sum.
+
+    The time complexity of the twoSumSorted function is O(n), where n is the length of the numbers list.
+    This is because the function uses a TWO-POINTER APPROACH to iterate through the list once.
+    The pointers move towards each other until they meet, and at each iteration, the function compares the current sum with the target value.
+    Since the list is sorted, the function can determine whether to move the left pointer or the right pointer based on the comparison.
+    Therefore, the function performs a constant amount of work for each element in the list, resulting in a linear time complexity.
+    """
+
+    # initialize two pointers, one at the start and one at the end
+    l = 0
+    r = len(numbers) - 1
+
+    # iterate until the pointers meet
+    while l < r:
+        # calculate the current sum
+        currSum = numbers[l] + numbers[r]
+        # if the current sum is greater than the target, we need to decrease the sum so we move the right pointer to the left
+        if currSum > target:
+            r -= 1
+        elif currSum < target:
+            l += 1
+        # if the current sum is equal to the target, we return the indices (1-indexed)
+        else:
+            return [l + 1, r + 1]
