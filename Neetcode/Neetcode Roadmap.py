@@ -1,4 +1,4 @@
-## ARRAYS AND HASHING #####
+#### ARRAYS AND HASHING #####
 
 # --------- 1. Contains Duplicate - Leetcode 217 - Easy ------------
 import collections
@@ -387,3 +387,37 @@ def longestConsecutive(nums):
             longest = max(curLength, longest)
 
     return longest
+
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------
+#### TWO POINTERS ####
+# --------- 10. Valid Palindrome - Leetcode 125 - Easy ------------
+def isPalindrome(s):
+    """
+    COMPLEXITY:
+
+    The space complexity of the isPalindrome function is O(n), where n is the length of the input string s.
+    This is because the function CREATES 2 LISTS, original and reversedOriginal, to store the alphanumeric characters of the string.
+    The size of these lists will be proportional to the length of the input string.
+
+    The time complexity of the isPalindrome function is O(n), where n is the length of the input string s.
+    This is because the function ITERATES THROUGH each character of the string once to populate the original list.
+    Additionally, the function creates the reversedOriginal list by REVERSING the original list, which takes O(n) time.
+    Finally, the function compares the original and reversedOriginal lists, which also takes O(n) time.
+    Therefore, the overall time complexity is linear.
+    """
+
+    # initialize two lists to store the original and reversed strings
+    original = []
+    reversedOriginal = []
+
+    # populate the original list with only alphanumeric characters
+    for c in s:
+        # isalnum() checks whether the character is alphanumeric
+        if c.isalnum():
+            # lower() converts the character to lowercase
+            original.append(c.lower())
+
+    # populate the reversedOriginal list with only alphanumeric characters
+    reversedOriginal = original[::-1]
+    return original == reversedOriginal
