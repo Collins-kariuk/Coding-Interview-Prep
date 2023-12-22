@@ -454,3 +454,59 @@ def twoSumSorted(numbers, target):
         # if the current sum is equal to the target, we return the indices (1-indexed)
         else:
             return [l + 1, r + 1]
+
+
+# --------- 12. 3Sum - Leetcode 15 - Medium ------------
+def threeSum(nums):
+    nums.sort()
+    res = []
+
+    for i in range(len(nums)):
+        # when the number is greater than 0, we can safely break out of the loop
+        # because we know that the numbers that follow will be GREATER THAN 0
+        # and so the sum of 3 numbers will never be 0
+        if nums[i] > 0:
+            break
+        # when the number is equal to the number before it, we can safely SKIP IT
+        # because we've already considered it in a previous iteration
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+
+        # initialize the left and right pointers
+        l = i + 1
+        r = len(nums) - 1
+
+        while l < r:
+            # calculate the sum of the 3 numbers
+            currSum = nums[i] + nums[l] + nums[r]
+            # when the sum is less than 0, we increment the left pointer by one
+            # so as to increase the sum
+            if currSum < 0:
+                l += 1
+            # when the sum is greater than 0, we decrement the right pointer by
+            # one so as to decrease the sum
+            elif currSum > 0:
+                r -= 1
+            # when the sum is equal to 0, we append the 3 numbers to the result
+            # array
+            else:
+                res.append([nums[i], nums[l], nums[r]])
+                # we then increment the left pointer by one and decrement the
+                # right pointer by one so as to look for other combinations
+                # that sum up to 0
+                l += 1
+                r -= 1
+                # when the number at the left pointer is equal to the number
+                # before it, we increment the left pointer by one so as to skip it
+                # if we don't check whether the number at the left pointer is equal
+                # to the number before it, we'll end up with duplicate doublets for
+                # our mini 2Sum problem which we do not want since the question asks
+                # for unique triplets
+                while l < r and nums[l] == nums[l - 1]:
+                    l += 1
+                # when the number at the right pointer is equal to the number
+                # before it, we decrement the right pointer by one so as to
+                # skip it
+                while l < r and nums[r] == nums[r + 1]:
+                    r -= 1
+    return res
