@@ -260,12 +260,12 @@ def invertTree(root):
 
 
 def maxDepth(root):
-    # the base case
+    # base case
     # when we reach a null node, we return 0 since the depth of a null node is 0
     if root is None:
         return 0
 
-    # the recursive case
+    # recursive case
     # calculate the depth of the left part of the binary tree
     leftDepth = maxDepth(root.left)
     # calculate the depth of the right part of the binary tree
