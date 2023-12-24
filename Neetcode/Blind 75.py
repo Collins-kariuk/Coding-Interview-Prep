@@ -1550,15 +1550,13 @@ def isValid(s):
     # dictionary with closing to open parentheses as key:val pairs
     closeToOpen = {')': '(', ']': '[', '}': '{'}
 
-    # looping through the characters in string
     for char in s:
-        # what to do when the character we're looking at is a closing parens
+        # when the character we're looking at is a closing parens
         if char in closeToOpen:
-            # when the stack is non-empty and the last character in the stack
-            # or the character at the top of the stack (which is supposed to
-            # be an opening parens) matches the opening parens counterpart of
-            # the closing parens we are looking at, then we remove the matching
-            # opening parens at the top of the stack
+            # when the stack is non-empty and the open parens character at the top
+            # of the stack matches the open parens counterpart of the closing parens
+            # we're looking at, then it means that we have a matching pair of parens
+            # and we can pop the open parens character at the top of the stack
             if len(stack) != 0 and stack[-1] == closeToOpen[char]:
                 stack.pop()
             # when the stack is empty or if the open parens character at the top
