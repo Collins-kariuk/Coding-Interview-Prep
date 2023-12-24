@@ -309,13 +309,13 @@ def isSubtree(root, subroot):
             return False
         return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
 
-    # if the subroot is null, then technically it is a subtree of any other tree since
-    # you can always find a null node in the leaf children of any other tree
+    # When the subroot is null, it's technically a subtree of any other tree, as a null
+    # node can always be found among the leaf children in any tree
     if subroot is None:
         return True
 
-    # if the root is null, then it can't possibly have a subtree other than itself (null),
-    # which we checked above, so we return False
+    # In the case where the root is null, it cannot contain any subtree other than itself
+    # (which is also null). This scenario has already been accounted for previously
     if root is None:
         return False
 
@@ -323,12 +323,10 @@ def isSubtree(root, subroot):
     if isSameTree(root, subroot):
         return True
 
-    # otherwise we recursively check the left and right subtrees of the root
-    # to see if they contain the subroot
-    # this works because we know that the subroot is not the same as the root
-    # and so we can check the left and right subtrees of the root to see if
-    # they contain the subroot because even if the subroot is not the same as
-    # the root, it could be the same as the left or right subtrees of the root
+    # If the above conditions are not met, we proceed to recursively examine the left
+    # and right subtrees of the root to determine if they include the subroot
+    # This approach is valid because we've established that the subroot is distinct from the root.
+    # Therefore, we need to investigate whether the subroot matches either the left or right subtree of the root.
     return isSubtree(root.left, subroot) or isSubtree(root.right, subroot)
 
 # --------------- 28. Lowest Common Ancestor of a Binary Search Tree - Leetcode 235 - Medium --------------
