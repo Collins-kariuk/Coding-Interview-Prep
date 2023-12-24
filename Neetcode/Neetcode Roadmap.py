@@ -458,6 +458,22 @@ def twoSumSorted(numbers, target):
 
 # --------- 12. 3Sum - Leetcode 15 - Medium ------------
 def threeSum(nums):
+    """
+    COMPLEXITY:
+
+    The space complexity of the threeSum function is O(n), where n is the length of the nums list.
+    This is because the function uses additional space to store the result array res, which can potentially contain all possible unique triplets that sum up to 0.
+    In the worst case scenario, the size of res can be O(n^2) if all elements in nums form unique triplets.
+    nums = [-1, -2, -3, ..., -n, 1, 2, 3, ..., n]
+
+    The time complexity of the threeSum function is O(n^2).
+    The function first SORTS the nums list, which takes O(n log n) time.
+    Then, it iterates through each element in the sorted list, resulting in O(n) iterations.
+    Within each iteration, the function uses a two-pointer approach to find the remaining two numbers that sum up to the negation of the current number.
+    This TWO-POINTER APPROACH takes O(n) time in the worst case scenario, as the pointers can potentially traverse the entire list.
+    Therefore, the overall time complexity is O(n log n + n^2), which SIMPLIFIES to O(n^2).
+    """
+
     nums.sort()
     res = []
 
@@ -491,9 +507,8 @@ def threeSum(nums):
             # array
             else:
                 res.append([nums[i], nums[l], nums[r]])
-                # we then increment the left pointer by one and decrement the
-                # right pointer by one so as to look for other combinations
-                # that sum up to 0
+                # we change the states of the pointers by one so as to look for
+                # other combinations that sum up to 0
                 l += 1
                 r -= 1
                 # when the number at the left pointer is equal to the number
