@@ -1323,12 +1323,10 @@ def minWindow(s, t):
 def findMin(nums):
     # variable that'll store the current minimum
     res = nums[0]
-    # left pointer initially at the leftmost end
+    # intiaialize pointers
     l = 0
-    # right pointer initially at the rightmost end
     r = len(nums) - 1
 
-    # continue looping as long left and right pointers don't cross each other
     while l <= r:
         # if the number at the left pointer is less than the one at the right pointer,
         # it means that nums is already sorted and we can safely return the number at
@@ -1342,12 +1340,11 @@ def findMin(nums):
         # before further comparison, the number at the middle pointer will serve as
         # the minimum
         res = min(res, nums[mid])
-        # if the number at the middle is greater than or equal than the number at
-        # the left pointer, it means that we need to look at the right part of nums
-        # because it means that the left part of the sublist is already sorted and
-        # because of the rotation, it makes no sense to look at the left part of
-        # nums since it will always be larger than the right part of nums, so we
-        # focus our attention to the right part of nums
+        # If the central element is greater than or equal to the element at the left pointer,
+        # it indicates that the left segment of the sublist is already sorted. Due to the 
+        # array's rotation, searching in the left segment is not logical, as it will always 
+        # contain larger values compared to the right segment. Therefore, our search should 
+        # concentrate on the right segment of the array.
         if nums[mid] >= nums[l]:
             l = mid + 1
         # the opposite holds
