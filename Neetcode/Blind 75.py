@@ -163,13 +163,14 @@ def reorderList(head):
 
     # merge the 2 halves
     first = head
-    # after the second while loop is done executing the head of the now reversed second
-    # half of the linked list will be at prev as second (the pointer of the second half
-    # of the linked list) will be at Null
+    # Once the execution of the second while loop concludes, the prev pointer will be
+    # at the head of the now-reversed second half of the linked list
+    # This occurs because the second pointer, which traverses the second half of the
+    # list, reaches Null
     second = prev
-    # we continue merging until one of the pointers, either first or second, is non-null
-    # but since we know that the second half could be shorter, our condition could be
-    # predicated on just the second pointer
+    # The merging process goes on until either the first or second pointer becomes null
+    # However, given that the second half of the list might be shorter, we can
+    # base our continuation condition primarily on the status of the second pointer
     while second:
         # we store the references of the next nodes in separate variables since we know
         # we are going to break the links as we traverse through both halves
