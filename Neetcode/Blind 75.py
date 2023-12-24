@@ -1124,7 +1124,7 @@ class MedianFinder:
 
 
 def maxProfit(prices):
-    # initialize pointer
+    # initialize pointers
     l = 0
     r = 1
     # initialize variable that's gonna store the maximum profit
@@ -1139,7 +1139,10 @@ def maxProfit(prices):
         # be better suited to calculate the maximum profit
         # we therefore change the left pointer to where the right pointer is and
         # increment the right pointer by one
-        if prices[r] <= prices[l]:
+        if prices[l] >= prices[r]:
+            # the reason why we change the left pointer to where the right pointer
+            # is because we need to keep track of the minimum value in the prices list
+            # so that we can calculate the maximum profit
             l = r
             r += 1
         else:
@@ -1148,9 +1151,8 @@ def maxProfit(prices):
             # the maximum profit will be the larger profit between the previous max
             # profit and the just calculated current profit
             maxProfit = max(maxProfit, currProfit)
-            # we increment the right pointer by onw
+            # increment the right pointer by one
             r += 1
-    # the maximum profit at the end
     return maxProfit
 
 # --------- 7. Longest Substring Without Repeating Characters - Leetcode 3 - Medium ------------
