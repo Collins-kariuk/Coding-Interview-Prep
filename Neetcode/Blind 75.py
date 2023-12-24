@@ -237,17 +237,20 @@ class TreeNode:
 
 
 def invertTree(root):
+    # base case
     # check whether the root contains value and if not return none
     if root == None:
         return None
 
-    # swap the left and right children
-    # you have to store the left child in a variable first to not lose it
+    # Exchange the left and right children of the node
+    # To ensure the left child is not lost in the process, it's crucial
+    # to first save it in a temporary variable
     temp = root.left
     root.left = root.right
     root.right = temp
 
-    # recursively call the method on the right and left children
+    # recursive case
+    # recursively on the right and left children
     invertTree(root.left)
     invertTree(root.right)
 
