@@ -100,10 +100,10 @@ def mergeTwoLists(l1, l2):
 
 def hasCycle(head):
     """
-    the gist is that one pointer advances faster than the other and if the linked
-    list has a cycle, the fast one will eventually overlap the slow one and when
-    that happens is when we know the pointer has a cycle
-    we initially set the 2 pointers at the head of the input linked list
+    The essence of the method is that one pointer progresses more rapidly than the other.
+    If there's a cycle in the linked list, the faster pointer will eventually catch up to the slower one.
+    The moment they overlap is the indication of a cycle's presence.
+    Both pointers are initially positioned at the head of the input linked list.
     """
 
     # using slow and fast pointers
