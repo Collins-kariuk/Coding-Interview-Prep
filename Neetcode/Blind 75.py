@@ -1161,12 +1161,11 @@ def maxProfit(prices):
 def lengthOfLongestSubstring(s):
     # create a set that'll store all unique non-repeating characters
     charSet = set()
-    # initialize left pointer at first element of input string
+    # initialize left pointer
     l = 0
     # result that'll hold the longest substring without repeating characters
     res = 0
 
-    # loop through the input string
     for r in range(len(s)):
         # if the character at the right pointer is already in the set, it means
         # that we've encountered a repeating character and we need to remove the
@@ -1191,9 +1190,7 @@ def lengthOfLongestSubstring(s):
         # the maximum length of the substring without repeating characters will be the
         # larger of the previous length and the current length
         # the current length is just the difference between the right and left pointers
-        # plus one since we're dealing with indices
-        # the plus one is also because the left pointer is initially at the first element
-        # of the input string
+        # plus one since we're dealing with 0-indexing
         res = max(res, r - l + 1)
     return res
 
