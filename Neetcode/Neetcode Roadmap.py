@@ -562,3 +562,64 @@ def maxArea(height):
             r -= 1
 
     return res
+
+
+# --------- 14. Trapping Rain Water - Leetcode 42 - Hard ------------
+def trap(height):
+    """
+    COMPLEXITY:
+
+    The time complexity of the trap function is O(n), where n is the length of the height list.
+    This is because the function uses a TWO-POINTER approach to iterate through the list once.
+
+    The space complexity of the trap function is O(1), as it only uses a constant amount of
+    extra space to store the pointers, the left and right maxes, and the result variable.
+    """
+
+    # edge case when the height list is empty
+    if len(height) == 0:
+        return 0
+
+    # initialize the left and right pointers
+    l = 0
+    r = len(height) - 1
+
+    # initialize the left and right maxes
+    leftMax = height[l]
+    rightMax = height[r]
+
+    # initialize the result variable
+    res = 0
+
+    while l < r:
+        # If the left max is less than the right max, we know that the water
+        # trapped at the left pointer is determined by the left max
+        # We also know that the water trapped at the left pointer is determined
+        # by the height at the left pointer
+        # We can then calculate the water trapped at the left pointer by
+        # subtracting the height at the left pointer from the left max
+        # We then increment the left pointer by one so as to move on to the next
+        # pointer
+        if leftMax < rightMax:
+            res += leftMax - height[l]
+            l += 1
+            # we update the left max if the height at the left pointer is greater
+            # than the left max
+            leftMax = max(leftMax, height[l])
+
+        # if the right max is less than the left max, we know that the water
+        # trapped at the right pointer is determined by the right max
+        # we also know that the water trapped at the right pointer is determined
+        # by the height at the right pointer
+        # we can then calculate the water trapped at the right pointer by
+        # subtracting the height at the right pointer from the right max
+        # we then decrement the right pointer by one so as to move on to the next
+        # pointer
+        else:
+            res += rightMax - height[r]
+            r -= 1
+            # we update the right max if the height at the right pointer is greater
+            # than the right max
+            rightMax = max(rightMax, height[r])
+
+    return res
