@@ -525,3 +525,40 @@ def threeSum(nums):
                 while l < r and nums[r] == nums[r + 1]:
                     r -= 1
     return res
+
+
+# --------- 13. Container with Most Water - Leetcode 11 - Medium ------------
+def maxArea(height):
+    """
+    COMPLEXITY:
+
+    The time complexity of the maxArea function is O(n), where n is the length of the height list.
+    This is because the function uses a TWO-POINTER approach to iterate through the list once.
+
+    The space complexity of the maxArea function is O(1), as it only uses a constant amount of extra space to store the pointers and the result variable.
+    """
+
+    # initialize pointers
+    l = 0
+    r = len(height) - 1
+    res = 0
+
+    while l < r:
+        # calculate the current area at the specific point in the iteration
+        # it is basic equation of base*height where the base is the difference
+        # in the pointers and the height is the smaller of the 2 values at the
+        # left and right pointers
+        currArea = (r - l) * min(height[l], height[r])
+        # the current maximum volume at the specific point in the iteration is
+        # just the bigger of the previous volume and the current volume
+        res = max(res, currArea)
+        # when the height at the left pointer is smaller than the height at the
+        # right pointer we increment the left pointer by one so as to still
+        # preserve the bigger height at the right pointer since that height may
+        # be the smaller of 2 heights later in the iteration
+        if height[l] < height[r]:
+            l += 1
+        else:
+            r -= 1
+
+    return res
