@@ -285,19 +285,16 @@ def isSameTree(p, q):
         return True
 
     # base case part 2
-    # when one of the nodes is null and the other is not, we
-    # can consider them to be different trees and hence we
-    # return false OR when the values of the nodes are not
-    # equal, we can consider them to be different trees and
-    # hence we return false
+    # If one of the nodes is null while the other isn't, or if the values
+    # of the nodes don't match, we recognize these as different trees
+    # In either of these cases, we return false, indicating a mismatch
     if (p == None or q == None) or (p.val != q.val):
         return False
 
     # the recursive case
-    # both the left and right sides of the tree need to be strictly equal,
-    # that is, if, say, the left subtrees of p and q are equal while their
-    # right subtrees are not, we do not consider them to be the same tree
-    # and so their logical AND returns False
+    # For the trees to be considered identical, both the left and right sides must
+    # be exactly the same. This means if the left subtrees of p and q match but
+    # their right subtrees do not, the trees are deemed different
     return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
 
 # --------------- 27. Subtree of Another Tree - Leetcode 572 - Easy --------------
