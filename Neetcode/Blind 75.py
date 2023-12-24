@@ -72,10 +72,11 @@ def mergeTwoLists(l1, l2):
     # a pointer to the temp head
     tail = res
 
-    # while both pointers to the input linked lists are non-null, continue looping
+    # we continue with the loop as long as both pointers to the input linked lists
+    # are non-null
     while l1 and l2:
-        # if the value of the node in l1 is less than the value of the node in l2
-        # we add the node in l1 to the result linked list
+        # when the value of the current node in l1 is smaller than that of the node in l2,
+        # the node from l1 is appended to the resultant linked list.
         if l1.val < l2.val:
             tail.next = l1
             l1 = l1.next
@@ -83,7 +84,7 @@ def mergeTwoLists(l1, l2):
             # otherwise we add the node in l2 to the result linked list
             tail.next = l2
             l2 = l2.next
-        # we advance the pointer to the result linked list regardless
+        # regardless, we advance the pointer to the result linked list
         tail = tail.next
 
     # if either of the pointers to the input linked lists are null, we add the
@@ -1341,9 +1342,9 @@ def findMin(nums):
         # the minimum
         res = min(res, nums[mid])
         # If the central element is greater than or equal to the element at the left pointer,
-        # it indicates that the left segment of the sublist is already sorted. Due to the 
-        # array's rotation, searching in the left segment is not logical, as it will always 
-        # contain larger values compared to the right segment. Therefore, our search should 
+        # it indicates that the left segment of the sublist is already sorted. Due to the
+        # array's rotation, searching in the left segment is not logical, as it will always
+        # contain larger values compared to the right segment. Therefore, our search should
         # concentrate on the right segment of the array.
         if nums[mid] >= nums[l]:
             l = mid + 1
