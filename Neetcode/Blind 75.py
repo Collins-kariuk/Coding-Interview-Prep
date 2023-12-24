@@ -48,19 +48,18 @@ def reverseList(head):
     # null node
     while curr:
         # save the reference to the next node after the current one since
-        # it the next iteration it will serve as the current node
+        # ,in the next iteration, it will serve as the current node
         placeholder = curr.next
         # changing the "direction of the arrow" or where the current node
         # points to
         curr.next = prev
         # advancing the previous pointer to be where the current pointer is
         prev = curr
-        # advancing the current pointer to the placeholder we conviently
+        # advancing the current pointer to the placeholder we conveniently
         # saved earlier
         curr = placeholder
 
-    # the new head of the reversed linked list will be the node the prev
-    # pointer is pointing to
+    # the new head of the reversed linked list will be the node the prev is pointing to
     return prev
 
 # ------------- 17. Merge Two Sorted Lists - Leetcode 21 - Easy -----------------
@@ -131,12 +130,11 @@ def hasCycle(head):
 # ----------------- 19. Reorder List - Leetcode 143 - Medium --------------------
 def reorderList(head):
     """
-    Do not return anything, modify head in-place instead
-    the gist of the implementation is that we need to split the input linked list
-    into 2 halves
-    since we're alternating, we need pointers to heads of the 2 halves, the only
-    challenge is that we need to reverse the second half of the linked list for
-    easier reordering as we can't "go back" in a singly linked list
+    Modify the head directly, without returning any value.
+    The core strategy involves dividing the input linked list into two sections.
+    To facilitate alternating between the segments, pointers to the heads of both halves are necessary.
+    The main hurdle is that the second half of the list must be reversed for straightforward reintegration,
+    as backtracking is not possible in a singly linked list.
     """
 
     # find the middle point of the linked list
