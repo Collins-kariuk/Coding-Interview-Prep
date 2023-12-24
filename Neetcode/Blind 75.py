@@ -549,14 +549,15 @@ def numIslands(grid):
 
     def bfs(r, c):
         """
-        a breadth-first-search to check the number of islands by marking already visited islands so as
-        to not forget which ones have already been visited
+        Conducting a breadth-first search to count the number of islands, while keeping track of the
+        islands already visited. This ensures that we don't mistakenly revisit the same islands.
         """
-        # bfs is an iterative algorithm that needs a DS, which is normally a queue
+
+        # bfs is an iterative algorithm that needs a data structure, which is normally a queue
         q = deque()
         # we add the island to the visited pile
         visited.add((r, c))
-        # append the island we're at in the iteration in the our bfs queue
+        # append the island we're at in the iteration in our bfs queue
         q.append((r, c))
 
         # traverse through the queue as long as it's non-empty thus "expanding our island"
@@ -574,7 +575,7 @@ def numIslands(grid):
                 # check that the coordinates are in bounds
                 # check that it's land
                 # check that it's not visited yet
-                if r in range(rows) and c in range(cols) and grid[r][c] == '1' and (r, c) not in visited:
+                if (r in range(rows) and c in range(cols)) and grid[r][c] == '1' and (r, c) not in visited:
                     # add to queue because we also have to run bfs on this cell as well
                     q.append((r, c))
                     # mark it as visited so that we don't visit it twice
