@@ -623,3 +623,56 @@ def trap(height):
             rightMax = max(rightMax, height[r])
 
     return res
+
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------
+#### STACK ####
+# --------- 15. Valid Parentheses - Leetcode 20 - Easy ------------
+def isValid(s):
+    """
+    COMPLEXITY:
+
+    The space complexity of the isValid function is O(n), where n is the length of the input string s.
+    This is because the function uses a stack to store opening brackets, and the maximum size of the
+    stack is proportional to the number of opening brackets in the string.
+
+    The time complexity of the isValid function is O(n), where n is the length of the input string s.
+    This is because the function iterates through each character in the string once, performing
+    constant-time operations for each character.
+    """
+
+    # initialize a stack
+    stack = []
+    # a dictionary that maps the closing bracket to the opening bracket
+    closeToOpen = {"]": "[", "}": "{", ")": "("}
+
+    for c in s:
+        # if the character is a closing bracket
+        if c in closeToOpen:
+            # if the stack is not empty and the top of the stack is the opening bracket
+            # of the current closing bracket, we pop the opening bracket from the stack
+            # else, we return False
+            if len(stack) != 0 and stack[-1] == closeToOpen[c]:
+                stack.pop()
+            # when the stack is empty or if the open parens character at the top
+            # of the stack does not match the open parens counterpart of the closing
+            # parens we're looking at, then it means that the input string is not a
+            # valid parens
+            # in the case of the stack being empty, a sample input string would be
+            # '(()))[]{}' whereby the time we get to the third closing ) parens, the
+            # stack will be empty since 2 pops of ( will have been made in prior
+            # iterations
+            # in the case of the open parens character at the top of the stack not
+            # matching the open parens counterpart of the closing parens we're looking
+            # at, a sample string would be '[{]}' whereby the stack will be non-empty
+            # but by the time we get to the third character, the closing parens ], the
+            # character at the top of the stack will be the prior { which does not match
+            # the open parens counterpart of ]
+            else:
+                return False
+        # if the character is an opening bracket, we push it onto the stack
+        else:
+            stack.append(c)
+    # if the stack is empty, it means that all the opening brackets have been popped
+    # and there are no closing brackets left and so the input string is valid
+    return len(stack) == 0
