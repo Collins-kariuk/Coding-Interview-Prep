@@ -676,3 +676,41 @@ def isValid(s):
     # if the stack is empty, it means that all the opening brackets have been popped
     # and there are no closing brackets left and so the input string is valid
     return len(stack) == 0
+
+# --------- 16. Evaluate Reverse Polish Situation - Leetcode 150 - Medium ------------
+
+
+def evalRPN(tokens):
+    """
+    COMPLEXITY:
+
+    The space complexity of the evalRPN function is O(n), where n is the number of tokens in the input list.
+    This is because the function uses a stack to store the operands, and the size of the stack GROWS LINEARLY with the number of tokens.
+
+    The time complexity of the evalRPN function is also O(n), where n is the number of tokens in the input list.
+    This is because the function iterates through each token once and performs constant-time operations for each token.
+    Therefore, the time complexity is linear with respect to the NUMBER OF TOKENS.
+    """
+
+    # Initialize a stack to store the operands
+    stack = []
+
+    for token in tokens:
+        # Push the operands onto the stack
+        if token not in "+-*/":
+            stack.append(int(token))
+        else:
+            # Pop the operands in the correct order
+            num2 = stack.pop()
+            num1 = stack.pop()
+
+            if token == "+":
+                stack.append(num1 + num2)
+            elif token == "-":
+                stack.append(num1 - num2)
+            elif token == "*":
+                stack.append(num1 * num2)
+            elif token == "/":
+                # use integer division that truncates towards zero
+                stack.append(int(num1 / num2))
+    return stack[0]
