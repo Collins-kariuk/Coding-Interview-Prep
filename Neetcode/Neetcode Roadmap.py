@@ -681,30 +681,33 @@ def isValid(s):
 
 
 class MinStack:
-
     def __init__(self):
-        pass
+        # initialize the stack and the minStack
+        # the stack will store the values while the minStack will store the minimum values after each push
+        self.stack = []
+        self.minStack = []
 
     def push(self, val: int) -> None:
-        pass
+        # we push the value onto the stack
+        self.stack.append(val)
+        # we push the minimum value onto the minStack
+        # we get the minimum value by comparing the current value with the value at the top of the minStack
+        # if the minStack is empty, we push the current value onto the minStack which is just the equivalent of
+        # pushing the current value onto the stack
+        val = min(val, self.minStack[-1] if len(self.minStack) != 0 else val)
+        self.minStack.append(val)
 
     def pop(self) -> None:
-        pass
+        self.stack.pop()
+        self.minStack.pop()
 
     def top(self) -> int:
-        pass
+        # we return the value at the top of the stack
+        return self.stack[-1]
 
     def getMin(self) -> int:
-        pass
-
-
-# Your MinStack object will be instantiated and called as such:
-# obj = MinStack()
-# obj.push(val)
-# obj.pop()
-# param_3 = obj.top()
-# param_4 = obj.getMin()
-
+        # we return the value at the top of the minStack
+        return self.minStack[-1]
 
 # --------- 17. Evaluate Reverse Polish Situation - Leetcode 150 - Medium ------------
 
