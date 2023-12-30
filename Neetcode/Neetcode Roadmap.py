@@ -751,7 +751,68 @@ def evalRPN(tokens):
 
 
 def generateParenthesis(n):
-    pass
+    """
+    COMPLEXITY:
+
+    The space complexity of the generateParenthesis function is O(n), where n is the input parameter representing the number of pairs of parentheses.
+    This is because the function uses a stack to store the parentheses combinations, and the maximum size of the stack at any given time is n.
+
+    The stack indeed stores one potential parentheses combination at a time, but the maximum length of this combination can be up to 2n (for n pairs of parentheses,
+    each pair consists of an opening and a closing bracket). Therefore, the space complexity is O(n) because the maximum size of the stack (or the maximum length of
+    a single combination) is proportional to the input size n.
+    Additionally, the recursive nature of the function also contributes to the space complexity. Each recursive call to backtrack adds a new level to the call stack.
+    In the worst-case scenario, the depth of recursion (i.e., the maximum height of the implicit call stack) can be up to 2n, which also contributes to the O(n)
+    space complexity. So, in summary, the space complexity of the function is O(n) due to the MAXIMUM SIZE OF THE STACK used to store a single parentheses
+    combination and the MAXIMUM DEPTH OF THE RECURSIVE CALL STACK.
+
+    The time complexity of the generateParenthesis function is O(4^n/n^(1/2)), which can be approximated as O(4^n). This is because the function uses
+    a backtracking approach to generate all the valid parentheses combinations. In the worst case, the function explores all possible combinations,
+    which is exponential with respect to the input size. The factor of 4 comes from the two choices for each parentheses position (open or closed),
+    and the division by n^(1/2) accounts for the number of invalid combinations that are pruned during the backtracking process.
+    """
+
+    # initialize a stack to store the parentheses intermediately
+    # at any given time in the backtracking process, the stack will store only one valid parentheses combination
+    stack = []
+    # initialize a list to store the result
+    res = []
+
+    def backtrack(openCount, closedCount):
+        """
+        The purpose of the backtrack function is to generate all the valid parentheses combinations.
+        The function uses a backtracking approach to generate all the combinations.
+        The function takes in two parameters, openCount and closedCount, which represent the number of open and closed parentheses respectively.
+
+        Yes, that is correct. At any given time during the backtracking process, the stack will only be storing one potential parentheses combination.
+        This is because the function uses a backtracking approach, where it explores all possible combinations by adding and removing parentheses from the stack.
+        Each time a valid combination is found, it is appended to the result list, and then the function continues exploring other possibilities.
+        """
+
+        # the base case is when the number of open and closed parentheses is equal to n
+        # this means that we have generated A valid parentheses combination
+        # we append the parentheses combination to the result list and return
+        if openCount == closedCount == n:
+            res.append("".join(stack))
+            return
+
+        # as long as the number of open parentheses is less than n, we can add an open parentheses
+        # to the stack
+        if openCount < n:
+            stack.append("(")
+            # we increment the openCount by one since we have added an open parentheses
+            # we keep the closedCount the same since we have not added a closed parentheses
+            # this is done so that future recursive calls can keep track of the number of open and closed parentheses
+            backtrack(openCount + 1, closedCount)
+            stack.pop()
+
+        if closedCount < openCount:
+            stack.append(")")
+            backtrack(openCount, closedCount + 1)
+            stack.pop()
+
+    # we initially call the backtrack function with the initial openCount and closedCount values of 0
+    backtrack(0, 0)
+    return res
 
 # ------------- 19. Daily Temperatures - Leetcode 739 - Medium ---------------
 
