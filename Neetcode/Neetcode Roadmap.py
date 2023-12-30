@@ -677,7 +677,36 @@ def isValid(s):
     # and there are no closing brackets left and so the input string is valid
     return len(stack) == 0
 
-# --------- 16. Evaluate Reverse Polish Situation - Leetcode 150 - Medium ------------
+# --------- 16. Min Stack - Leetcode 155 - Medium ------------
+
+
+class MinStack:
+
+    def __init__(self):
+        pass
+
+    def push(self, val: int) -> None:
+        pass
+
+    def pop(self) -> None:
+        pass
+
+    def top(self) -> int:
+        pass
+
+    def getMin(self) -> int:
+        pass
+
+
+# Your MinStack object will be instantiated and called as such:
+# obj = MinStack()
+# obj.push(val)
+# obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.getMin()
+
+
+# --------- 17. Evaluate Reverse Polish Situation - Leetcode 150 - Medium ------------
 
 
 def evalRPN(tokens):
@@ -714,3 +743,45 @@ def evalRPN(tokens):
                 # use integer division that truncates towards zero
                 stack.append(int(num1 / num2))
     return stack[0]
+
+# --------- 18. Generate Parentheses - Leetcode 22 - Medium ------------
+
+
+def generateParenthesis(n):
+    pass
+
+# ------------- 19. Daily Temperatures - Leetcode 739 - Medium ---------------
+
+
+def dailyTemperatures(temperatures):
+    """
+    COMPLEXITY:
+
+    The time complexity of the dailyTemperatures function is O(n), where n is the length of the temperatures list.
+    This is because we iterate through each temperature once and perform CONSTANT-TIME OPERATIONS for each temperature.
+
+    The space complexity of the function is O(n) as well.
+    This is because we use a stack to store the indices of the temperatures that we have seen so far alongside the temperature.
+    The size of the stack grows linearly with the number of temperatures, so the space complexity is also linear with respect
+    to the length of the temperatures list.
+    """
+
+    # initialize the result array
+    # we initialize it to all zeros because the default value for when we do not find a warmer day is 0
+    res = [0] * len(temperatures)
+    # initialize a stack to store the indices of the temperatures that we have seen so far alongside the temperature
+    stack = []  # pair: [temp, index]
+
+    for currIndex, temperature in enumerate(temperatures):
+        # if the stack is not empty and the current temperature is greater than the temperature at the top of the stack
+        # we pop the temperature and index from the stack and calculate the number of days between the current index and
+        # the index at the top of the stack
+        # we then update the result array at the index at the top of the stack with the number of days
+        # we continue popping from the stack until the stack is empty or the current temperature is less than the
+        # temperature at the top of the stack
+        while len(stack) != 0 and temperature > stack[-1][0]:
+            stackTemp, stackInd = stack.pop()
+            res[stackInd] = currIndex - stackInd
+        # we push the current temperature and index onto the stack
+        stack.append([temperature, currIndex])
+    return res
