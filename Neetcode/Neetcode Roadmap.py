@@ -849,3 +849,43 @@ def dailyTemperatures(temperatures):
         # we push the current temperature and index onto the stack
         stack.append([temperature, currIndex])
     return res
+
+# ------------- 20. Car Fleet - Leetcode 853 - Medium ---------------
+
+
+def carFleet(target, position, speed):
+    """
+    COMPLEXITY:
+
+    The time complexity of the carFleet function is O(n log n), where n is the length of the position or speed list.
+    This is because the function involves SORTING the pair list, which takes O(n log n) time complexity.
+
+    The space complexity of the function is O(n), where n is the length of the position or speed list. This is
+    because the function creates A PAIR LIST to store the position and speed of each car, which takes O(n) space.
+    Additionally, the function uses a stack to keep track of the time it takes for the cars to reach the target,
+    which also takes O(n) space in the worst case.
+    """
+
+    # keep track of the position and speed of each car simultaneously in one list that'll store the pair as tuples
+    # pair = [(p, s) for p, s in zip(position, speed)]
+    # we could also do the above using the zip function but it's more readable to do it the way below
+    pair = []
+    for i in range(len(position)):
+        pair.append((position[i], speed[i]))
+
+    # sort the list in reverse order based on the position of the car because we want to start from the car that is
+    # closest to the target
+    pair.sort(reverse=True)
+    stack = []
+    # we use the stack to keep track of the time it takes for the cars to reach the target
+    for p, s in pair:  # in reverse Sorted Order
+        stack.append((target - p) / s)
+        # as long as the stack has more than 1 car, we check whether the time it takes for the car at the top of the
+        # stack to reach the target
+        # is less than or equal to the time it takes for the car below it to reach the target
+        # if it is, it means that the car below it will reach the target earlier or at the same time as the car above
+        # it and so they will form a fleet and so we pop the car above it
+        if len(stack) >= 2 and stack[-1] <= stack[-2]:
+            stack.pop()
+    # at the end of it all, the number of cars in the stack will be the number of fleets
+    return len(stack)
