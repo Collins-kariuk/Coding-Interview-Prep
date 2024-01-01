@@ -35,3 +35,48 @@ def maxLengthBetweenEqualCharacters(s):
             max_length = max(max_length, i - d[c] - 1)
     # Return the max length
     return max_length
+
+
+# --------- (Jan 1 2024) Assign Cookies - Leetcode 455 - Easy ------------
+def findContentChildren(g, s):
+    """
+    COMPLEXITY: O(nlogn) time | O(1) space
+
+    DESCRIPTION: 
+    The space complexity of this function is O(1), because the function does not use any
+    additional data structures to store information.
+
+    The time complexity of this function is O(nlogn), where n is the length of the input
+    array g. This is because the function sorts the input array g, which takes O(nlogn) time.
+    The function then iterates through the input array s, performing constant-time operations
+    for each element. The maximum number of iterations is equal to the length of the input
+    array s, resulting in a linear time complexity.
+
+    NOTES: The function finds the maximum number of content children by greedily assigning
+    cookies to children with the smallest greed factors. It does not assume any specific
+    order of the input arrays g and s.
+    """
+
+    # Sort the input arrays g and s
+    g.sort()
+    s.sort()
+
+    # Create a variable to store the number of content children
+    count = 0
+    i = 0  # Index for array g
+    j = 0  # Index for array s
+
+    while i < len(g) and j < len(s):
+        # If the current cookie j is greater than or equal to the greed factor of the
+        # current child i, the function gives the cookie to the child and moves to the
+        # next child
+        if s[j] >= g[i]:
+            count += 1
+            i += 1
+        # we move to the next cookie regardless of whether the current child gets a cookie because we want to
+        # find the smallest cookie that can satisfy the current child and we can only do that by checking all cookies
+        # in the sorted array s
+        j += 1
+
+    # Return the number of content children
+    return count
