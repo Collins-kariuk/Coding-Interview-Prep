@@ -80,3 +80,52 @@ def findContentChildren(g, s):
 
     # Return the number of content children
     return count
+
+
+# --------- (Jan 2 2024) Convert an Array into a 2D Array with Conditions - Leetcode 2610 - Medium ------------
+def dictify(nums):
+    countNums = {}
+    for num in nums:
+        if num in countNums:
+            countNums[num] += 1
+        else:
+            countNums[num] = 1
+    return countNums
+
+
+def findMatrix(nums):
+    """
+    COMPLEXITY: O(n) time | O(n) space
+
+    DESCRIPTION:
+    The space complexity of the findMatrix function is O(n), where n is the length of the input array nums.
+    This is because the function creates a result list res with a number of sublists equal to the maximum number of
+    occurrences of a number in the input array. The size of each sublist will depend on the number of unique elements
+    in the input array.
+
+    The time complexity of the findMatrix function is O(n^2), where n is the length of the input array nums.
+    This is because the function iterates through each element in the input array and checks if it is already present
+    in any of the sublists in the result. The worst-case scenario occurs when all elements in the input array are unique,
+    resulting in nested loops that iterate through all sublists for each element.
+
+    NOTES: The function creates a result list with a number of sublists equal to the maximum number of occurrences of a
+    number in the input array. It then iterates through the input array and adds each element to the first sublist that
+    does not contain it. This ensures that the number of unique elements in each sublist is equal to the maximum number
+    of occurrences of a number in the input array.
+    """
+
+    # the number of sublists in the result is equal to the maximum number of occurrences of a number in the input array
+    countNumsVals = list(dictify(nums).values())
+    numResSublists = max(countNumsVals)
+    res = [[] for _ in range(numResSublists)]
+
+    for num in nums:
+        # if the number is not in any of the sublists in the result, add it to the first sublist
+        # if the number is already in a sublist in the result, add it to the next sublist, and so on
+        for sublist in res:
+            if num not in sublist:
+                sublist.append(num)
+                # we have to break out of the loop after adding the number to the first sublist that does not contain it
+                # otherwise, the number will be added to all sublists that do not contain it
+                break
+    return res
