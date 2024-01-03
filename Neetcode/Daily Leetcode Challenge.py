@@ -129,3 +129,53 @@ def findMatrix(nums):
                 # otherwise, the number will be added to all sublists that do not contain it
                 break
     return res
+
+
+# --------- (Jan 3 2024) Number of Laser Beams in a Bank - Leetcode 2125 - Medium ------------
+def numberOfBeams(bank):
+    """
+    COMPLEXITY:
+    The space complexity of the numberOfBeams function is O(n), where n is the number of rows in the input array bank.
+    This is because the function creates a list to store the number of devices in each row, a list to store the number
+    of laser beams in between each row pair, and a list to store the number of laser beams in each row. The size of each
+    list will depend on the number of rows in the input array.
+
+    The time complexity of the numberOfBeams function is O(n^2), where n is the number of rows in the input array bank.
+    This is because the function iterates through each row in the input array and then iterates through each space in
+    the row. The worst-case scenario occurs when all spaces in the input array contain devices, resulting in nested loops
+    that iterate through all spaces in each row.
+
+    NOTES: The function first iterates through each row in the input array and counts the number of devices in each row.
+    It then iterates through the list of device counts and calculates the number of laser beams in between each row pair.
+    The function returns the sum of the number of laser beams in the bank.
+    """
+
+    # initialize a list to store the number of devices in each row
+    deviceCounts = []
+    numDevices = 0
+    # iterate through each row in the bank
+    for row in bank:
+        for space in row:
+            # if the space contains a device, increment the number of devices in the row
+            if space == '1':
+                numDevices += 1
+        # after iterating through all spaces in the row, append the number of devices to the list
+        deviceCounts.append(numDevices)
+        # reset the number of devices to 0 for the next row
+        numDevices = 0
+
+    # initialize a list to store the number of laser beams in each row
+    rowsWithDevices = []
+    for deviceCount in deviceCounts:
+        # if the row contains at least one device, add it to the list
+        # we are not interested in rows that do not contain any devices
+        if deviceCount != 0:
+            rowsWithDevices.append(deviceCount)
+
+    # initialize a list to store the number of laser beams in between each row pair
+    laserBeamsPerRow = []
+    for i in range(len(rowsWithDevices) - 1):
+        # the number of laser beams between two rows is equal to the product of the number of devices in any two adjacent rows
+        laserBeamsPerRow.append(rowsWithDevices[i] * rowsWithDevices[i + 1])
+    # return the sum of the number of laser beams in the bank
+    return sum(laserBeamsPerRow)
