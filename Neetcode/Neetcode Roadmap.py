@@ -889,3 +889,43 @@ def carFleet(target, position, speed):
             stack.pop()
     # at the end of it all, the number of cars in the stack will be the number of fleets
     return len(stack)
+
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------
+#### BINARY SEARCH ####
+# ------------- 21. Binary Search - Leetcode 704 - Easy ---------------
+def search(nums, target):
+    """
+    COMPLEXITY:
+
+    The time complexity of the search function is O(log n), where n is the length of the nums list.
+    This is because the function uses a BINARY SEARCH approach to find the target value.
+    The function performs a constant amount of work for each iteration, and the number of iterations
+    is bounded by the length of the nums list. Therefore, the time complexity is logarithmic.
+
+    The space complexity of the search function is O(1), as it only uses a constant amount of extra
+    space to store the pointers.
+    """
+
+    # initialize the left and right pointers
+    l = 0
+    r = len(nums) - 1
+
+    # iterate until the pointers meet
+    while l <= r:
+        # calculate the middle index
+        mid = (l + r) // 2
+        # if the middle value is equal to the target, we return the middle index
+        if nums[mid] == target:
+            return mid
+        # if the middle value is greater than the target, we move the right pointer to the left
+        # so as to decrease the middle value
+        elif nums[mid] > target:
+            r = mid - 1
+        # if the middle value is less than the target, we move the left pointer to the right
+        # so as to increase the middle value
+        else:
+            l = mid + 1
+    # if the pointers meet and we still haven't found the target, it means that the target is not
+    # in the list and so we return -1
+    return -1
