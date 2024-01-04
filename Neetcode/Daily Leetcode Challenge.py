@@ -1,4 +1,7 @@
 # --------- (Dec 31 2023) Largest Substring Between Two Equal Characters - Leetcode 1624 - Easy ------------
+import math
+
+
 def maxLengthBetweenEqualCharacters(s):
     """
     COMPLEXITY: O(n) time | O(n) space
@@ -179,3 +182,45 @@ def numberOfBeams(bank):
         laserBeamsPerRow.append(rowsWithDevices[i] * rowsWithDevices[i + 1])
     # return the sum of the number of laser beams in the bank
     return sum(laserBeamsPerRow)
+
+# --------- (Jan 4 2024) Minimum Number of Operations to Make Array Empty - Leetcode 2870 - Medium ------------
+
+
+def dictify(nums):
+    counter = {}
+    for num in nums:
+        if num in counter:
+            counter[num] += 1
+        else:
+            counter[num] = 1
+    return counter
+
+
+def minOperations(nums):
+    """
+    COMPLEXITY:
+    The space complexity of the minOperations function is O(n), where n is the length of the input array nums.
+    This is because the function creates a dictionary to store the number of occurrences of each element in the input array.
+    The size of the dictionary will depend on the number of unique elements in the input array.
+
+    The time complexity of the minOperations function is O(n), where n is the length of the input array nums.
+    This is because the function iterates through each element in the input array and performs constant-time operations
+    for each element. The maximum number of iterations is equal to the length of the input array, resulting in a linear
+    time complexity.
+    """
+
+    # create a dictionary to store the number of occurrences of each element in the input array
+    counter = dictify(nums)
+    # create a list to store the number of operations required to empty the input array
+    frequencies = list(counter.values())
+    res = 0
+    for num in frequencies:
+        # when the number is equal to 1 we cannot reduce it to groups of 2 or 3, so we return -1
+        if num == 1:
+            return -1
+        # when the number is greater than 1, we can reduce it to groups of 2 or 3
+        # we do this by dividing the number by 3 and rounding up to the nearest integer regardless of whether the number
+        # is divisible by 2 or 3
+        # this is because any number greater than 1 can be reduced to groups of 2 or 3
+        res += math.ceil(num / 3)
+    return res
