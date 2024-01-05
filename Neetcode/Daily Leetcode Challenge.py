@@ -224,3 +224,43 @@ def minOperations(nums):
         # this is because any number greater than 1 can be reduced to groups of 2 or 3
         res += math.ceil(num / 3)
     return res
+
+
+# --------- (Jan 5 2024) Longest Increasing Subsequence - Leetcode 300 - Medium ------------
+def lengthOfLIS(nums):
+    """
+    COMPLEXITY:
+    The space complexity of the lengthOfLIS function is O(n), where n is the length of the input array nums.
+    This is because the function creates a list to store the length of the longest increasing subsequence ending at each index.
+    The size of the list will depend on the length of the input array.
+
+    The time complexity of the lengthOfLIS function is O(n^2), where n is the length of the input array nums.
+    This is because the function iterates through the input array twice, performing constant-time operations for each element.
+    The maximum number of iterations is equal to the length of the input array, resulting in a quadratic time complexity.
+
+    NOTES: There exists a more efficient solution to this problem that uses binary search to reduce the time complexity to O(nlogn).
+    However, the solution below is easier to understand and implement. There also exists a brute force solution that uses recursion
+    to generate all possible subsequences and then checks if each subsequence is increasing (via DFS). This solution has a time
+    complexity of O(2^n) and is not included below.
+    """
+
+    # create a list to store the length of the longest increasing subsequence ending at each index
+    LIS = [1] * len(nums)
+    # iterate in reverse order
+    for i in range(len(nums) - 1, -1, -1):
+        # iterate through the input array starting from the index after the current index
+        # essentially looking at the numbers to the right of the current number
+        for j in range(i + 1, len(nums)):
+            # there can only be a valid increasing subsequence from the current index to the next index if the current
+            # number is less than the next number
+            if nums[i] < nums[j]:
+                # the length of the longest increasing subsequence ending at the current index is equal to the maximum
+                # of the current length and the length of the longest increasing subsequence ending at the next index
+                # in the example, [1, 2, 4, 3], if we want to find the length of the longest increasing subsequence at
+                # index 2 (4), we have the choice of only including the 4 or including the 4 and the longest increasing
+                # subseqence at index 3 (3)
+                # however, since 4 > 3, it means that no valid increasing subsequence can be formed by including the 4
+                # and the 3, so we only include the 4 which is why we need the if check
+                LIS[i] = max(LIS[i], 1 + LIS[j])
+    # return the maximum length of the longest increasing subsequence
+    return max(LIS)
