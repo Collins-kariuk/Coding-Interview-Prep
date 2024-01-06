@@ -264,3 +264,54 @@ def lengthOfLIS(nums):
                 LIS[i] = max(LIS[i], 1 + LIS[j])
     # return the maximum length of the longest increasing subsequence
     return max(LIS)
+
+
+# --------- (Jan 6 2024) Maximum Profit in Job Scheduling - Leetcode 1235 - Hard ------------
+import bisect
+def jobScheduling(startTime, endTime, profit):
+    """
+    
+    COMPLEXITY:
+    The space complexity of the jobScheduling function is O(n), where n is the length of the input arrays startTime, endTime, and profit.
+    This is because the function creates a dictionary to store the maximum profit for each index in the input arrays.
+    The size of the dictionary will depend on the length of the input arrays.
+
+    The time complexity of the jobScheduling function is O(nlogn), where n is the length of the input arrays startTime, endTime, and profit.
+    This is because the function iterates through the input arrays and performs constant-time operations for each element.
+    The maximum number of iterations is equal to the length of the input arrays, resulting in a linear time complexity.
+    The function also uses the bisect module to perform binary search, which has a time complexity of O(logn).
+    
+    NOTES: The function first sorts the input arrays by the end time of each job. It then iterates through the input arrays
+    and uses binary search to find the index of the next job that starts after the current job ends. The function then
+    calculates the maximum profit for the current job by adding the profit of the current job to the maximum profit of the
+    next job. The function returns the maximum profit of the last job.
+    """
+
+    # sort the input arrays by the start time of each job
+    intervals = sorted(zip(startTime, endTime, profit))
+    # create a dictionary to store the maximum profit for each index in the input arrays
+    cache = {}
+
+    def dfs(i):
+        # when i is equal to the length of the input arrays, it means we have reached the end of the intervals
+        if i == len(intervals):
+            return 0
+        # if the index is already in the dictionary, it means we have already calculated the maximum profit for that index
+        # so we return the maximum profit for that index
+        if i in cache:
+            return cache[i]
+        
+        # don't include the element at index i
+        res = dfs(i + 1)
+
+        # include the element at index i
+        # we use binary search to find the index of the next job that starts after the current job ends
+        # we use the bisect module to perform binary search
+        j = bisect.bisect(intervals, (intervals[i][1], -1, -1))
+
+        # the maximum profit for the current job is equal to the profit of the current job plus the maximum profit of the next job
+        # we use max to ensure that we are always returning the maximum profit
+        cache[i] = res = max(res, intervals[i][2] + dfs(j))
+        return res
+    
+    return dfs(0)
