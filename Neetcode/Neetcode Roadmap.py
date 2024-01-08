@@ -929,3 +929,60 @@ def search(nums, target):
     # if the pointers meet and we still haven't found the target, it means that the target is not
     # in the list and so we return -1
     return -1
+
+
+# ------------- 22. Search a 2D Matrix - Leetcode 74 - Medium ---------------
+def searchMatrix(matrix, target):
+    """
+    COMPLEXITY:
+
+    The time complexity of the searchMatrix function is O(m + log n), where m is the number of rows and n is the number of columns.
+    This is because the function uses a TWO-POINTER APPROACH to iterate through the matrix once.
+    The function performs a constant amount of work for each iteration, and the number of iterations is bounded by the number of rows.
+    Therefore, the time complexity is linear with respect to the number of rows.
+
+    Additionally, the function uses a BINARY SEARCH approach to find the target value in the row.
+    The function performs a constant amount of work for each iteration, and the number of iterations is bounded by the number of columns.
+    Therefore, the time complexity is logarithmic with respect to the number of columns.
+
+    The time complexity of the searchMatrix function is O(m + log(n)) instead of O(log(m*n)) because the function iterates through the
+    matrix row by row using a two-pointer approach, and performs a binary search within each row.
+    Iterating through the matrix: The function uses a for loop to iterate through each row of the matrix. Since there are m rows, the
+    time complexity of this part is O(m).
+
+    Binary search within each row: For each row, the function performs a binary search to find the target value. The binary search algorithm
+    has a time complexity of O(log(n)), where n is the number of columns in the matrix. Since the binary search is performed for each row,
+    the total time complexity for this part is O(m * log(n)).
+
+    Combining the time complexities of both parts, we get O(m + m * log(n)), which can be simplified to O(m + log(n)).
+
+    It's important to note that the time complexity is not O(log(m*n)) because the function does not perform a binary search on the entire
+    matrix at once. Instead, it performs a binary search within each row individually. Therefore, the time complexity is linear with respect
+    to the number of rows and logarithmic with respect to the number of columns.
+
+    The space complexity of the searchMatrix function is O(1), as it only uses a constant amount of extra space to store the pointers.
+    """
+
+    # initialize the left and right pointers
+    l = 0
+    ROW_LENGTH = len(matrix[0])
+    r = ROW_LENGTH - 1
+
+    for row in matrix:
+        # if the target is within the range of the current row, we perform a binary search on the row
+        if row[0] <= target and target <= row[ROW_LENGTH - 1]:
+            while l <= r:
+                m = (l + r) // 2
+                if row[m] == target:
+                    return True
+                elif row[m] < target:
+                    l = m + 1
+                elif row[m] > target:
+                    r = m - 1
+            # if the pointers meet and we still haven't found the target, it means that the target is not
+            # in the list and so we return False
+            return False
+    # if the target is not within the range of the current row, we move on to the next row
+    # if we have iterated through all the rows and still haven't found the target, it means that the target
+    # is not in the matrix and so we return False
+    return False
