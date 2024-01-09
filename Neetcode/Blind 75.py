@@ -1368,10 +1368,10 @@ def search(nums, target):
             return mid
 
         # left sorted portion
-        # if the number at the middle is less than the number at the left pointer,
+        # if the number at the middle is greater than the number at the left pointer,
         # we are at the left sorted portion
         if nums[l] <= nums[mid]:
-            # if the target greater than the number at the middle OR if the target is
+            # if the target is greater than the number at the middle OR if the target is
             # less than the number at the left pointer, there is no point in looking
             # at the left sorted portion, so we update our pointers to concentrate our
             # search on the right sorted portion
