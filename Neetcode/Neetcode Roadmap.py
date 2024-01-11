@@ -1075,6 +1075,8 @@ def findMin(nums):
     return res
 
 # ---------- 25. Search in Rotated Sorted Array - Leetcode 33 - Medium -------------
+
+
 def search(nums, target):
     """
     COMPLEXITY:
@@ -1102,7 +1104,7 @@ def search(nums, target):
         # if the number at the middle is greater than the number at the left pointer,
         # we are at the left sorted portion
         if nums[l] <= nums[mid]:
-            # if the target is greater than the number at the middle OR if the target is 
+            # if the target is greater than the number at the middle OR if the target is
             # less than the number at the left pointer, there is no point in looking
             # at the left sorted portion, so we update our pointers to concentrate our
             # search on the right sorted portion
@@ -1127,3 +1129,48 @@ def search(nums, target):
                 l = mid + 1
     # when the target is not  in our list of numbers, we just return -1
     return -1
+
+
+# ---------- 26. Time Based Key-Value Store - Leetcode 981 - Medium -------------
+class TimeMap:
+
+    def __init__(self):
+        # initialize a dictionary to store the key-value pairs
+        # key = string, value = [list of [value, timestamp] pairs]
+        self.store = {}
+
+    def set(self, key, value, timestamp):
+        # if the key is already in the dictionary, we append the value and timestamp to the list
+        if key in self.store:
+            self.store[key].append([value, timestamp])
+        # otherwise, we create a new list with the value and timestamp and add it to the dictionary
+        else:
+            self.store[key] = [[value, timestamp]]
+
+    def get(self, key, timestamp):
+        # initialize a variable to store the result
+        res = ""
+        # if the key is not in the dictionary, we return an empty string
+        if key in self.store:
+            # we get the list of [value, timestamp] pairs for the key
+            values = self.store[key]
+        else:
+            values = []
+
+        # binary search
+        l = 0
+        r = len(values) - 1
+        while l <= r:
+            m = (l + r) // 2
+            # when the timestamp at the middle index is less than or equal to the input timestamp,
+            # it means that the timestamp at the middle index is the closest to the input timestamp
+            # and so we update our result to be the value at the middle index
+            # we also move the left pointer to the right so as to look for a closer timestamp
+            if values[m][1] <= timestamp:
+                res = values[m][0]
+                l = m + 1
+            # when the input timestamp is less than the timestamp at the middle index, it means that
+            # the timestamp at the middle index is too far from the input timestamp and so we move
+            else:
+                r = m - 1
+        return res
