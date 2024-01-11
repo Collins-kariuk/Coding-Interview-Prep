@@ -1174,3 +1174,49 @@ class TimeMap:
             else:
                 r = m - 1
         return res
+    
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------
+#### SLIDING WINDOW ####
+# ---------- 27. Best Time to Buy and Sell Stock - Leetcode 121 - Easy -------------
+def maxProfit(prices):
+    """
+    COMPLEXITY:
+
+    The time complexity of the maxProfit function is O(n), where n is the length of the prices list.
+    This is because the function uses a SLIDING WINDOW approach to iterate through the list once.
+
+    The space complexity of the maxProfit function is O(1), as it only uses a constant amount of extra
+    space to store the pointers and the result variable.    
+    """
+
+    # initialize pointers
+    l = 0
+    r = 1
+    # initialize variable that's gonna store the maximum profit
+    maxProfit = 0
+
+    # continue as long as the right pointer doesn't go out of bounds of the length
+    # of the prices list
+    while r < len(prices):
+        # it's futile to calculate the profit if the value at the right pointer is
+        # less than the value at the left pointer, so it means we've encountered a
+        # value which is less than the one at the left pointer and would therefore
+        # be better suited to calculate the maximum profit
+        # we therefore change the left pointer to where the right pointer is and
+        # increment the right pointer by one
+        if prices[l] >= prices[r]:
+            # the reason why we change the left pointer to where the right pointer
+            # is because we need to keep track of the minimum value in the prices list
+            # so that we can calculate the maximum profit
+            l = r
+            r += 1
+        else:
+            # otherwise we calculate the current profit normally
+            currProfit = prices[r] - prices[l]
+            # the maximum profit will be the larger profit between the previous max
+            # profit and the just calculated current profit
+            maxProfit = max(maxProfit, currProfit)
+            # increment the right pointer by one
+            r += 1
+    return maxProfit
