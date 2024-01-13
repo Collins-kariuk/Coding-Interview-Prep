@@ -1174,7 +1174,7 @@ class TimeMap:
             else:
                 r = m - 1
         return res
-    
+
 
 # ----------------------------------------------------------------------------------------------------------------------------------------------------------
 #### SLIDING WINDOW ####
@@ -1224,11 +1224,21 @@ def maxProfit(prices):
 
 # ---------- 28. Longest Substring Without Repeating Characters - Leetcode 3 - Medium -------------
 def lengthOfLongestSubstring(s):
-    # create a set that'll store all unique non-repeating characters
+    """
+    COMPLEXITY:
+
+    The time complexity of the lengthOfLongestSubstring function is O(n), where n is the length of the input string s.
+    This is because the function uses a SLIDING WINDOW approach to iterate through the string once.
+
+    The space complexity of the lengthOfLongestSubstring function is O(n), where n is the length of the input string s.
+    This is because the function uses a set to store the characters in the sliding window, and the maximum size of the set
+    is proportional to the length of the input string.
+    """
+
+    # create a set that'll store all unique non-repeating characters in our sliding window
     charSet = set()
     # initialize left pointer
     l = 0
-    # result that'll hold the longest substring without repeating characters
     res = 0
 
     for r in range(len(s)):
