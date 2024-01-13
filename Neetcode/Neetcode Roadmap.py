@@ -1220,3 +1220,41 @@ def maxProfit(prices):
             # increment the right pointer by one
             r += 1
     return maxProfit
+
+
+# ---------- 28. Longest Substring Without Repeating Characters - Leetcode 3 - Medium -------------
+def lengthOfLongestSubstring(s):
+    # create a set that'll store all unique non-repeating characters
+    charSet = set()
+    # initialize left pointer
+    l = 0
+    # result that'll hold the longest substring without repeating characters
+    res = 0
+
+    for r in range(len(s)):
+        # if the character at the right pointer is already in the set, it means
+        # that we've encountered a repeating character and we need to remove the
+        # character at the left pointer from the set and advance the left pointer
+        # rightwards
+        while s[r] in charSet:
+            # 1. remove the character at the left pointer from the set
+            # this is done because we need to keep track of the characters in the
+            # substring we're currently looking at
+            charSet.remove(s[l])
+            # 2. advance the left pointer rightwards
+            # this is done because we need to keep track of the characters in the
+            # substring we're currently looking at
+            # we also need to advance the left pointer rightwards because we need
+            # to remove the character at the left pointer from the set
+            l += 1
+        # add the character at the right pointer to the set
+        # this is done regardless of whether the character is repeated or not
+        # because we need to keep track of the characters in the substring
+        # we're currently looking at
+        charSet.add(s[r])
+        # the maximum length of the substring without repeating characters will be the
+        # larger of the previous length and the current length
+        # the current length is just the difference between the right and left pointers
+        # plus one since we're dealing with 0-indexing
+        res = max(res, r - l + 1)
+    return res
