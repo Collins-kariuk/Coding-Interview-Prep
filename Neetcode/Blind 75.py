@@ -1210,10 +1210,6 @@ def characterReplacement(s, k):
         # the logic of this is that if the length of the current substring minus the
         # maximum count of a character in the current substring is greater than k, then
         # we know that we can't make a character replacement
-        # we know that we can't make a character replacement because the length of the
-        # current substring minus the maximum count of a character in the current substring
-        # is the number of characters that are NOT the most frequent character in the current
-        # substring
         # it makes sense to replace the characters that are NOT the most frequent character
         # in the current substring because we can replace them with the most frequent character
         # replacements (k) in the current substring and still have a valid substring
@@ -1225,7 +1221,7 @@ def characterReplacement(s, k):
             count[s[l]] -= 1
             l += 1
         # the maximum length of the substring with repeating characters will be the larger of
-        # the previous length and the current length
+        # the previous window length and the current sliding window length
         res = max(res, r - l + 1)
     return res
 
