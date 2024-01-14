@@ -55,9 +55,11 @@ def isAnagram(s, t):
                 stringDict[c] = 1
         return stringDict
 
+    # convert the strings to dictionaries that store the frequency of each character
     sDict = convertToDict(s)
     tDict = convertToDict(t)
 
+    # s and t are anagrams only if the counts of the characters in both strings are the same
     return sDict == tDict
 
 
@@ -1297,6 +1299,7 @@ def characterReplacement(s, k):
             count[char] += 1
         else:
             count[char] = 1
+        
         # check whether a character replacement can even be made
         # the logic of this is that if the length of the current substring window minus the
         # maximum count of a character in the current substring is greater than k, then
@@ -1304,6 +1307,9 @@ def characterReplacement(s, k):
         # it makes sense to replace the characters that are NOT the most frequent character
         # in the current substring because we can replace them with the most frequent character
         # replacements (k) in the current substring and still have a valid substring
+            
+        # (r - l + 1) is the length of the current substring window
+        # max(count.values()) is the maximum count of a character in the current substring
         if (r - l + 1) - max(count.values()) > k:
             # when this occurs, we need to decrement the count of the character at the left
             # pointer in the dictionary since we're going to move the left pointer rightwards
