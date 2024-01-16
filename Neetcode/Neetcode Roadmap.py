@@ -1299,7 +1299,7 @@ def characterReplacement(s, k):
             count[char] += 1
         else:
             count[char] = 1
-        
+
         # check whether a character replacement can even be made
         # the logic of this is that if the length of the current substring window minus the
         # maximum count of a character in the current substring is greater than k, then
@@ -1307,7 +1307,7 @@ def characterReplacement(s, k):
         # it makes sense to replace the characters that are NOT the most frequent character
         # in the current substring because we can replace them with the most frequent character
         # replacements (k) in the current substring and still have a valid substring
-            
+
         # (r - l + 1) is the length of the current substring window
         # max(count.values()) is the maximum count of a character in the current substring
         if (r - l + 1) - max(count.values()) > k:
@@ -1320,3 +1320,55 @@ def characterReplacement(s, k):
         # the previous window length and the current sliding window length
         res = max(res, r - l + 1)
     return res
+
+
+# --------- 30. Permutation in String - Leetcode 567 - Medium ------------
+def dictify(s):
+    someDict = {}
+    for c in s:
+        if c in someDict:
+            someDict[c] += 1
+        else:
+            someDict[c] = 1
+    return someDict
+
+
+def checkInclusion(s1, s2):
+    """
+    COMPLEXITY:
+
+    The time complexity of the checkInclusion function is O(n * m), where n is the length of s2 and m is the length of s1.
+    This is because we iterate through s2 using the while loop, and for each iteration, we create a dictionary of the
+    current window of length m using the dictify function. The dictify function has a time complexity of O(m) because it
+    iterates through the characters of s1 and performs constant time operations to update the dictionary.
+
+    The space complexity of the checkInclusion function is O(m), where m is the length of s1. This is because we create
+    a dictionary s1Dict to store the character counts of s1, which can have at most m unique characters. Additionally,
+    we create a curWindowDict dictionary for each window of length m in s2. Therefore, the space required is proportional
+    to the length of s1.
+    """
+
+    # an edge case is when the length of s1 is greater than the length of s2
+    if len(s1) > len(s2):
+        return False
+
+    # initialize left and right pointers
+    l = 0
+    r = len(s1) - 1
+    # create a dictionary that'll store the character counts of s1
+    s1Dict = dictify(s1)
+
+    while r < len(s2):
+        # create a dictionary that'll store the character counts of the current window
+        curWindow = s2[l:r + 1]
+        curWindowDict = dictify(curWindow)
+
+        # if the character counts of the current window and s1 are the same, it means that
+        # the current window is a permutation of s1 and so we return True
+        if curWindowDict == s1Dict:
+            return True
+        # otherwise, we move the left and right pointers (the whole window) rightwards
+        else:
+            l += 1
+            r += 1
+    return False
