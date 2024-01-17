@@ -1372,3 +1372,45 @@ def checkInclusion(s1, s2):
             l += 1
             r += 1
     return False
+
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------
+#### LINKED LIST ####
+# --------- 31. Reverse Linked List - Leetcode 206 - Easy ------------
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+def reverseList(head):
+    """
+    COMPLEXITY:
+
+    The time complexity of the reverseList function is O(n), where n is the number of
+    nodes in the linked list. This is because the function iterates through each node once.
+
+    The space complexity of the reverseList function is O(1), which means it uses constant
+    space. This is because the function only uses a constant amount of additional space to
+    store the previous and current pointers, as well as the placeholder variable. The space
+    used does not depend on the size of the input linked list.
+    """
+
+    # initialize the previous and current pointers
+    prev = None
+    curr = head
+
+    # iterate through the linked list as long as the current pointer is not None
+    while curr:
+        # store the next node in a placeholder
+        placeholder = curr.next
+        # reverse the current node's next pointer to point to the previous node
+        curr.next = prev
+        # the next 2 steps set up the prev and curr pointers for the next iteration
+        # move the previous pointer to the current node
+        prev = curr
+        # move the current pointer to the next node
+        curr = placeholder
+    # return the previous pointer since it'll be pointing to the last node of the original
+    # linked list
+    return prev
