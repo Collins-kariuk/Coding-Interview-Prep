@@ -1414,3 +1414,53 @@ def reverseList(head):
     # return the previous pointer since it'll be pointing to the last node of the original
     # linked list
     return prev
+
+
+# --------- 32. Merge Two Sorted Lists - Leetcode 21 - Easy ------------
+def mergeTwoLists(l1, l2):
+    """
+    COMPLEXITY:
+
+    The time complexity of the mergeTwoLists function is O(n), where n is the total number
+    of nodes of the larger of the two input linked lists. This is because the function
+    iterates through each node once.
+
+    The space complexity of the mergeTwoLists function is O(1), which means it uses constant
+    space. This is because the function only uses a constant amount of additional space to
+    store the temporary head (res), the tail pointer (tail), and the variables for iterating
+    through the linked lists (l1 and l2). The space used does not depend on the size of the
+    input linked lists.
+
+    The new linked list that is being formed is not counted towards the space complexity
+    because it's considered as the required output of the function, not additional space used
+    by the function.
+    """
+
+    # initialize a temp head that'll serve as a placeholder
+    res = ListNode()
+    # a pointer to the temp head
+    tail = res
+
+    # we continue with the loop as long as both pointers to the input linked lists
+    # are non-null
+    while l1 and l2:
+        # when the value of the current node in l1 is smaller than that of the node in l2,
+        # the node from l1 is appended to the resultant linked list.
+        if l1.val < l2.val:
+            tail.next = l1
+            l1 = l1.next
+        else:
+            # otherwise we add the node in l2 to the result linked list
+            tail.next = l2
+            l2 = l2.next
+        # regardless, we advance the pointer to the result linked list
+        tail = tail.next
+
+    # if either of the pointers to the input linked lists are null, we add the
+    # non-null linked list to the end of the result linked list
+    if l1 is not None and l2 is None:
+        tail.next = l1
+    else:
+        tail.next = l2
+    # we return the next node of the temp head since the temp head is just a placeholder
+    return res.next
