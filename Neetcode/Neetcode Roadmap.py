@@ -1464,3 +1464,76 @@ def mergeTwoLists(l1, l2):
         tail.next = l2
     # we return the next node of the temp head since the temp head is just a placeholder
     return res.next
+
+
+# --------- 33. Reorder List - Leetcode 143 - Medium ------------
+def reorderList(head):
+    """
+    Modify the head directly, without returning any value.
+    The core strategy involves dividing the input linked list into two sections.
+    To facilitate alternating between the segments, pointers to the heads of both halves are necessary.
+    The main hurdle is that the second half of the list must be reversed for straightforward reintegration,
+    as backtracking is not possible in a singly linked list.
+
+    COMPLEXITY:
+
+    The time complexity of the reorderList function is O(n), where n is the number of nodes in the linked list.
+    This is because the function iterates through the linked list once to find the middle point, once to
+    reverse the second half, and once to merge the two halves.
+
+    The space complexity of the reorderList function is O(1), which means it uses constant space. This is
+    because the function only uses a constant amount of additional space to store the pointers (slow, fast,
+    second, prev, temp1, temp2) and variables for iterating through the linked list (first and second).
+    The space used does not depend on the size of the input linked list.
+    """
+
+    # find the middle point of the linked list
+    slow = head
+    fast = head.next
+
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+
+    # reverse second half
+    # second half of the list
+    second = slow.next
+    # we split the linked list into 2 halves so instead of pointing the next pointer
+    # of the middle node to the head of the second half of the linked list, we point
+    # it to None thus effectively splitting the linked list into 2
+    slow.next = None
+
+    # we initialize a prev pointer to None because we need to reverse the second half
+    prev = None
+
+    # reversing the second half (see reversing linked list question)
+    while second:
+        temp = second.next
+        second.next = prev
+        prev = second
+        second = temp
+
+    # merge the 2 halves
+    first = head
+    # Once the execution of the second while loop concludes, the prev pointer will be
+    # at the head of the now-reversed second half of the linked list
+    # This occurs because the second pointer, which traverses the second half of the
+    # list, reaches Null
+    second = prev
+
+    # The merging process goes on until either the first or second pointer becomes null
+    # However, given that the second half of the list might be shorter, we can
+    # base our continuation condition primarily on the status of the second pointer
+    while second:
+        # we store the references of the next nodes in separate variables since we know
+        # we are going to break the links as we traverse through both halves
+        temp1 = first.next
+        temp2 = second.next
+
+        first.next = second
+        second.next = temp1
+
+        # advance our pointers forward in the respective halves
+        # this is easy since we saved the references to the old/prior nexts
+        first = temp1
+        second = temp2
