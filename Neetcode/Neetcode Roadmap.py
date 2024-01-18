@@ -1537,3 +1537,42 @@ def reorderList(head):
         # this is easy since we saved the references to the old/prior nexts
         first = temp1
         second = temp2
+
+
+# --------- 34. Remove Nth Node from End of List - Leetcode 19 - Medium ------------
+def removeNthFromEnd(head, n):
+    """
+    COMPLEXITY:
+
+    The space complexity of the removeNthFromEnd function is O(1) because it uses a
+    constant amount of extra space regardless of the size of the input.
+
+    The time complexity of the function is O(n), where n is the length of the linked list.
+    This is because the function iterates through the linked list twice: once to find the
+    node to be removed (using the first pointer), and once to remove the node (using the
+    second pointer).
+    Both iterations take linear time proportional to the length of the linked list.
+    """
+
+    # Create a dummy node and attach it to the head of the input list.
+    dummy = ListNode(val=0, next=head)
+
+    # Initialize 2 pointers, first and second, to point to the dummy node.
+    first = dummy
+    second = dummy
+
+    # Advances first pointer so that the gap between first and second is n nodes apart
+    for _ in range(n + 1):
+        first = first.next
+
+    # While the first pointer does not equal null move both first and second to
+    # maintain the gap and get nth node from the end
+    while first != None:
+        first = first.next
+        second = second.next
+
+    # Delete the node being pointed to by second.
+    second.next = second.next.next
+
+    # Return dummy.next
+    return dummy.next
