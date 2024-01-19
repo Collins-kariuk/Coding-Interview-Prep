@@ -1576,3 +1576,57 @@ def removeNthFromEnd(head, n):
 
     # Return dummy.next
     return dummy.next
+
+# --------- 35. Copy List with Random Pointer - Leetcode 138 - Medium ------------
+
+
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+
+
+def copyRandomList(head):
+    """
+    COMPLEXITY:
+
+    The space complexity of the copyRandomList function is O(n), where n is the number of
+    nodes in the linked list. This is because we create a dictionary oldToCopy that stores
+    the old nodes as keys and the new nodes as values. The size of this dictionary is
+    proportional to the number of nodes in the linked list.
+
+    The time complexity of the function is also O(n), where n is the number of nodes in the
+    linked list. This is because we iterate through the linked list twice: once to create a
+    copy of the linked list without the random pointers or the next pointers, and once to set
+    the next and random pointers of the copy nodes. Both iterations take linear time
+    proportional to the number of nodes in the linked list.
+    """
+
+    # create a dictionary that'll store the old node as the key and the new node as the value
+    oldToCopy = {None: None}  # key:value = oldNode:newNode
+
+    # the first pass
+    # create a copy of the linked list without the random pointers or the next pointers
+    cur = head
+    while cur:
+        # create a new node with the same value as the current node
+        copy = Node(x=cur.val, next=None, random=None)
+        # add the current node and its copy to the dictionary
+        oldToCopy[cur] = copy
+        cur = cur.next
+
+    cur = head
+    while cur:
+        # get the copy of the current node
+        copy = oldToCopy[cur]
+        # set the next pointer of the copy node to be the copy of the next node which we can
+        # get from the dictionary by accessing the next pointer of the current node
+        copy.next = oldToCopy[cur.next]
+        # set the random pointer of the copy node to be the copy of the random node which we
+        # can get from the dictionary by accessing the random pointer of the current node
+        copy.random = oldToCopy[cur.random]
+        cur = cur.next
+
+    # return the copy of the head node
+    return oldToCopy[head]
