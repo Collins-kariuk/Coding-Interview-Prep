@@ -1630,3 +1630,53 @@ def copyRandomList(head):
 
     # return the copy of the head node
     return oldToCopy[head]
+
+
+
+
+# --------- 36. Add Two Numbers - Leetcode 2 - Medium ------------
+def addTwoNumbers(l1, l2):
+    res = ListNode(val = 0, next = None)
+    resPointer = res
+    carry = 0
+    
+    while l1 and l2:
+        # carry = 0
+        nodesSum = l1.val + l2.val
+        
+        resPointer.next = (nodesSum % 10) + carry
+        carry = nodesSum // 10
+
+        l1 = l1.next
+        l2 = l2.next
+
+    if l1 is not None and l2 is None:
+        resPointer.next = l2
+    else:
+        resPointer.next = l1
+    return res.next
+
+
+
+
+
+
+
+
+
+# def mergeTwoLists(l1, l2):
+#     res = ListNode()
+#     tail = res
+#     while l1 and l2:
+#         if l1.val < l2.val:
+#             tail.next = l1
+#             l1 = l1.next
+#         else:
+#             tail.next = l2
+#             l2 = l2.next
+#         tail = tail.next
+#     if l1 is not None and l2 is None:
+#         tail.next = l1
+#     else:
+#         tail.next = l2
+#     return res.next
