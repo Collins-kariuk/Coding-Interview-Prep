@@ -1725,10 +1725,12 @@ def findDuplicate(nums):
     l += 1
     r = l + 1
 
+# --------- 39. LRU Cache - Leetcode 146 - Medium ------------
+
 
 # ----------------------------------------------------------------------------------------------------------------------------------------------------------
 #### TREES ####
-# --------- 39. Invert Binary Tree - Leetcode 226 - Easy ------------
+# --------- 40. Invert Binary Tree - Leetcode 226 - Easy ------------
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -1767,3 +1769,30 @@ def invertTree(root):
     invertTree(root.right)
 
     return root
+
+# --------- 41. Maximum Depth of Binary Tree - Leetcode 104 - Easy ------------
+
+
+def maxDepth(root):
+    """
+    COMPLEXITY:
+
+    The time complexity of the maxDepth function is O(n), where n is the number of nodes
+    in the binary tree. This is because the function visits each node once.
+
+    The space complexity of the maxDepth function is O(h), where h is the height of the
+    binary tree. This is because the function uses the call stack to store recursive
+    function calls, and the maximum depth of the call stack is equal to the height of
+    the tree.
+    """
+
+    # base case
+    if root == None:
+        return 0
+    # recursively call the method on the right and left children
+    # these recursive calls will return the maximum depth of the right and left subtrees
+    leftDepth = maxDepth(root.left)
+    rightDepth = maxDepth(root.right)
+    # the maximum depth of the binary tree will be the larger of the maximum depth of the
+    # right and left subtrees plus one (for the root node)
+    return 1 + max(leftDepth, rightDepth)
