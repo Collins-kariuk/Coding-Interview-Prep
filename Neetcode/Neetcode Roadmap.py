@@ -1631,52 +1631,51 @@ def copyRandomList(head):
     # return the copy of the head node
     return oldToCopy[head]
 
-
-
-
 # --------- 36. Add Two Numbers - Leetcode 2 - Medium ------------
+
+
 def addTwoNumbers(l1, l2):
-    res = ListNode(val = 0, next = None)
-    resPointer = res
+    """
+    COMPLEXITY:
+
+    The space complexity of the addTwoNumbers function is O(max(m, n)), where m and n are the
+    lengths of the input linked lists l1 and l2 respectively. This is because we create a new 
+    linked list to store the sum, which can have a maximum length of max(m, n) + 1.
+
+    The time complexity of the function is O(max(m, n)), where m and n are the lengths of the
+    input linked lists l1 and l2 respectively. This is because we iterate through the linked
+    lists once, performing constant time operations for each node. The number of iterations
+    is determined by the length of the longer linked list, which is max(m, n).
+    """
+
+    # initialize a dummy node that'll serve as a placeholder
+    dummy = ListNode()
+    # a pointer to the dummy node
+    cur = dummy
+    # initialize a carry variable that'll store the carry value
     carry = 0
-    
-    while l1 and l2:
-        # carry = 0
-        nodesSum = l1.val + l2.val
-        
-        resPointer.next = (nodesSum % 10) + carry
-        carry = nodesSum // 10
+    # we continue with the loop as long as both pointers to the input linked lists
+    # are non-null and the carry value is not 0
+    while l1 or l2 or carry != 0:
+        # obtain the value of the current node in l1 and l2
+        v1 = l1.val if l1 else 0
+        v2 = l2.val if l2 else 0
 
-        l1 = l1.next
-        l2 = l2.next
+        # calculate the sum of the values of the current nodes in l1 and l2
+        val = v1 + v2 + carry
+        # since the value could be greater than 9, we need to calculate the carry value and
+        # also the value of the current node in the resultant linked list
+        carry = val // 10
+        val = val % 10
 
-    if l1 is not None and l2 is None:
-        resPointer.next = l2
-    else:
-        resPointer.next = l1
-    return res.next
+        # create a new node with the calculated value
+        cur.next = ListNode(val)
 
+        # update pointers
+        cur = cur.next
+        # we only move the pointers to the input linked lists if they're not null since we
+        # don't want to access the next pointer of a null node
+        l1 = l1.next if l1 else None
+        l2 = l2.next if l2 else None
 
-
-
-
-
-
-
-
-# def mergeTwoLists(l1, l2):
-#     res = ListNode()
-#     tail = res
-#     while l1 and l2:
-#         if l1.val < l2.val:
-#             tail.next = l1
-#             l1 = l1.next
-#         else:
-#             tail.next = l2
-#             l2 = l2.next
-#         tail = tail.next
-#     if l1 is not None and l2 is None:
-#         tail.next = l1
-#     else:
-#         tail.next = l2
-#     return res.next
+    return dummy.next
