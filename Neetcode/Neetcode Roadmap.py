@@ -1710,3 +1710,17 @@ def hasCycle(head):
             return True
     # if the fast pointer reaches null, it means that there is no cycle in the linked list
     return False
+
+
+# --------- 38. Find the Duplicate Number - Leetcode 287 - Medium ------------
+def findDuplicate(nums):
+    l = 0
+    r = 1
+
+    while r < len(nums):
+        if nums[l] == nums[r]:
+            return nums[l]
+        r += 1
+    
+    l += 1
+    r = l + 1
