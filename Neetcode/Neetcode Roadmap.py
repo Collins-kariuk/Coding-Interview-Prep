@@ -1721,6 +1721,49 @@ def findDuplicate(nums):
         if nums[l] == nums[r]:
             return nums[l]
         r += 1
-    
+
     l += 1
     r = l + 1
+
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------
+#### TREES ####
+# --------- 39. Invert Binary Tree - Leetcode 226 - Easy ------------
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def invertTree(root):
+    """
+    COMPLEXITY:
+
+    The time complexity of the invertTree function is O(n), where
+    n is the number of nodes in the binary tree. This is because
+    the function visits each node once.
+
+    The space complexity of the invertTree function is O(h), where
+    h is the height of the binary tree. This is because the function
+    uses the call stack to store recursive function calls, and the
+    maximum depth of the call stack is equal to the height of the tree.
+    """
+
+    # base case
+    if root == None:
+        return None
+
+    # swap the left and right children
+    # temp = root.left
+    # root.left = root.right
+    # root.right = temp
+
+    root.left, root.right = root.right, root.left
+
+    # recursively call the method on the right and left children
+    invertTree(root.left)
+    invertTree(root.right)
+
+    return root
