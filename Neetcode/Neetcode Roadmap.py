@@ -1679,3 +1679,34 @@ def addTwoNumbers(l1, l2):
         l2 = l2.next if l2 else None
 
     return dummy.next
+
+# --------- 37. Linked List Cycle - Leetcode 141 - Easy ------------
+
+
+def hasCycle(head):
+    """
+    COMPLEXITY:
+
+    The space complexity of the hasCycle function is O(1) because it uses a constant
+    amount of extra space to store the slow and fast pointers.
+
+    The time complexity of the function is O(n), where n is the number of nodes in the
+    linked list. This is because in the worst case scenario, the fast pointer will
+    traverse the entire linked list before reaching the end or encountering a cycle.
+    """
+
+    # initialize the slow and fast pointers
+    slow = head
+    fast = head
+
+    # we continue with the loop as long as the fast pointer is not null and the next
+    # pointer of the fast pointer is not null
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        # if the slow and fast pointers are equal, it means that there is a cycle in the
+        # linked list
+        if slow == fast:
+            return True
+    # if the fast pointer reaches null, it means that there is no cycle in the linked list
+    return False
