@@ -1798,20 +1798,43 @@ def maxDepth(root):
     return 1 + max(leftDepth, rightDepth)
 
 # --------- 42. Diameter of Binary Tree - Leetcode 543 - Easy ------------
+
+
 def diameterOfBinaryTree(root):
+    """
+    COMPLEXITY:
+
+    The time complexity of the diameterOfBinaryTree function is O(n), where n is the number
+    of nodes in the binary tree. This is because the function visits each node once during
+    the depth-first search traversal.
+
+    The space complexity of the diameterOfBinaryTree function is O(h), where h is the height
+    of the binary tree. This is because the function uses the call stack to store recursive
+    function calls, and the maximum depth of the call stack is equal to the height of the tree.
+    """
+
     # initialize a variable that'll store the maximum diameter
     res = [0]
 
     def dfs(root):
+        # base case
+        # per convention, the height of a null node is -1 and the height of a leaf node is 0
         if root == None:
             return -1
-        
+
+        # recursively call the method on the right and left children to obtain their heights
         leftHeight = dfs(root.left)
         rightHeight = dfs(root.right)
 
+        # the maximum diameter will be the larger of the previous maximum diameter and the
+        # sum of the heights of the right and left subtrees plus 2 (for the root node)
         res[0] = max(res[0], 2 + leftHeight + rightHeight)
 
+        # the height of the current node will be the larger of the heights of the right and
+        # left subtrees plus 1 (for the current node)
         return 1 + max(leftHeight, rightHeight)
-    
+
+    # call the dfs function on the root node
     dfs(root)
+    # return the maximum diameter
     return res[0]
