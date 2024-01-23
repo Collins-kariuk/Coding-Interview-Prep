@@ -361,3 +361,24 @@ def fourSum(nums, target):
     # initially start starts at the first index of the array (0)
     kSum(4, 0, target)
     return res
+
+
+
+import math
+
+def min_operations_log(target):
+    operations = 0
+    while target > 0:
+        # Find the highest power of 2 less than or equal to the target
+        power = int(math.log(target, 2))
+        print("The power is", power)
+        # Subtract the value of the highest power of 2 from the target
+        target -= 2 ** power
+        print("The target after power subtraction is", target)
+        # Increment the operations count
+        operations += 1
+    return operations
+
+# print("Answer is", min_operations_log(1024))
+
+
