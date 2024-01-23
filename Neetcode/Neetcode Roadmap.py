@@ -1796,3 +1796,22 @@ def maxDepth(root):
     # the maximum depth of the binary tree will be the larger of the maximum depth of the
     # right and left subtrees plus one (for the root node)
     return 1 + max(leftDepth, rightDepth)
+
+# --------- 42. Diameter of Binary Tree - Leetcode 543 - Easy ------------
+def diameterOfBinaryTree(root):
+    # initialize a variable that'll store the maximum diameter
+    res = [0]
+
+    def dfs(root):
+        if root == None:
+            return -1
+        
+        leftHeight = dfs(root.left)
+        rightHeight = dfs(root.right)
+
+        res[0] = max(res[0], 2 + leftHeight + rightHeight)
+
+        return 1 + max(leftHeight, rightHeight)
+    
+    dfs(root)
+    return res[0]
