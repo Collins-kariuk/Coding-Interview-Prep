@@ -1856,10 +1856,9 @@ def isBalanced(root):
 
     def dfs(root):
         # base case
-        # per convention, here we return a list of 2 elements
-        # the first element is a boolean that indicates whether the tree is balanced and since,
+        # the first element is a boolean that INDICATES WHETHER THE TREE IS BALANCED and since,
         # for the base case, the node is null, the tree is balanced
-        # the second element is the height of the tree
+        # the second element is the HEIGHT OF THE TREE
         if root == None:
             return [True, 0]
 
@@ -1878,3 +1877,33 @@ def isBalanced(root):
     # call the dfs function on the root node and return the first element of the list because
     # it indicates whether the tree is balanced
     return dfs(root)[0]
+
+# --------- 43. Same Tree - Leetcode 100 - Easy ------------
+def isSameTree(p, q):
+    """
+    COMPLEXITY:
+
+    The time complexity of the isSameTree function is O(n), where n is the number of nodes
+    in the tree. This is because the function visits each node once during the recursive
+    traversal.
+
+    The space complexity of the isSameTree function is O(h), where h is the height of the
+    tree. This is because the function uses the call stack to store recursive function
+    calls, and the maximum depth of the call stack is equal to the height of the tree.
+    """
+
+    # base case
+    # if both nodes are null, it means that the trees are the same
+    if p == None and q == None:
+        return True
+    # if one of the nodes is null, it means that the trees are not the same
+    # if the values of the nodes are not equal, it means that the trees are not the same
+    if (p == None or q == None) or (p.val != q.val):
+        return False
+    
+    # we recursively call the function on the left and right children of the nodes
+    leftSide = isSameTree(p.left, q.left)
+    rightSide = isSameTree(p.right, q.right)
+    
+    # the trees are the same if the left and right subtrees are the same
+    return leftSide and rightSide
