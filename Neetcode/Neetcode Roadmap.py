@@ -20,6 +20,7 @@ def containsDuplicate(nums):
     If the lengths are not equal, it means that there are duplicate elements in nums, and the function returns True. Otherwise, it returns False.
     Since creating the set and comparing the lengths both have a time complexity of O(n), the overall complexity of the function is O(n).
     """
+
     return len(set(nums)) != len(nums)
     # Complexity? O(1) space complexity and O(nlogn) time complexity
 
@@ -1838,3 +1839,42 @@ def diameterOfBinaryTree(root):
     dfs(root)
     # return the maximum diameter
     return res[0]
+
+
+# --------- 42. Balanced Binary Tree - Leetcode 110 - Easy ------------
+def isBalanced(root):
+    """
+    COMPLEXITY:
+
+    The time complexity of the isBalanced function is O(n), where n is the number of nodes in
+    the binary tree. This is because the function visits each node once during the DFS traversal.
+
+    The space complexity of the isBalanced function is O(h), where h is the height of the binary
+    tree. This is because the function uses the call stack to store recursive function calls, and
+    the maximum depth of the call stack is equal to the height of the tree.
+    """
+
+    def dfs(root):
+        # base case
+        # per convention, here we return a list of 2 elements
+        # the first element is a boolean that indicates whether the tree is balanced and since,
+        # for the base case, the node is null, the tree is balanced
+        # the second element is the height of the tree
+        if root == None:
+            return [True, 0]
+
+        # recursively call the method on the right and left children
+        left = dfs(root.left)
+        right = dfs(root.right)
+
+        # the tree is balanced if the left and right subtrees are balanced and the difference
+        # between their heights is less than or equal to 1
+        balance = left[0] and right[0] and (abs(left[1] - right[1]) <= 1)
+
+        # the height of the tree will be the larger of the heights of the right and left subtrees
+        # plus 1 (for the current node)
+        return [balance, 1 + max(left[1], right[1])]
+
+    # call the dfs function on the root node and return the first element of the list because
+    # it indicates whether the tree is balanced
+    return dfs(root)[0]
