@@ -1907,3 +1907,33 @@ def isSameTree(p, q):
     
     # the trees are the same if the left and right subtrees are the same
     return leftSide and rightSide
+
+# --------- 44. Subtree of Another Tree - Leetcode 572 - Easy ------------
+def isSubtree(root, subRoot):
+    """
+    The time complexity of the isSubtree function is O(m * n), where m is the number
+    of nodes in the root tree and n is the number of nodes in the subRoot tree. This
+    is because for each node in the root tree, we are potentially comparing it with
+    the subRoot tree using the isSameTree function, which has a time complexity of O(n).
+
+    The space complexity of the isSubtree function is O(max(m, n)), where m is the
+    height of the root tree and n is the height of the subRoot tree. This is because the
+    function uses the call stack to store recursive function calls, and the maximum
+    depth of the call stack is equal to the height of the tree with more nodes.
+    """
+
+    # base cases
+    # technically, a null sub-root node is a subtree of any tree
+    if subRoot == None:
+        return True
+    # technically, a null root node cannot have a subtree aside from a null subtree
+    # (which we've checked above)
+    if root == None:
+        return False
+    # if the values of the root and sub-root nodes are equal, we check whether the
+    # trees are the same
+    if isSameTree(root, subRoot):
+        return True
+    # recursively call the function on the left and right children of the nodes
+    return isSubtree(root.left, subRoot) or isSubtree(root.right, subRoot)
+
