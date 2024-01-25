@@ -1992,3 +1992,50 @@ def lowestCommonAncestor(root, p, q):
             root = root.left
         else:
             return root
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------
+#### BACKTRACKING ####
+# --------- 46. Subsets - Leetcode 78 - Medium ------------
+def subsets(nums):
+    """
+    COMPLEXITY:
+
+    The time complexity of the subsets function is O(2^N), where N is the length of the
+    input list nums. This is because for each element in nums, we have two choices: either
+    include it in the subset or not include it. Therefore, the number of subsets grows
+    exponentially with the size of the input list.
+
+    The space complexity of the function is O(N), where N is the length of the input list
+    nums. This is because we use a recursive approach to generate all subsets, and the
+    maximum depth of the recursion is equal to the length of the input list. Additionally,
+    we use an auxiliary list subset to store the current subset, which can have a maximum
+    size of N.
+    """
+
+    res = []
+    # initialize a list that'll store the current subset
+    subset = []
+
+    def dfs(i):
+        # base case
+        # when i (the index of the current element) is greater than or equal to the length
+        # of the input list, it means that we've reached the end of the list and we can
+        # add the current subset to the result list
+        # the reason why we need to add a copy of the current subset is because we're
+        # going to be modifying the subset in the recursive calls and we don't want to
+        # add the modified subset to the result list
+        if i >= len(nums):
+            res.append(subset.copy())
+            return
+        
+        # there are 2 decisions to make at each step:
+        # 1. decision to include nums[i]
+        subset.append(nums[i])
+        dfs(i + 1)
+
+        # 2. decision NOT to include nums[i]
+        subset.pop()
+        dfs(i + 1)
+
+    dfs(0)
+    return res
