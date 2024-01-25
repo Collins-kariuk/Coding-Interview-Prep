@@ -1984,6 +1984,8 @@ def lowestCommonAncestor(root, p, q):
     return root
 
 # alternative (iterative) solution
+
+
 def lowestCommonAncestor(root, p, q):
     while True:
         if root.val < p.val and root.val < q.val:
@@ -1996,6 +1998,8 @@ def lowestCommonAncestor(root, p, q):
 # ----------------------------------------------------------------------------------------------------------------------------------------------------------
 #### BACKTRACKING ####
 # --------- 46. Subsets - Leetcode 78 - Medium ------------
+
+
 def subsets(nums):
     """
     COMPLEXITY:
@@ -2007,7 +2011,7 @@ def subsets(nums):
 
     The space complexity of the function is O(N), where N is the length of the input list
     nums. This is because we use a recursive approach to generate all subsets, and the
-    maximum depth of the recursion is equal to the length of the input list. Additionally,
+    maximum depth of the recursion  is equal to the length of the input list. Additionally,
     we use an auxiliary list subset to store the current subset, which can have a maximum
     size of N.
     """
@@ -2027,7 +2031,7 @@ def subsets(nums):
         if i >= len(nums):
             res.append(subset.copy())
             return
-        
+
         # there are 2 decisions to make at each step:
         # 1. decision to include nums[i]
         subset.append(nums[i])
@@ -2039,3 +2043,24 @@ def subsets(nums):
 
     dfs(0)
     return res
+
+# --------- 39. Combination Sum - Leetcode 39 - Medium ------------
+def combinationSum(candidates, target):
+    res = []
+
+    def dfs(i, cur, total):
+        if total == target:
+            res.append(cur.copy())
+            return
+        
+        if i >= len(candidates) or total > target:
+            return
+        
+        cur.append(candidates[i])
+        dfs(i, cur, total + candidates[i])
+
+        cur.pop()
+        dfs(i + 1, cur, total)
+    
+    dfs(i = 0, cur = [], target = 0)
+    
