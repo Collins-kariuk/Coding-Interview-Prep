@@ -1879,6 +1879,8 @@ def isBalanced(root):
     return dfs(root)[0]
 
 # --------- 43. Same Tree - Leetcode 100 - Easy ------------
+
+
 def isSameTree(p, q):
     """
     COMPLEXITY:
@@ -1900,26 +1902,38 @@ def isSameTree(p, q):
     # if the values of the nodes are not equal, it means that the trees are not the same
     if (p == None or q == None) or (p.val != q.val):
         return False
-    
+
     # we recursively call the function on the left and right children of the nodes
     leftSide = isSameTree(p.left, q.left)
     rightSide = isSameTree(p.right, q.right)
-    
+
     # the trees are the same if the left and right subtrees are the same
     return leftSide and rightSide
 
 # --------- 44. Subtree of Another Tree - Leetcode 572 - Easy ------------
+
+
 def isSubtree(root, subRoot):
     """
-    The time complexity of the isSubtree function is O(m * n), where m is the number
-    of nodes in the root tree and n is the number of nodes in the subRoot tree. This
-    is because for each node in the root tree, we are potentially comparing it with
-    the subRoot tree using the isSameTree function, which has a time complexity of O(n).
+    Let's say:
+    n is the number of nodes in the main tree (root) and m is the number of nodes
+    in the subtree (subRoot).
+    In the worst-case scenario, the function will have to compare the subRoot tree
+    with every node's subtree in the main tree. The isSameTree function, which is used
+    to check if two subtrees are identical, has a time complexity of O(min(n, m))
+    because it needs to traverse every node in both trees.
+    Thus, in the worst case, the isSubtree function is called once for each node in the
+    main tree and for each call, isSameTree may potentially be called (in the worst case,
+    if the trees are very unbalanced and the subtree is large compared to the main tree).
+    This gives us a total time complexity of O(n * min(n, m)).
 
-    The space complexity of the isSubtree function is O(max(m, n)), where m is the
-    height of the root tree and n is the height of the subRoot tree. This is because the
-    function uses the call stack to store recursive function calls, and the maximum
-    depth of the call stack is equal to the height of the tree with more nodes.
+    The space complexity is determined by the depth of the recursion stack, which, in the
+    worst case, can go as deep as the height of the trees. For a balanced tree, the height
+    would be log(n) for the main tree and log(m) for the subtree. However, in the worst
+    case for an unbalanced tree, the height could be as much as n for the main tree and m
+    for the subtree.
+    Therefore, the worst-case space complexity is O(n + m), corresponding to the depth of
+    the recursion stack if both trees are completely unbalanced.
     """
 
     # base cases
@@ -1936,4 +1950,3 @@ def isSubtree(root, subRoot):
         return True
     # recursively call the function on the left and right children of the nodes
     return isSubtree(root.left, subRoot) or isSubtree(root.right, subRoot)
-
