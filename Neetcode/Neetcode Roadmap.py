@@ -1950,3 +1950,45 @@ def isSubtree(root, subRoot):
         return True
     # recursively call the function on the left and right children of the nodes
     return isSubtree(root.left, subRoot) or isSubtree(root.right, subRoot)
+
+# --------- 45. Lowest Common Ancestor of a Binary Search Tree - Leetcode 235 - Medium ------------
+
+
+def lowestCommonAncestor(root, p, q):
+    """
+    COMPLEXITY:
+
+    The time complexity of the lowestCommonAncestor function is O(log(n)) in the average case and
+    O(n) in the worst case, where n is the number of nodes in the binary search tree. This is
+    because the function traverses the tree in a binary search manner, comparing the values of p
+    and q with the value of the current node to determine the next node to visit. In the average
+    case, the function can eliminate half of the remaining nodes at each step, resulting in a
+    logarithmic time complexity. However, in the worst case, where the tree is highly unbalanced,
+    the function may need to visit all nodes, resulting in a linear time complexity.
+
+    The space complexity of the function is O(1) in the average case and O(n) in the worst case.
+    This is because the function uses a constant amount of additional space for the iterative
+    approach, regardless of the size of the tree. However, in the worst case, where the tree is
+    highly unbalanced and resembles a linked list, the function may need to recursively call
+    itself for each node in the tree, resulting in a recursion stack that can go as deep as the
+    height of the tree, which is O(n).
+    """
+
+    if p.val > root.val and q.val > root.val:
+        # both p and q are greater than root, so lowest common ancestor must be in right subtree
+        return lowestCommonAncestor(root.right, p, q)
+    if p.val < root.val and q.val < root.val:
+        # both p and q are less than root, so lowest common ancestor must be in left subtree
+        return lowestCommonAncestor(root.left, p, q)
+    # if neither of the above conditions are true, it means that p and q are on either side
+    return root
+
+# alternative (iterative) solution
+def lowestCommonAncestor(root, p, q):
+    while True:
+        if root.val < p.val and root.val < q.val:
+            root = root.right
+        elif root.val > p.val and root.val > q.val:
+            root = root.left
+        else:
+            return root
