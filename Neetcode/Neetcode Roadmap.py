@@ -2044,7 +2044,9 @@ def subsets(nums):
     dfs(0)
     return res
 
-# --------- 39. Combination Sum - Leetcode 39 - Medium ------------
+# --------- 47. Combination Sum - Leetcode 39 - Medium ------------
+
+
 def combinationSum(candidates, target):
     """
     COMPLEXITY:
@@ -2059,7 +2061,7 @@ def combinationSum(candidates, target):
     depth of the recursion is equal to the length of the input list. Additionally, we use an
     auxiliary list cur to store the current combination, which can have a maximum size of N.
     """
-    
+
     # initialize a list that'll store the current combination
     res = []
 
@@ -2078,7 +2080,7 @@ def combinationSum(candidates, target):
             res.append(cur.copy())
             # we return because we don't want to continue with the recursive calls
             return
-        
+
         # base case number 2
         # when i (the index of the current element) is greater than or equal to the length
         # of the input list, it means that we've reached the end of the list and we can
@@ -2088,7 +2090,7 @@ def combinationSum(candidates, target):
         # the current combination will be greater than the target
         if i >= len(candidates) or total > target:
             return
-        
+
         # there are 2 decisions to make at each step:
         # 1. decision to include candidates[i]
         cur.append(candidates[i])
@@ -2101,8 +2103,76 @@ def combinationSum(candidates, target):
         # we pass i + 1 as the index of the current element because we can't use the same
         # element multiple times
         dfs(i + 1, cur, total)
-    
+
     # we start the recursive calls at index 0 and with an empty combination and a total of 0
-    dfs(i = 0, cur = [], total = 0)
+    dfs(i=0, cur=[], total=0)
     return res
+
+# --------- 48. Word Search - Leetcode 79 - Medium ------------
+def exist(board, word):
+    """
+    COMPLEXITY:
+
+    The time complexity of the exist function is O(N * M * 4^L), where N is the number of rows in the
+    board, M is the number of columns in the board, and L is the length of the word. This is because
+    for each cell in the board, we perform a DFS in four directions (up, down, left, right) until we
+    either find the word or reach the end of the board. The worst-case scenario is that we have to
+    explore all possible paths, which gives us a time complexity of O(N * M * 4^L).
+
+    The space complexity of the exist function is O(L), where L is the length of the word. This is because
+    we use a set called path to keep track of the visited cells during the DFS. The maximum number of
+    cells that can be visited at any given time is equal to the length of the word. Therefore, the space
+    complexity is O(L).
+    """
+
+    # save the dimensions of the board
+    ROWS = len(board)
+    COLS = len(board[0])
+
+    # initialize a set that'll store the visited cells
+    path = set()
+
+    def dfs(r, c, i):
+        """
+        r: the row of the current cell
+        c: the column of the current cell
+        i: the index of the current character in word
+        """
+
+        # base case 1
+        # if i is equal to the length of word, it means that we've reached the end of the
+        # word and we can return True
+        if i == len(word):
+            return True
+        
+        # base case 2
+        # if r or c are out of bounds, it means that we've reached the end of the board or
+        # we've reached a cell that we've already visited or the current character in the
+        # board is not the same as the current character in word
+        # in any of these cases, we return False
+        if (r < 0 or c < 0 or r >= ROWS or c >= COLS) or (word[i] != board[r][c]) or ((r, c) in path):
+            return False
+        
+        # we add the current cell to the set of visited cells
+        path.add((r, c))
+
+        # we recursively call the function on the cells to the right, left, top, and bottom
+        # of the current cell
+        res = (dfs(r + 1, c, i + 1) or
+               dfs(r - 1, c, i + 1) or 
+               dfs(r, c + 1, i + 1) or
+               dfs(r, c - 1, i + 1))
+        # we remove the current cell from the set of visited cells because we're going to
+        # be modifying the set in the recursive calls and we don't want to add the modified
+        # set to the result list
+        path.remove((r, c))
+        return res
+
+    # we iterate through each cell in the board and call the dfs function on each cell
+    for r in range(ROWS):
+        for c in range(COLS):
+            if dfs(r, c, 0):
+                return True
     
+    # if we reach this point, it means that we haven't found the word in the board
+    return False
