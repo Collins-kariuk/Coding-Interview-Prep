@@ -2046,21 +2046,63 @@ def subsets(nums):
 
 # --------- 39. Combination Sum - Leetcode 39 - Medium ------------
 def combinationSum(candidates, target):
+    """
+    COMPLEXITY:
+
+    The time complexity of the combinationSum function is exponential, specifically O(2^N),
+    where N is the length of the candidates list. This is because for each element in
+    candidates, we have two choices: either include it in the combination or not include it.
+    Therefore, the number of combinations grows exponentially with the size of the input list.
+
+    The space complexity of the function is O(N), where N is the length of the candidates list.
+    This is because we use a recursive approach to generate all combinations, and the maximum
+    depth of the recursion is equal to the length of the input list. Additionally, we use an
+    auxiliary list cur to store the current combination, which can have a maximum size of N.
+    """
+    
+    # initialize a list that'll store the current combination
     res = []
 
     def dfs(i, cur, total):
+        """
+        i: the index of the current element in candidates
+        cur: the current combination
+        total: the sum of the elements in the current combination
+        """
+
+        # base case number 1
         if total == target:
+            # we add a copy of the current combination to the result list because we're
+            # going to be modifying the current combination in the recursive calls and we
+            # don't want to add the modified combination to the result list
             res.append(cur.copy())
+            # we return because we don't want to continue with the recursive calls
             return
         
+        # base case number 2
+        # when i (the index of the current element) is greater than or equal to the length
+        # of the input list, it means that we've reached the end of the list and we can
+        # return because we don't want to continue with the recursive calls
+        # we also return if the total is greater than the target because we don't want to
+        # continue with the recursive calls since we know that the sum of the elements in
+        # the current combination will be greater than the target
         if i >= len(candidates) or total > target:
             return
         
+        # there are 2 decisions to make at each step:
+        # 1. decision to include candidates[i]
         cur.append(candidates[i])
+        # we pass i as the index of the current element because we can use the same element
+        # multiple times
         dfs(i, cur, total + candidates[i])
 
+        # 2. decision NOT to include candidates[i]
         cur.pop()
+        # we pass i + 1 as the index of the current element because we can't use the same
+        # element multiple times
         dfs(i + 1, cur, total)
     
-    dfs(i = 0, cur = [], target = 0)
+    # we start the recursive calls at index 0 and with an empty combination and a total of 0
+    dfs(i = 0, cur = [], total = 0)
+    return res
     
