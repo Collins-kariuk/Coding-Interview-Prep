@@ -2109,6 +2109,8 @@ def combinationSum(candidates, target):
     return res
 
 # --------- 48. Word Search - Leetcode 79 - Medium ------------
+
+
 def exist(board, word):
     """
     COMPLEXITY:
@@ -2144,7 +2146,7 @@ def exist(board, word):
         # word and we can return True
         if i == len(word):
             return True
-        
+
         # base case 2
         # if r or c are out of bounds, it means that we've reached the end of the board or
         # we've reached a cell that we've already visited or the current character in the
@@ -2152,14 +2154,14 @@ def exist(board, word):
         # in any of these cases, we return False
         if (r < 0 or c < 0 or r >= ROWS or c >= COLS) or (word[i] != board[r][c]) or ((r, c) in path):
             return False
-        
+
         # we add the current cell to the set of visited cells
         path.add((r, c))
 
         # we recursively call the function on the cells to the right, left, top, and bottom
         # of the current cell
         res = (dfs(r + 1, c, i + 1) or
-               dfs(r - 1, c, i + 1) or 
+               dfs(r - 1, c, i + 1) or
                dfs(r, c + 1, i + 1) or
                dfs(r, c - 1, i + 1))
         # we remove the current cell from the set of visited cells because we're going to
@@ -2173,6 +2175,88 @@ def exist(board, word):
         for c in range(COLS):
             if dfs(r, c, 0):
                 return True
-    
+
     # if we reach this point, it means that we haven't found the word in the board
     return False
+
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------
+#### GRAPHS ####
+# --------- 49. Number of Islands - Leetcode 200 - Medium ------------
+def numIslands(grid):
+    """
+    COMPLEXITY:
+
+    The space complexity of the numIslands function is O(M * N), where M is the number of rows in
+    the grid and N is the number of columns in the grid. This is because we use a set visited to
+    keep track of the visited islands, which can store at most M * N island coordinates.
+
+    The time complexity of the function is O(M * N), as we iterate through each individual grid
+    cell once in the nested loops. Additionally, for each unvisited land cell, we perform a BFS
+    operation, which can potentially visit all the cells in the grid in the worst case. Therefore,
+    the overall time complexity is dominated by the BFS operation, resulting in O(M * N).
+    """
+
+    # edge case
+    # when the grid is empty
+    if len(grid) == 0:
+        return 0
+
+    # initialize the number of islands
+    islands = 0
+
+    # set that'll store the visited islands
+    visited = set()
+
+    # number of rows and columns in the grid
+    ROWS = len(grid)
+    COLS = len(grid[0])
+
+    def bfs(r, c):
+        """
+        Conducting a breadth-first search to count the number of islands, while keeping track of the
+        islands already visited. This ensures that we don't mistakenly revisit the same islands.
+
+        r: the row of the current subgrid
+        c: the column of the current subgrid 
+        """
+
+        # bfs is an iterative algorithm that needs a queue
+        q = deque()
+        # we add the island to the visited pile
+        visited.add((r, c))
+        # append the island we're at in the iteration in our bfs queue
+        q.append((r, c))
+        
+        # traverse through the queue as long as it's non-empty thus "expanding our island"
+        while q:
+            # the subgrid coordinate at the top of our queue
+            row, col = q.popleft()
+            # check the adjacent positions of the subgrid we're looking at generic LEFT, RIGHT, UP,
+            # and DOWN directions
+            directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+
+            for dr, dc in directions:
+                # specific coordinates of neighbors
+                r = row + dr
+                c = col + dc
+                # check that the coordinates are in bounds
+                # check that it's land
+                # check that it's not visited yet
+                if (r in range(ROWS) and c in range(COLS)) and grid[r][c] == '1' and (r, c) not in visited:
+                    # add to queue because we also have to run bfs on this cell as well
+                    q.append((r, c))
+                    # mark it as visited so that we don't visit it twice
+                    visited.add((r, c))
+
+    # looping through each individual grid
+    for r in range(ROWS):
+        for c in range(COLS):
+            # if the subgrid is land and is not among the visited, do a BFS on it and increment the number
+            # of islands
+            if grid[r][c] == "1" and (r, c) not in visited:
+                bfs(r, c)
+                islands += 1
+
+    # the final number of islands
+    return islands
