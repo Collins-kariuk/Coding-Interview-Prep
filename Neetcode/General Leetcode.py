@@ -363,22 +363,33 @@ def fourSum(nums, target):
     return res
 
 
+"""
+Given a positive integer n, in a single operation, choose any i >= 0 and convert n to
+n + 2^i or n - 2^i. Find the minimum number of operations required to convert n to 0.
+The question is called binary operations. Please help me answer this question in Python.
+"""
 
 import math
 
-def min_operations_log(target):
-    operations = 0
-    while target > 0:
-        # Find the highest power of 2 less than or equal to the target
-        power = int(math.log(target, 2))
-        print("The power is", power)
-        # Subtract the value of the highest power of 2 from the target
-        target -= 2 ** power
-        print("The target after power subtraction is", target)
-        # Increment the operations count
-        operations += 1
-    return operations
+def getMinOperations(n):
+    res = 0
+    while n > 0:
+        exponent = int(math.log(n, 2))
+        resOfExp = 2 ** exponent # 4
+        resOfExpTwice = 2 ** (exponent + 1) # 8
+        
+        afterSubOfExp = n - resOfExp # 7-4=3    # Difference after subtracting the power of 2
+        afterSubOfExpTwice = resOfExpTwice - n #8-7=1 # Difference if we overshoot and subtract twice the power of 2
 
-# print("Answer is", min_operations_log(1024))
+        # Choose the operation that results in a smaller absolute value
+        if abs(afterSubOfExp) <= abs(afterSubOfExpTwice):
+            n -= resOfExp
+        else:
+            n = resOfExpTwice - n
+            # n += resOfExp  # Add if overshooting is better
 
+        res += 1
+    return res
 
+# Test the function with an example
+print(getMinOperations(15))
