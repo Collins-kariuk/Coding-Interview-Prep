@@ -2199,8 +2199,7 @@ def numIslands(grid):
     the overall time complexity is dominated by the BFS operation, resulting in O(M * N).
     """
 
-    # edge case
-    # when the grid is empty
+    # edge case: when the grid is empty
     if len(grid) == 0:
         return 0
 
@@ -2210,7 +2209,7 @@ def numIslands(grid):
     # set that'll store the visited islands
     visited = set()
 
-    # number of rows and columns in the grid
+    # the dimensions of the grid
     ROWS = len(grid)
     COLS = len(grid[0])
 
@@ -2302,7 +2301,7 @@ def cloneGraph(node):
         # a copy of the node and we can return the copy
         if node in oldToNew:
             return oldToNew[node]
-        
+
         # create a copy of the current node and add it to the dictionary
         copy = Node(node.val)
         oldToNew[node] = copy
@@ -2318,6 +2317,8 @@ def cloneGraph(node):
     return clone_dfs(node) if node else None
 
 # --------- 51. Pacific Atlantic Water Flow - Leetcode 417 - Medium ------------
+
+
 def pacificAtlantic(heights):
     """
     COMPLEXITY:
@@ -2384,7 +2385,7 @@ def pacificAtlantic(heights):
     for row in range(ROWS):
         dfs(row, 0, pacific, heights[row][0])
         dfs(row, COLS - 1, atlantic, heights[row][COLS - 1])
-    
+
     # we iterate through each cell in the grid and check if the cell can reach both oceans
     # and if it can, we add it to the result list
     res = []
@@ -2392,5 +2393,85 @@ def pacificAtlantic(heights):
         for c in range(COLS):
             if (r, c) in pacific and (r, c) in atlantic:
                 res.append([r, c])
-    
+
     return res
+
+# --------- 52. Course Schedule - Leetcode 207 - Medium ------------
+
+
+def canFinish(numCourses, prerequisites):
+    """
+    COMPLEXITY:
+
+    The space complexity of the canFinish function is O(N), where N is the number of courses. This
+    is because we are using a dictionary (prerequisiteMap) to store the prerequisites for each
+    course, and the size of the dictionary will be proportional to the number of courses.
+
+    The time complexity of the canFinish function is O(N + E), where N is the number of courses and
+    E is the number of prerequisites. This is because we need to populate the prerequisiteMap
+    dictionary, which takes O(E) time as we iterate through the prerequisites. Then, we perform a
+    DFS on each course, which takes O(N) time as we visit each course once. Therefore, the overall
+    time complexity is O(N + E).
+    """
+
+    # initialize a dictionary that'll store the prerequisites for each course in an adjacency list
+    # so each course is mapped to its prerequisites
+    prerequisiteMap = {i: [] for i in range(numCourses)}
+
+    # a more verbose way of writing the above line
+    # prerequisiteMap = {}
+    # for i in range(numCourses):
+    #     prerequisiteMap[i] = []
+
+    # populate the dictionary
+    for course, prerequisite in prerequisites:
+        prerequisiteMap[course].append(prerequisite)
+
+    # visitSet = all courses along the current DFS path
+    visitSet = set()
+
+    def dfs(course):
+        # base case 1 - if the course is in the visitSet, it means that we've encountered a cycle
+        if course in visitSet:
+            return False
+
+        # base case 2 - if the course has no prerequisites, it means we can successfully complete
+        # the course
+        if prerequisiteMap[course] == []:
+            return True
+
+        # add the course to the visitSet
+        visitSet.add(course)
+
+        # recursively call the function on the prerequisites of the course
+        for prerequisite in prerequisiteMap[course]:
+            # immediately return False if we find a cycle (if we cannot complete a course)
+            if not dfs(prerequisite):
+                return False
+
+        # remove the course from the visitSet because we're done with the current DFS path
+        """
+        The primary role of this line is to backtrack correctly. When the DFS for a particular
+        course is complete (i.e., all courses dependent on this course have been visited and
+        checked for cycles), we need to remove this course from the visitSet. This action signifies
+        that we are backtracking from this course and it should not be considered part of the
+        current DFS path anymore.
+        """
+        visitSet.remove(course)
+        # remove the course from the prerequisiteMap because we've completed the course
+        prerequisiteMap[course] = []
+        return True
+
+    # we call the dfs function on each course
+    # we need to call the dfs function on each course because there may be multiple disconnected
+    # components in the graph
+    for course in range(numCourses):
+        if not dfs(course):
+            return False
+
+    # if we reach this point, it means that we can complete all courses
+    return True
+
+
+sample = [[0, 1], [1, 2], [2, 0]]
+sample = [[0, 1], [0, 2], [1, 3], [1, 4], [3, 4]]
