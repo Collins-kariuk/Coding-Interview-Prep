@@ -1617,6 +1617,8 @@ def copyRandomList(head):
         oldToCopy[cur] = copy
         cur = cur.next
 
+    # the second pass
+    # set the next and random pointers of the copy nodes
     cur = head
     while cur:
         # get the copy of the current node
@@ -2227,7 +2229,7 @@ def numIslands(grid):
         visited.add((r, c))
         # append the island we're at in the iteration in our bfs queue
         q.append((r, c))
-        
+
         # traverse through the queue as long as it's non-empty thus "expanding our island"
         while q:
             # the subgrid coordinate at the top of our queue
@@ -2260,3 +2262,57 @@ def numIslands(grid):
 
     # the final number of islands
     return islands
+
+# --------- 47. Clone Graph - Leetcode 133 - Medium ------------
+
+
+class Node:
+    def __init__(self, val=0, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+
+
+def cloneGraph(node):
+    """
+    COMPLEXITY:
+
+    The space complexity of the cloneGraph function is O(V), where V is the number of
+    nodes in the graph. This is because we use a dictionary (oldToNew) to store the
+    mapping between old nodes and new nodes, and the size of the dictionary will be
+    proportional to the number of nodes in the graph.
+
+    The time complexity of the cloneGraph function is O(V + E), where V is the number
+    of nodes and E is the number of edges in the graph. This is because we perform a DFS
+    traversal of the graph, visiting each node and its neighbors exactly once. The time
+    complexity of the DFS traversal is O(V + E). Additionally, for each node, we create a
+    copy of the node and its neighbors, which takes O(1) time. Therefore, the overall
+    time complexity is O(V + E).
+    """
+
+    # a dictionary that'll store the old node as the key and the new node as the value
+    oldToNew = {}  # key:value = oldNode:newNode
+
+    def clone_dfs(node):
+        """
+        node: the current node in the DFS traversal
+        """
+
+        # base case
+        # when the node is already in the dictionary, it means that we've already created
+        # a copy of the node and we can return the copy
+        if node in oldToNew:
+            return oldToNew[node]
+
+        # create a copy of the current node and add it to the dictionary
+        copy = Node(node.val)
+        oldToNew[node] = copy
+        
+        # recursively call the function on the neighbors of the current node
+        for neighbor in node.neighbors:
+            copy.neighbors.append(clone_dfs(neighbor))
+
+        # return the copy of the current node
+        return copy
+
+    # call the clone_dfs function on the input node
+    return clone_dfs(node) if node else None
