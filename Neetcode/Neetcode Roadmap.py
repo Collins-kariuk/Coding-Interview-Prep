@@ -2263,7 +2263,7 @@ def numIslands(grid):
     # the final number of islands
     return islands
 
-# --------- 47. Clone Graph - Leetcode 133 - Medium ------------
+# --------- 50. Clone Graph - Leetcode 133 - Medium ------------
 
 
 class Node:
@@ -2302,11 +2302,11 @@ def cloneGraph(node):
         # a copy of the node and we can return the copy
         if node in oldToNew:
             return oldToNew[node]
-
+        
         # create a copy of the current node and add it to the dictionary
         copy = Node(node.val)
         oldToNew[node] = copy
-        
+
         # recursively call the function on the neighbors of the current node
         for neighbor in node.neighbors:
             copy.neighbors.append(clone_dfs(neighbor))
@@ -2316,3 +2316,81 @@ def cloneGraph(node):
 
     # call the clone_dfs function on the input node
     return clone_dfs(node) if node else None
+
+# --------- 51. Pacific Atlantic Water Flow - Leetcode 417 - Medium ------------
+def pacificAtlantic(heights):
+    """
+    COMPLEXITY:
+
+    The space complexity of the pacificAtlantic function is O(R * C), where R is the number of rows
+    in the grid and C is the number of columns in the grid. This is because we use two sets (pacific
+    and atlantic) to store the visited cells, and in the worst case, all cells in the grid can be
+    visited.
+
+    The time complexity of the pacificAtlantic function is O(R * C), where R is the number of rows
+    in the grid and C is the number of columns in the grid. This is because we perform a DFS traversal
+    on the grid, visiting each cell exactly once. In the worst case, we may need to visit all cells
+    in the grid.
+
+    Additionally, the nested loops at the end of the function iterate through each cell in the grid,
+    resulting in an additional time complexity of O(R * C).
+
+    Therefore, the overall time complexity of the function is O(R * C), and the space complexity is
+    O(R * C).
+    """
+
+    # save the dimensions of the grid
+    ROWS = len(heights)
+    COLS = len(heights[0])
+
+    # the set of cells that can reach the pacific ocean and the atlantic ocean
+    pacific = set()
+    atlantic = set()
+
+    def dfs(r, c, visit, prevHeight):
+        """
+        r: the row of the current cell
+        c: the column of the current cell
+        visit: the set of visited cells (either pacific or atlantic)
+        prevHeight: the height of the previous cell
+        """
+
+        # base case
+        # if the cell is already in the set of visited cells or if the cell is out of bounds
+        # or if the height of the cell is less than the height of the previous cell (we are starting
+        # from the ocean and working our way inland so we want the heights we meet inland to be
+        # greater), we return
+        if (r, c) in visit or r < 0 or c < 0 or r == ROWS or c == COLS or heights[r][c] < prevHeight:
+            return
+
+        # add the current cell to the set of visited cells
+        visit.add((r, c))
+
+        # recursively call the function on the cells to the right, left, top, and bottom
+        dfs(r + 1, c, visit, heights[r][c])
+        dfs(r - 1, c, visit, heights[r][c])
+        dfs(r, c + 1, visit, heights[r][c])
+        dfs(r, c - 1, visit, heights[r][c])
+
+    # we start the recursive calls at the cells on the borders of the grid
+    # the cells on the top border reach the pacific ocean and the cells on the bottom border
+    # reach the atlantic ocean
+    for col in range(COLS):
+        dfs(0, col, pacific, heights[0][col])
+        dfs(ROWS - 1, col, atlantic, heights[ROWS - 1][col])
+
+    # the cells on the left border reach the pacific ocean and the cells on the right border
+    # reach the atlantic ocean
+    for row in range(ROWS):
+        dfs(row, 0, pacific, heights[row][0])
+        dfs(row, COLS - 1, atlantic, heights[row][COLS - 1])
+    
+    # we iterate through each cell in the grid and check if the cell can reach both oceans
+    # and if it can, we add it to the result list
+    res = []
+    for r in range(ROWS):
+        for c in range(COLS):
+            if (r, c) in pacific and (r, c) in atlantic:
+                res.append([r, c])
+    
+    return res
