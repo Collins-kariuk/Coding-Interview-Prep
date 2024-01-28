@@ -2473,5 +2473,43 @@ def canFinish(numCourses, prerequisites):
     return True
 
 
-sample = [[0, 1], [1, 2], [2, 0]]
-sample = [[0, 1], [0, 2], [1, 3], [1, 4], [3, 4]]
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------
+#### 1-D DYNAMIC PROGRAMMING ####
+# --------- 53. Climbing Stairs - Leetcode 70 - Easy ------------
+def climbStairs(n):
+    """
+    This question can easily be solved using DP we can solve this using brute force utilizing DFS
+    and a top-down approach meaning that we start from the bottom of the stairs and work our way
+    up to the nth stair and in each path counting how many ways we arrive to the nth stair
+
+    However,the time complexity of this approach is bad since it's O(2^n) where n is the number
+    of stairs in this top down approach, we repetitively do the same calculation, eg, we answer the
+    question "how many ways does it take to get to the nth stair from the second one?" twice to
+    mitigate this, we can using a DP-bottom-up approach where we start with the easier questions
+    (when n = 5, say) "how many ways does it take to get to the 5th stair from the fourth/fifth
+    stair?
+
+    Answer: 1" we can then work ourselve to the top (zeroth stair) by saving the previous subproblem
+    solutions in their own variables which will take O(n) time complexity if you trace the outputs
+    of one and two below, you'll find that this is essentially a Fibonacci sequence problem
+    """
+
+    # one represents the number of ways to get to the nth stair from the (n - 1)st stair via one step
+    # remember, we are doing a bottom up approach as opposed to starting from the zeroth stair
+    # and working our way up as we already know our 2 bases cases which are:
+    # - the number of ways to get to the nth stair from the nth stair is n
+    # - the number of ways to get to the nth stair from the (n - 1)st stair is n
+    one = 1
+    # two represents the number of ways to get to the nth stair from the (n - 2)nd stair via two steps
+    two = 1
+    # we start at the 3rd stair since we already know the number of ways to get to the 1st and
+    # 2nd stairs
+    for i in range(n - 1):
+        # we need to save the number of ways to get to the 3rd stair in a temporary variable
+        temp = one
+        # the number of ways to get to the 3rd stair is the sum of the number of ways to get to
+        one = one + two
+        # the number of ways to get to the 2nd stair
+        two = temp
+    # the number of ways to get to the nth stair
+    return one
