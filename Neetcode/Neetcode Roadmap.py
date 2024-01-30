@@ -2494,17 +2494,28 @@ def climbStairs(n):
     of one and two below, you'll find that this is essentially a Fibonacci sequence problem
     """
 
+    """
+    COMPLEXITY:
+
+    The space complexity of the climbStairs function is O(1) because it uses a constant amount of
+    extra space to store the variables one, two, and temp.
+
+    The time complexity of the function is O(n) because it iterates n-1 times in the for loop, where
+    n is the input parameter. Each iteration takes constant time, so the overall time complexity is
+    linear with respect to the input size.
+    """
+
     # one represents the number of ways to get to the nth stair from the (n - 1)st stair via one step
     # remember, we are doing a bottom up approach as opposed to starting from the zeroth stair
     # and working our way up as we already know our 2 bases cases which are:
     # - the number of ways to get to the nth stair from the nth stair is n
     # - the number of ways to get to the nth stair from the (n - 1)st stair is n
     one = 1
-    # two represents the number of ways to get to the nth stair from the (n - 2)nd stair via two steps
+    # two represents the number of ways to get to the nth stair from the (n - 1)st stair
     two = 1
     # we start at the 3rd stair since we already know the number of ways to get to the 1st and
     # 2nd stairs
-    for i in range(n - 1):
+    for _ in range(n - 1):
         # we need to save the number of ways to get to the 3rd stair in a temporary variable
         temp = one
         # the number of ways to get to the 3rd stair is the sum of the number of ways to get to
