@@ -592,6 +592,7 @@ def threeSum(nums):
                 # decrement the right pointer by one so as to skip it
                 while l < r and nums[r] == nums[r + 1]:
                     r -= 1
+    # return the result array
     return res
 
 # --------- 13. Container with Most Water - Leetcode 11 - Medium ------------
@@ -622,11 +623,13 @@ def maxArea(height):
         # the previous volume and the current volume
         res = max(res, currArea)
         # when the height at the left pointer is smaller than the height at the right pointer we
-        # increment the left pointer by one so as to still preserve the bigger height at the right pointer since that height may be the smaller of 2 heights later in the iteration
+        # increment the left pointer by one so as to still preserve the bigger height at the right
+        # pointer since that height may be the smaller of 2 heights later in the iteration
         if height[l] < height[r]:
             l += 1
         else:
             r -= 1
+    # return the maximum volume
     return res
 
 # --------- 14. Trapping Rain Water - Leetcode 42 - Hard ------------
