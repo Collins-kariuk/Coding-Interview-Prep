@@ -7,6 +7,8 @@ from collections import defaultdict
 #### ARRAYS AND HASHING #####
 
 # --------- 1. Contains Duplicate - Leetcode 217 - Easy ------------
+
+
 def containsDuplicate(nums):
     """
     COMPLEXITY:
@@ -34,6 +36,8 @@ def containsDuplicate(nums):
     return False
 
 # --------- 2. Valid Anagram - Leetcode 242 - Easy ------------
+
+
 def convertToDict(someString):
     stringDict = {}
     for c in someString:
@@ -43,8 +47,11 @@ def convertToDict(someString):
             stringDict[c] = 1
     return stringDict
 
+
 def isAnagram(s, t):
     """
+    COMPLEXITY:
+
     The space complexity of the isAnagram function is O(n), where n is the length of the input
     strings s and t. This is because the function uses dictionaries sDict and tDict to store
     the frequency of each character in the strings. The size of the dictionaries depends on the
@@ -68,28 +75,34 @@ def isAnagram(s, t):
     return sDict == tDict
 
 # --------- 3. Two Sum - Leetcode 1 - Easy ------------
+
+
 def twoSum(nums, target):
     """
     COMPLEXITY:
-    The space complexity of the twoSum function is O(n), where n is the length of the input list nums.
-    This is because the function uses a dictionary, twoSumDict, to store the elements of nums as keys and their corresponding indices as values.
-    The size of the dictionary depends on the number of unique elements in nums, which can be at most n.
 
-    The time complexity of the twoSum function is O(n), where n is the length of the input list nums.
-    This is because the function iterates over each element in nums once, performing constant-time operations such as dictionary lookups and updates.
-    The worst-case scenario occurs when the target sum is achieved with the last two elements of nums, resulting in a linear time complexity.
+    The space complexity of the twoSum function is O(n), where n is the length of the input list
+    nums. This is because the function uses a dictionary, twoSumDict, to store the elements of nums
+    as keys and their corresponding indices as values. The size of the dictionary depends on the
+    number of unique elements in nums, which can be at most n.
 
-    Therefore, the space complexity and time complexity of the twoSum function are both O(n).
+    The time complexity of the twoSum function is O(n), where n is the length of the input list
+    nums. This is because the function iterates over each element in nums once, performing
+    constant-time operations such as dictionary lookups and updates. The worst-case scenario occurs
+    when the target sum is achieved with the last two elements of nums, resulting in a linear time
+    complexity.
     """
 
-    twoSumDict = {}
+    twoSumDict = {} # key:value = num:index
     for i in range(len(nums)):
+        # calculate the second number that we need to achieve the target sum
         num2 = target - nums[i]
+        # if the second number is already in the dictionary, we return the indices
         if num2 in twoSumDict:
             return [i, twoSumDict[num2]]
+        # if second number is not in the dictionary, we add the current number to the dictionary
         else:
             twoSumDict[nums[i]] = i
-
 
 # --------- 4. Group Anagrams - Leetcode 49 - Medium ------------
 def groupAnagrams(strs):
