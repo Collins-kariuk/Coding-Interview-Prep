@@ -34,27 +34,31 @@ def containsDuplicate(nums):
     return False
 
 # --------- 2. Valid Anagram - Leetcode 242 - Easy ------------
+def convertToDict(someString):
+    stringDict = {}
+    for c in someString:
+        if c in stringDict:
+            stringDict[c] += 1
+        else:
+            stringDict[c] = 1
+    return stringDict
+
 def isAnagram(s, t):
     """
-    Complexity O(n):
-    The SPACE complexity of the isAnagram function is O(n), where n is the length of the input strings s and t.
-    This is because the function creates two dictionaries, sDict and tDict, which store the frequency of each character in the respective strings.
-    The size of these dictionaries depends on the number of unique characters in the strings.
+    The space complexity of the isAnagram function is O(n), where n is the length of the input
+    strings s and t. This is because the function uses dictionaries sDict and tDict to store
+    the frequency of each character in the strings. The size of the dictionaries depends on the
+    number of unique characters in the strings, which can be at most n.
 
-    The TIME complexity of the isAnagram function is O(n), where n is the length of the input strings s and t.
-    This is because the function iterates over each character in the strings to populate the dictionaries sDict and tDict.
-    The iteration takes O(n) time, and the dictionary operations (checking for membership and updating values) have an average time complexity of O(1).
-    Therefore, the overall space complexity and time complexity of the isAnagram function are both O(n).
+    The time complexity of the convertToDict function is O(n), where n is the length of the input
+    string. This is because the function iterates over each character in the string once,
+    performing constant-time operations such as dictionary lookups and updates.
+
+    Therefore, the overall time complexity of the isAnagram function is O(n), where n is the length
+    of the input strings s and t. This is because the function calls convertToDict twice, which
+    has a time complexity of O(n), and then compares the two dictionaries, WHICH ALSO takes O(n)
+    time.
     """
-
-    def convertToDict(someString):
-        stringDict = {}
-        for c in someString:
-            if c in stringDict:
-                stringDict[c] += 1
-            else:
-                stringDict[c] = 1
-        return stringDict
 
     # convert the strings to dictionaries that store the frequency of each character
     sDict = convertToDict(s)
@@ -62,7 +66,6 @@ def isAnagram(s, t):
 
     # s and t are anagrams only if the counts of the characters in both strings are the same
     return sDict == tDict
-
 
 # --------- 3. Two Sum - Leetcode 1 - Easy ------------
 def twoSum(nums, target):
