@@ -142,6 +142,15 @@ def groupAnagrams(strs):
     # returns a list of all the values in anagramDict.
     return list(anagramDict.values())
 
+def groupAnagrams2(strs):
+    ans = collections.defaultdict(list)
+    for s in strs:
+        count = [0] * 26
+        for c in s:
+            count[ord(c) - ord("a")] += 1
+        ans[tuple(count)].append(s)
+    return ans.values()
+
 # --------- 5. Top K Frequent Elements - Leetcode 347 - Medium ------------
 def topKFrequent(nums, k):
     """
