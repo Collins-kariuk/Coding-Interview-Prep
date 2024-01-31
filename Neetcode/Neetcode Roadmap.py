@@ -93,7 +93,8 @@ def twoSum(nums, target):
     complexity.
     """
 
-    twoSumDict = {} # key:value = num:index
+    twoSumDict = {}  # key:value = num:index
+
     for i in range(len(nums)):
         # calculate the second number that we need to achieve the target sum
         num2 = target - nums[i]
@@ -105,39 +106,41 @@ def twoSum(nums, target):
             twoSumDict[nums[i]] = i
 
 # --------- 4. Group Anagrams - Leetcode 49 - Medium ------------
+
+
 def groupAnagrams(strs):
     """
     COMPLEXITY:
-    The space complexity of the groupAnagrams function is O(n), where n is the length of the input list strs.
-    This is because the function uses a dictionary, anagramDict, to store the anagrams as keys and their corresponding indices as values.
-    The size of the dictionary depends on the number of unique anagrams in strs, which can be at most n.
 
-    The time complexity of the sorted function is O(n log n), where n is the length of the input string s.
-    This is because the sorted function uses a SORTING algorithm that has a time complexity of O(n log n) in the average case.
-    Therefore, the overall time complexity of the groupAnagrams function is O(n * m log m), where n is the LENGTH OF THE INPUT LIST strs and
-    m is the MAXIMUM LENGTH OF A STRING in strs.
-    This is because the function iterates over each element in strs and performs the sorted function on each string, which has a time complexity
-    of O(m log m).
+    The space complexity of the groupAnagrams function is O(n), where n is the length of the input
+    list strs. This is because the function uses a DICTIONARY, anagramDict, to store the anagrams
+    as keys and their corresponding indices as values. The size of the dictionary depends on the
+    number of UNIQUE ANAGRAMS in strs, which can be at most n.
+
+    The time complexity of the sorted function is O(n log n), where n is the length of the input
+    string s. This is because the sorted function uses a SORTING algorithm that has a time
+    complexity of O(n log n) in the AVERAGE CASE. Therefore, the OVERALL time complexity of the
+    groupAnagrams function is O(n * m log m), where n is the LENGTH OF THE INPUT LIST strs and m is
+    the MAXIMUM LENGTH OF A STRING in strs. This is because the function iterates over each element
+    in strs and performs the sorted function on each string, which has a time complexity of
+    O(m log m).
     """
 
-    # The purpose of the anagramDict dictionary is to store anagrams.
-    # The dictionary is used to store words as KEYS and their corresponding anagrams as VALUES.
-    # This allows for efficient lookup and retrieval of anagrams based on a given word.
-    anagramDict = {}
+    anagramDict = {}  # key:value = sortedString:[list of anagrams]
+
     for s in strs:
-        # sorts the string
-        # you first need to convert the string to a list of characters, sort the list, and then convert the sorted list back to a string.
+        # The sorted function returns a sorted list of the characters in a string and the join
+        # function converts the list back into a string
         sortedS = "".join(sorted(s))
 
-        # If sortedS is already a key in anagramDict, the code appends the value of another variable s to the list associated with that key.
-        # If sortedS is not a key in anagramDict, the code creates a new key-value pair in anagramDict, where the key is sortedS and the value is a list containing only the value of s.
+        # If the sorted string is already in the anagramDict, we append the current string to the
+        # list of anagrams. Otherwise, we create a new key-value pair in the anagramDict
         if sortedS in anagramDict:
             anagramDict[sortedS].append(s)
         else:
             anagramDict[sortedS] = [s]
     # returns a list of all the values in anagramDict.
     return list(anagramDict.values())
-
 
 # --------- 5. Top K Frequent Elements - Leetcode 347 - Medium ------------
 def topKFrequent(nums, k):
