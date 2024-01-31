@@ -531,29 +531,31 @@ def threeSum(nums):
     COMPLEXITY:
 
     The space complexity of the threeSum function is O(n), where n is the length of the nums list.
-    This is because the function uses additional space to store the result array res, which can potentially contain all possible unique triplets that sum up to 0.
-    In the worst case scenario, the size of res can be O(n^2) if all elements in nums form unique triplets.
+    This is because the function uses additional space to store the result array res, which can
+    potentially contain all possible unique triplets that sum up to 0. In the worst case scenario,
+    the size of res can be O(n^2) if all elements in nums form unique triplets.
     nums = [-1, -2, -3, ..., -n, 1, 2, 3, ..., n]
 
-    The time complexity of the threeSum function is O(n^2).
-    The function first SORTS the nums list, which takes O(n log n) time.
-    Then, it iterates through each element in the sorted list, resulting in O(n) iterations.
-    Within each iteration, the function uses a two-pointer approach to find the remaining two numbers that sum up to the negation of the current number.
-    This TWO-POINTER APPROACH takes O(n) time in the worst case scenario, as the pointers can potentially traverse the entire list.
-    Therefore, the overall time complexity is O(n log n + n^2), which SIMPLIFIES to O(n^2).
+    The time complexity of the threeSum function is O(n^2). The function first SORTS the nums list,
+    which takes O(n log n) time. Then, it iterates through each element in the sorted list,
+    resulting in O(n) iterations. Within each iteration, the function uses a two-pointer approach
+    to find the remaining two numbers that sum up to the negation of the current number. This
+    TWO-POINTER APPROACH takes O(n) time in the WORST CASE scenario, as the pointers can
+    potentially traverse the entire list. Therefore, the overall time complexity is
+    O(n log n + n^2), which SIMPLIFIES to O(n^2).
     """
 
     nums.sort()
     res = []
 
     for i in range(len(nums)):
-        # when the number is greater than 0, we can safely break out of the loop
-        # because we know that the numbers that follow will be GREATER THAN 0
-        # and so the sum of 3 numbers will never be 0
+        # when the number is greater than 0, we can safely break out of the loop because we know
+        # that the numbers that follow (after sorting) will be GREATER THAN 0 and so the sum of 3
+        # numbers will never be 0
         if nums[i] > 0:
             break
-        # when the number is equal to the number before it, we can safely SKIP IT
-        # because we've already considered it in a previous iteration
+        # when the number is equal to the number before it, we can safely SKIP IT because we've
+        # already considered it in a previous iteration
         if i > 0 and nums[i] == nums[i - 1]:
             continue
 
@@ -564,39 +566,37 @@ def threeSum(nums):
         while l < r:
             # calculate the sum of the 3 numbers
             currSum = nums[i] + nums[l] + nums[r]
-            # when the sum is less than 0, we increment the left pointer by one
-            # so as to increase the sum
+            # when the sum is less than 0, we increment the left pointer by one so as to increase
+            # the sum
             if currSum < 0:
                 l += 1
-            # when the sum is greater than 0, we decrement the right pointer by
-            # one so as to decrease the sum
+            # when the sum is greater than 0, we decrement the right pointer by one so as to
+            # decrease the sum
             elif currSum > 0:
                 r -= 1
-            # when the sum is equal to 0, we append the 3 numbers to the result
-            # array
+            # when the sum is equal to 0, we append the 3 numbers to the result array
             else:
                 res.append([nums[i], nums[l], nums[r]])
-                # we change the states of the pointers by one so as to look for
-                # other combinations that sum up to 0
+                # we change the states of the pointers by one so as to look for other combinations
+                # that sum up to 0
                 l += 1
                 r -= 1
-                # when the number at the left pointer is equal to the number
-                # before it, we increment the left pointer by one so as to skip it
-                # if we don't check whether the number at the left pointer is equal
-                # to the number before it, we'll end up with duplicate doublets for
-                # our mini 2Sum problem which we do not want since the question asks
-                # for unique triplets
+                # when the number at the left pointer is equal to the number before it, we
+                # increment the left pointer by one so as to skip it if we don't check whether the
+                # number at the left pointer is equal to the number before it, we'll end up with
+                # duplicate doublets for our mini 2Sum problem which we do not want since the
+                # question asks for unique triplets
                 while l < r and nums[l] == nums[l - 1]:
                     l += 1
-                # when the number at the right pointer is equal to the number
-                # before it, we decrement the right pointer by one so as to
-                # skip it
+                # when the number at the right pointer is equal to the number before it, we
+                # decrement the right pointer by one so as to skip it
                 while l < r and nums[r] == nums[r + 1]:
                     r -= 1
     return res
 
-
 # --------- 13. Container with Most Water - Leetcode 11 - Medium ------------
+
+
 def maxArea(height):
     """
     COMPLEXITY:
@@ -604,7 +604,8 @@ def maxArea(height):
     The time complexity of the maxArea function is O(n), where n is the length of the height list.
     This is because the function uses a TWO-POINTER approach to iterate through the list once.
 
-    The space complexity of the maxArea function is O(1), as it only uses a constant amount of extra space to store the pointers and the result variable.
+    The space complexity of the maxArea function is O(1), as it only uses a constant amount of
+    extra space to store the pointers and the result variable.
     """
 
     # initialize pointers
@@ -613,25 +614,20 @@ def maxArea(height):
     res = 0
 
     while l < r:
-        # calculate the current area at the specific point in the iteration
-        # it is basic equation of base*height where the base is the difference
-        # in the pointers and the height is the smaller of the 2 values at the
-        # left and right pointers
+        # calculate the current area at the specific point in the iteration it is basic equation of
+        # base*height where the base is the difference in the pointers and the height is the
+        # smaller of the 2 values at the left and right pointers
         currArea = (r - l) * min(height[l], height[r])
-        # the current maximum volume at the specific point in the iteration is
-        # just the bigger of the previous volume and the current volume
+        # the current maximum volume at the specific point in the iteration is just the bigger of
+        # the previous volume and the current volume
         res = max(res, currArea)
-        # when the height at the left pointer is smaller than the height at the
-        # right pointer we increment the left pointer by one so as to still
-        # preserve the bigger height at the right pointer since that height may
-        # be the smaller of 2 heights later in the iteration
+        # when the height at the left pointer is smaller than the height at the right pointer we
+        # increment the left pointer by one so as to still preserve the bigger height at the right pointer since that height may be the smaller of 2 heights later in the iteration
         if height[l] < height[r]:
             l += 1
         else:
             r -= 1
-
     return res
-
 
 # --------- 14. Trapping Rain Water - Leetcode 42 - Hard ------------
 def trap(height):
