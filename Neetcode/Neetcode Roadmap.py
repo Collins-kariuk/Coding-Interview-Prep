@@ -1,37 +1,37 @@
-#### ARRAYS AND HASHING #####
-
-# --------- 1. Contains Duplicate - Leetcode 217 - Easy ------------
 import math
 import collections
 from collections import defaultdict, deque
 import heapq
 from collections import defaultdict
 
+#### ARRAYS AND HASHING #####
 
+# --------- 1. Contains Duplicate - Leetcode 217 - Easy ------------
 def containsDuplicate(nums):
     """
-    Complexity O(n):
-    The complexity of the containsDuplicate function is O(n), where n is the length of the input list nums.
-    The function uses the set data structure to remove duplicates from the input list nums.
-    The set data structure has an average time complexity of O(1) for operations like adding elements and checking for membership.
-    In the code, set(nums) creates a set from the list nums, which eliminates any duplicate elements.
-    The len(set(nums)) expression calculates the length of the set, which gives us the number of unique elements in nums.
-    Finally, the function compares the length of the set with the length of the original list nums using the != operator.
-    If the lengths are not equal, it means that there are duplicate elements in nums, and the function returns True. Otherwise, it returns False.
-    Since creating the set and comparing the lengths both have a time complexity of O(n), the overall complexity of the function is O(n).
+    COMPLEXITY:
+
+    The time complexity of the containsDuplicate function is O(n), where n is the length of the
+    input list nums. This is because the function iterates over each element in nums once,
+    performing constant-time operations such as set membership checks and set additions.
+
+    The space complexity of the containsDuplicate function is O(n), where n is the length of the
+    input list nums. This is because the function uses a set, hashSet, to store the unique
+    elements of nums. The size of the set depends on the number of unique elements in nums, which
+    can be at most n.
     """
 
-    return len(set(nums)) != len(nums)
-    # Complexity? O(1) space complexity and O(nlogn) time complexity
-
-    # neetcode's solution - O(n) time and space complexity
-    # hashset = set()
-    # for n in nums:
-    # if n in hashSet:
-    #    return True
-    # hashset.add(n)
-    # return False
-
+    # initialize a set to store the unique elements of nums
+    hashSet = set()
+    # iterate through the list
+    for n in nums:
+        # if the element is already in the set, we return True
+        if n in hashSet:
+            return True
+    # if the element is not in the set, we add it to the set
+    hashSet.add(n)
+    # if we get to the end of the list, it means that there are no duplicates
+    return False
 
 # --------- 2. Valid Anagram - Leetcode 242 - Easy ------------
 def isAnagram(s, t):
