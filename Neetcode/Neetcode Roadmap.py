@@ -126,7 +126,7 @@ def groupAnagrams(strs):
     O(m log m).
     """
 
-    anagramDict = {} # key:value = sortedString:[list of anagrams]
+    anagramDict = {}  # key:value = sortedString:[list of anagrams]
 
     for s in strs:
         # The sorted function returns a sorted list of the characters in a string and the join
@@ -139,9 +139,10 @@ def groupAnagrams(strs):
             anagramDict[sortedS].append(s)
         else:
             anagramDict[sortedS] = [s]
-    
+
     # returns a list of all the values in anagramDict.
     return list(anagramDict.values())
+
 
 def groupAnagrams2(strs):
     """
@@ -181,6 +182,8 @@ def groupAnagrams2(strs):
     return ans.values()
 
 # --------- 5. Top K Frequent Elements - Leetcode 347 - Medium ------------
+
+
 def topKFrequent(nums, k):
     """
     COMPLEXITY:
@@ -457,18 +460,19 @@ def isPalindrome(s):
     """
     COMPLEXITY:
 
-    The space complexity of the isPalindrome function is O(n), where n is the length of the input string s.
-    This is because the function CREATES 2 LISTS, original and reversedOriginal, to store the alphanumeric characters of the string.
-    The size of these lists will be proportional to the length of the input string.
+    The space complexity of the isPalindrome function is O(n), where n is the length of the input
+    string s. This is because the function CREATES 2 LISTS, original and reversedOriginal, to store
+    the alphanumeric characters of the string. The size of these lists will be proportional to the
+    length of the input string.
 
-    The time complexity of the isPalindrome function is O(n), where n is the length of the input string s.
-    This is because the function ITERATES THROUGH each character of the string once to populate the original list.
-    Additionally, the function creates the reversedOriginal list by REVERSING the original list, which takes O(n) time.
-    Finally, the function compares the original and reversedOriginal lists, which also takes O(n) time.
-    Therefore, the overall time complexity is linear.
+    The time complexity of the isPalindrome function is O(n), where n is the length of the input
+    string s. This is because the function ITERATES through each character of the string once to
+    populate the original list. Additionally, the function creates the reversedOriginal list by
+    REVERSING the original list, which takes O(n) time. Finally, the function COMPARES the original
+    and reversedOriginal lists, which also takes O(n) time.
     """
 
-    # initialize two lists to store the original and reversed strings
+    # initialize two lists to store the original and reversed strings respectively
     original = []
     reversedOriginal = []
 
@@ -483,8 +487,9 @@ def isPalindrome(s):
     reversedOriginal = original[::-1]
     return original == reversedOriginal
 
-
 # --------- 11. Two Sum II - Input Array Is Sorted - Leetcode 167 - Medium ------------
+
+
 def twoSumSorted(numbers, target):
     """
     COMPLEXITY:
