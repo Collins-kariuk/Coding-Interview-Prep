@@ -126,7 +126,7 @@ def groupAnagrams(strs):
     O(m log m).
     """
 
-    anagramDict = {}  # key:value = sortedString:[list of anagrams]
+    anagramDict = {} # key:value = sortedString:[list of anagrams]
 
     for s in strs:
         # The sorted function returns a sorted list of the characters in a string and the join
@@ -139,22 +139,52 @@ def groupAnagrams(strs):
             anagramDict[sortedS].append(s)
         else:
             anagramDict[sortedS] = [s]
+    
     # returns a list of all the values in anagramDict.
     return list(anagramDict.values())
 
 def groupAnagrams2(strs):
+    """
+    COMPLEXITY:
+
+    (I think the space complexity is O(n) where n is the length of the input list strs because we
+    use a dictionary to store the anagrams as keys and their corresponding indices as values. The
+    size of the dictionary depends on the number of unique anagrams in strs, which can be at most
+    n.)
+
+    The time complexity of the function is O(NK), where N is the length of the input list strs and
+    K is the maximum length of a string in strs. This is because we iterate through each string in
+    strs and for each string, we iterate through each character to update the count list. The
+    overall time complexity is determined by the NUMBER of strings and the MAXIMUM length of a
+    string
+
+    It's worth noting that the defaultdict lookup and append operations have an average time
+    complexity of O(1), so they do not significantly affect the overall time complexity of the
+    function
+    """
+
+    # defaultdict is a subclass of dict that provides a default value for a key that does not exist
     ans = collections.defaultdict(list)
     for s in strs:
+        # we want to count the number of occurrences of each character in the string (26 represents
+        # the number of letters in the alphabet)
         count = [0] * 26
         for c in s:
+            # ord() returns the ASCII value of the character
+            # for example, ord("a") returns 97 and ord("b") returns 98, so ord("b") - ord("a") = 1
+            # which is the index of the count list for the character b
             count[ord(c) - ord("a")] += 1
+        # we convert the count list to a tuple because lists are not hashable and cannot be used as
+        # dictionary keys and tuples are hashable
         ans[tuple(count)].append(s)
+    # returns a list of all the values in ans
     return ans.values()
 
 # --------- 5. Top K Frequent Elements - Leetcode 347 - Medium ------------
 def topKFrequent(nums, k):
     """
     COMPLEXITY:
+
     The space complexity of the topKFrequent function is O(n), where n is the length of the input list nums.
     This is because the function uses a dictionary, numDict, to store the elements of nums as keys and their corresponding frequencies as values.
     The size of the dictionary depends on the number of unique elements in nums, which can be at most n.
@@ -162,9 +192,8 @@ def topKFrequent(nums, k):
     The time complexity of the topKFrequent function is O(n), where n is the length of the input list nums.
     This is because the function iterates over each element in nums once, performing constant-time operations such as dictionary lookups and updates.
     The worst-case scenario occurs when all the elements in nums are unique, resulting in a linear time complexity.
-
-    Therefore, the space complexity and time complexity of the topKFrequent function are both O(n).
     """
+
     numDict = {}
     for num in nums:
         if num in numDict:
@@ -173,7 +202,7 @@ def topKFrequent(nums, k):
             numDict[num] = 1
 
     # a modified version of bucket sort
-    frequencies = [[] for i in range(len(nums) + 1)]
+    frequencies = [[] for _ in range(len(nums) + 1)]
 
     # frequencies is a list of lists, where each inner list contains all the numbers that occur with a certain frequency.
     # For example, if the number 2 occurs 3 times in nums, then frequencies[3] will contain the number 2.
