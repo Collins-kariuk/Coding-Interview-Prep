@@ -1234,8 +1234,9 @@ def search(nums, target):
     # when the target is not  in our list of numbers, we just return -1
     return -1
 
-
 # ---------- 26. Time Based Key-Value Store - Leetcode 981 - Medium -------------
+
+
 class TimeMap:
 
     def __init__(self):
@@ -1325,8 +1326,9 @@ def maxProfit(prices):
             r += 1
     return maxProfit
 
-
 # ---------- 28. Longest Substring Without Repeating Characters - Leetcode 3 - Medium -------------
+
+
 def lengthOfLongestSubstring(s):
     """
     COMPLEXITY:
@@ -1401,29 +1403,29 @@ def characterReplacement(s, k):
         else:
             count[char] = 1
 
-        # check whether a character replacement can even be made
-        # the logic of this is that if the length of the current substring window minus the
-        # maximum count of a character in the current substring is greater than k, then
-        # we know that we can't make a character replacement
-        # it makes sense to replace the characters that are NOT the most frequent character
-        # in the current substring because we can replace them with the most frequent character
-        # replacements (k) in the current substring and still have a valid substring
+        # check whether a character replacement can even be made the logic of this is that if the
+        # length of the current substring window minus the maximum count of a character in the
+        # current substring is greater than k, then we know that we can't make a character
+        # replacement it makes sense to replace the characters that are NOT the most frequent
+        # character in the current substring because we can replace them with the most frequent
+        # character replacements (k) in the current substring and still have a valid substring
 
         # (r - l + 1) is the length of the current substring window
         # max(count.values()) is the maximum count of a character in the current substring
         if (r - l + 1) - max(count.values()) > k:
-            # when this occurs, we need to decrement the count of the character at the left
-            # pointer in the dictionary since we're going to move the left pointer rightwards
-            # to make a valid substring that can be made with k character replacements
+            # when this occurs, we need to decrement the count of the character at the left pointer
+            # in the dictionary since we're going to move the left pointer rightwards to make a
+            # valid substring that can be made with k character replacements
             count[s[l]] -= 1
             l += 1
-        # the maximum length of the substring with repeating characters will be the larger of
-        # the previous window length and the current sliding window length
+        # the maximum length of the substring with repeating characters will be the larger of the
+        # previous window length and the current sliding window length
         res = max(res, r - l + 1)
     return res
 
-
 # --------- 30. Permutation in String - Leetcode 567 - Medium ------------
+
+
 def dictify(s):
     someDict = {}
     for c in s:
