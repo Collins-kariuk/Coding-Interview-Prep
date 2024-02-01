@@ -1141,37 +1141,36 @@ def findMin(nums):
     """
     COMPLEXITY:
 
-    The time complexity of the findMin function is O(log n), where n is the length of the nums list.
-    This is because the function uses a BINARY SEARCH approach to find the minimum value.
+    The time complexity of the findMin function is O(log n), where n is the length of the nums
+    list. This is because the function uses a BINARY SEARCH approach to find the minimum value.
 
-    The space complexity of the findMin function is O(1), as it only uses a constant amount of extra
-    space to store the pointers and the result variable.
+    The space complexity of the findMin function is O(1), as it only uses a constant amount of
+    extra space to store the pointers and the result variable.
     """
 
     # variable that'll store the current minimum
     res = nums[0]
-    # intiaialize pointers
+    # initialize pointers
     l = 0
     r = len(nums) - 1
 
     while l <= r:
-        # if the number at the left pointer is less than the one at the right pointer,
-        # it means that nums is already sorted and we can safely return the number at
-        # the left pointer or the current minimum, whichever is smaller
+        # if the number at the left pointer is less than the one at the right pointer, it means that
+        # nums is already sorted and we can safely return the number at the left pointer or the
+        # current minimum, whichever is smaller
         if nums[l] < nums[r]:
             res = min(res, nums[l])
             break
 
         # calculation of the location of the middle pointer
         mid = (l + r) // 2
-        # before further comparison, the number at the middle pointer will serve as
-        # the minimum
+        # before further comparison, the number at the middle pointer will serve as the minimum
         res = min(res, nums[mid])
-        # If the middle element is greater than or equal to the element at the left pointer,
-        # it indicates that the left segment of the sublist is already sorted. Due to the
-        # array's rotation, searching in the left segment is not logical, as it will always
-        # contain larger values compared to the right segment. Therefore, our search should
-        # concentrate on the right segment of the array.
+        # If the middle element is greater than or equal to the element at the left pointer, it
+        # indicates that the left segment of the sublist is already sorted. Due to the  array's
+        # rotation, searching in the left segment is not logical, as it will always contain larger
+        # values compared to the right segment. Therefore, our search should concentrate on the
+        # right segment of the array.
         if nums[mid] >= nums[l]:
             l = mid + 1
         # the opposite holds
