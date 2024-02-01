@@ -2094,10 +2094,16 @@ def lowestCommonAncestor(root, p, q):
 
 def lowestCommonAncestor(root, p, q):
     while True:
+        # if both p and q are greater than the current node, it means that the lowest common
+        # ancestor must be in the right subtree
         if root.val < p.val and root.val < q.val:
             root = root.right
+        # if both p and q are less than the current node, it means that the lowest common
+        # ancestor must be in the left subtree
         elif root.val > p.val and root.val > q.val:
             root = root.left
+        # if neither of the above conditions are true, it means that p and q are on either side
+        # of the current node, so the current node is the lowest common ancestor
         else:
             return root
 
