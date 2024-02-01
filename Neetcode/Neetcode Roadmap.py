@@ -1381,11 +1381,12 @@ def characterReplacement(s, k):
     """
     COMPLEXITY:
 
-    The time complexity of the characterReplacement function is O(n), where n is the length of the input string s.
-    This is because the function uses a SLIDING WINDOW approach to iterate through the string once.
+    The time complexity of the characterReplacement function is O(n), where n is the length of the
+    input string s. This is because the function uses a SLIDING WINDOW approach to iterate through
+    the string once.
 
-    The space complexity of the characterReplacement function is O(1), as it only uses a constant amount of extra
-    space to store the pointers and the result variable.
+    The space complexity of the characterReplacement function is O(1), as it only uses a constant
+    amount of extra space to store the pointers and the result variable.
     """
 
     # initialize a dictionary that'll store the running occurrences
@@ -1440,15 +1441,16 @@ def checkInclusion(s1, s2):
     """
     COMPLEXITY:
 
-    The time complexity of the checkInclusion function is O(n * m), where n is the length of s2 and m is the length of s1.
-    This is because we iterate through s2 using the while loop, and for each iteration, we create a dictionary of the
-    current window of length m using the dictify function. The dictify function has a time complexity of O(m) because it
-    iterates through the characters of s1 and performs constant time operations to update the dictionary.
+    The time complexity of the checkInclusion function is O(n * m), where n is the length of s2 and
+    m is the length of s1. This is because we iterate through s2 using the while loop, and for each
+    iteration, we create a dictionary of the current window of length m using the dictify function.
+    The dictify function has a time complexity of O(m) because it iterates through the characters
+    of s1 and performs constant time operations to update the dictionary.
 
-    The space complexity of the checkInclusion function is O(m), where m is the length of s1. This is because we create
-    a dictionary s1Dict to store the character counts of s1, which can have at most m unique characters. Additionally,
-    we create a curWindowDict dictionary for each window of length m in s2. Therefore, the space required is proportional
-    to the length of s1.
+    The space complexity of the checkInclusion function is O(m), where m is the length of s1. This
+    is because we create a dictionary s1Dict to store the character counts of s1, which can have at
+    most m unique characters. Additionally, we create a curWindowDict dictionary for each window of
+    length m in s2. Therefore, the space required is proportional to the length of s1.
     """
 
     # an edge case is when the length of s1 is greater than the length of s2
@@ -1466,8 +1468,8 @@ def checkInclusion(s1, s2):
         curWindow = s2[l:r + 1]
         curWindowDict = dictify(curWindow)
 
-        # if the character counts of the current window and s1 are the same, it means that
-        # the current window is a permutation of s1 and so we return True
+        # if the character counts of the current window and s1 are the same, it means that the
+        # current window is a permutation of s1 and so we return True
         if curWindowDict == s1Dict:
             return True
         # otherwise, we move the left and right pointers (the whole window) rightwards
