@@ -1200,18 +1200,18 @@ def search(nums, target):
     while l <= r:
         # calculated the middle pointer
         mid = (l + r) // 2
-        # direct return if the target is equal to the number at the middle pointer
+        # directly return if the target is equal to the number at the middle pointer
         if target == nums[mid]:
             return mid
 
         # left sorted portion
-        # if the number at the middle is greater than the number at the left pointer,
-        # we are at the left sorted portion
+        # if the number at the middle is greater than the number at the left pointer, we are at the
+        # left sorted portion
         if nums[l] <= nums[mid]:
-            # if the target is greater than the number at the middle OR if the target is
-            # less than the number at the left pointer, there is no point in looking
-            # at the left sorted portion, so we update our pointers to concentrate our
-            # search on the right sorted portion
+            # if the target is greater than the number at the middle OR if the target is less than
+            # the number at the left pointer, there is no point in looking at the left sorted
+            # portion, so we update our pointers to concentrate our search on the right sorted
+            # portion
             if target > nums[mid] or target < nums[l]:
                 l = mid + 1
             # otherwise, our target is surely in the left sorted portion and we change
@@ -1221,14 +1221,14 @@ def search(nums, target):
 
         # right sorted portion
         else:
-            # if the target is less than the number at the middle OR if the target is
-            # greater than the number at the right pointer, there is no point in looking
-            # at the right sorted portion, so we update our pointers to concentrate our
-            # search on the left sorted portion
+            # if the target is less than the number at the middle OR if the target is greater than
+            # the number at the right pointer, there is no point in looking at the right sorted
+            # portion, so we update our pointers to concentrate our search on the left sorted
+            # portion
             if target < nums[mid] or target > nums[r]:
                 r = mid - 1
-            # otherwise, our target is surely in the right sorted portion and we change
-            # our pointers to concentrate on this region
+            # otherwise, our target is surely in the right sorted portion and we change our
+            # pointers to concentrate on this region
             else:
                 l = mid + 1
     # when the target is not  in our list of numbers, we just return -1
