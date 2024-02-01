@@ -714,7 +714,8 @@ def isValid(s):
     # initialize a stack
     stack = []
     # a dictionary that maps the closing bracket to the opening bracket
-    closeToOpen = {"]": "[", "}": "{", ")": "("} # key:value = closing bracket:opening bracket
+    # key:value = closing bracket:opening bracket
+    closeToOpen = {"]": "[", "}": "{", ")": "("}
 
     for c in s:
         # if the character is a closing bracket
@@ -785,26 +786,29 @@ def evalRPN(tokens):
     """
     COMPLEXITY:
 
-    The space complexity of the evalRPN function is O(n), where n is the number of tokens in the input list.
-    This is because the function uses a stack to store the operands, and the size of the stack GROWS LINEARLY with the number of tokens.
+    The space complexity of the evalRPN function is O(n), where n is the number of tokens in the
+    input list. This is because the function uses a stack to store the operands, and the size of
+    the stack GROWS LINEARLY with the number of tokens.
 
-    The time complexity of the evalRPN function is also O(n), where n is the number of tokens in the input list.
-    This is because the function iterates through each token once and performs constant-time operations for each token.
-    Therefore, the time complexity is linear with respect to the NUMBER OF TOKENS.
+    The time complexity of the evalRPN function is also O(n), where n is the number of tokens in
+    the input list. This is because the function iterates through each token once and performs
+    constant-time operations for each token. Therefore, the time complexity is linear with respect
+    to the NUMBER OF TOKENS.
     """
 
-    # Initialize a stack to store the operands
+    # initialize a stack to store the operands
     stack = []
 
     for token in tokens:
-        # Push the operands onto the stack
+        # push the operands onto the stack
         if token not in "+-*/":
             stack.append(int(token))
         else:
-            # Pop the operands in the correct order
+            # pop the operands in the correct order
             num2 = stack.pop()
             num1 = stack.pop()
 
+            # perform the operation and push the result back onto the stack
             if token == "+":
                 stack.append(num1 + num2)
             elif token == "-":
@@ -814,6 +818,8 @@ def evalRPN(tokens):
             elif token == "/":
                 # use integer division that truncates towards zero
                 stack.append(int(num1 / num2))
+    
+    # the result will be at the top of the stack
     return stack[0]
 
 # --------- 18. Generate Parentheses - Leetcode 22 - Medium ------------
