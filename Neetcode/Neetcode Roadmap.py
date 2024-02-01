@@ -912,30 +912,36 @@ def generateParenthesis(n):
 
 def dailyTemperatures(temperatures):
     """
+    A monotonic stack is a stack that either strictly increases or strictly decreases. In this
+    problem, we use a monotonic decreasing stack to keep track of the indices of the temperatures
+    that we have seen so far. The stack will store the indices in decreasing order of temperature.
+
     COMPLEXITY:
 
-    The time complexity of the dailyTemperatures function is O(n), where n is the length of the temperatures list.
-    This is because we iterate through each temperature once and perform CONSTANT-TIME OPERATIONS for each temperature.
+    The time complexity of the dailyTemperatures function is O(n), where n is the length of the
+    temperatures list. This is because we iterate through each temperature once and perform
+    CONSTANT-TIME OPERATIONS for each temperature.
 
-    The space complexity of the function is O(n) as well.
-    This is because we use a stack to store the indices of the temperatures that we have seen so far alongside the temperature.
-    The size of the stack grows linearly with the number of temperatures, so the space complexity is also linear with respect
-    to the length of the temperatures list.
+    The space complexity of the function is O(n) as well. This is because we use a stack to store
+    the indices of the temperatures that we have seen so far alongside the temperature. The size of
+    the stack grows linearly with the number of temperatures, so the space complexity is also
+    linear with respect to the length of the temperatures list.
     """
 
     # initialize the result array
-    # we initialize it to all zeros because the default value for when we do not find a warmer day is 0
+    # we initialize it to all zeros because the default value when we do not find a warmer day is 0
     res = [0] * len(temperatures)
-    # initialize a stack to store the indices of the temperatures that we have seen so far alongside the temperature
+    # initialize a stack to store the indices of the temperatures that we have seen so far
+    # alongside the temperature
     stack = []  # pair: [temp, index]
 
     for currIndex, temperature in enumerate(temperatures):
-        # if the stack is not empty and the current temperature is greater than the temperature at the top of the stack
-        # we pop the temperature and index from the stack and calculate the number of days between the current index and
-        # the index at the top of the stack
-        # we then update the result array at the index at the top of the stack with the number of days
-        # we continue popping from the stack until the stack is empty or the current temperature is less than the
-        # temperature at the top of the stack
+        # if the stack is not empty and the current temperature is greater than the temperature at
+        # the top of the stack we pop the temperature and index from the stack and calculate the
+        # number of days between the current index and the index at the top of the stack we then
+        # update the result array at the index at the top of the stack with the number of days we
+        # continue popping from the stack until the stack is empty or the current temperature is
+        # less than the temperature at the top of the stack
         while len(stack) != 0 and temperature > stack[-1][0]:
             stackTemp, stackInd = stack.pop()
             res[stackInd] = currIndex - stackInd
