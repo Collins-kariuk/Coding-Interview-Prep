@@ -1952,8 +1952,8 @@ def isBalanced(root):
     """
     COMPLEXITY:
 
-    The time complexity of the isBalanced function is O(n), where n is the number of nodes in
-    the binary tree. This is because the function visits each node once during the DFS traversal.
+    The time complexity of the isBalanced function is O(n), where n is the number of nodes in the
+    binary tree. This is because the function visits each node once during the DFS traversal.
 
     The space complexity of the isBalanced function is O(h), where h is the height of the binary
     tree. This is because the function uses the call stack to store recursive function calls, and
@@ -1962,9 +1962,9 @@ def isBalanced(root):
 
     def dfs(root):
         # base case
-        # the first element is a boolean that INDICATES WHETHER THE TREE IS BALANCED and since,
-        # for the base case, the node is null, the tree is balanced
-        # the second element is the HEIGHT OF THE TREE
+        # the first element is a boolean that INDICATES WHETHER THE TREE IS BALANCED and since, for
+        # the base case, the node is null, the tree is balanced the second element is the HEIGHT OF
+        # THE TREE
         if root == None:
             return [True, 0]
 
@@ -1980,8 +1980,8 @@ def isBalanced(root):
         # plus 1 (for the current node)
         return [balance, 1 + max(left[1], right[1])]
 
-    # call the dfs function on the root node and return the first element of the list because
-    # it indicates whether the tree is balanced
+    # call the dfs function on the root node and return the first element of the list because it
+    # indicates whether the tree is balanced
     return dfs(root)[0]
 
 # --------- 43. Same Tree - Leetcode 100 - Easy ------------
