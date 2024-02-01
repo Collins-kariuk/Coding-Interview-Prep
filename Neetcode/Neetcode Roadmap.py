@@ -2107,6 +2107,43 @@ def lowestCommonAncestor(root, p, q):
         else:
             return root
 
+# --------------- 54. Validate Binary Search Tree - Leetcode 98 - Medium --------------
+
+
+def isValidBST(root):
+    """
+    The time complexity of the isValidBST function is O(N), where N is the number of nodes in the
+    binary tree. This is because the function performs a depth-first search traversal of the tree,
+    visiting each node once.
+
+    The space complexity of the function is O(N) as well. This is because the function uses a
+    recursive approach to traverse the tree, and the maximum depth of the recursion is equal to the
+    height of the tree, which can be N in the worst case for an unbalanced tree.
+    """
+
+    # the gist of the solution is that we need to check whether the current node's value is between
+    # the minimum and maximum values we do this by recursively calling the function on the left and
+    # right subtrees and updating the minimum and maximum values as we go along
+    def dfs_helper(node, minVal, maxVal):
+        # base case 1: if the node is null, we return True because an empty tree is a valid BST
+        if not node:
+            return True
+        # base case 2: if the node's value is less than the minimum value or greater than the max
+        # value, we return False
+        if node.val <= minVal or node.val >= maxVal:
+            return False
+
+        # the recursive case: we call the function on the left and right subtrees
+        # we update the minimum and maximum values as we go along
+
+        # for the left subtree, the maximum value is the value of the current node and for the
+        # right subtree, the minimum value is the value of the current node
+        return dfs_helper(node.left, minVal, node.val) and dfs_helper(node.right, node.val, maxVal)
+
+    # we set the initial minimum and maximum values to be the minimum and maximum values of a
+    # 32-bit signed integer
+    return dfs_helper(root, -2**31, 2**31 - 1)
+
 # ----------------------------------------------------------------------------------------------------------------------------------------------------------
 #### BACKTRACKING ####
 # --------- 46. Subsets - Leetcode 78 - Medium ------------
