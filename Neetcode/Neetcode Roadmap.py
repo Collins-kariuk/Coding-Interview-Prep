@@ -1092,37 +1092,44 @@ def minEatingSpeed(piles, h):
     """
     COMPLEXITY:
 
-    The time complexity of the minEatingSpeed function is O(n log m), where n is the length of the piles list and m is the maximum number of bananas in a pile.
-    This is because the function uses a BINARY SEARCH approach to find the minimum speed.
-    The function performs a constant amount of work for each iteration, and the number of iterations is bounded by the length of the piles list.
-    Additionally, the function performs a binary search on the possible speeds, which takes O(log m) time.
+    The time complexity of the minEatingSpeed function is O(n log m), where n is the length of the
+    piles list and m is the maximum number of bananas in a pile. This is because the function uses
+    a BINARY SEARCH approach to find the minimum speed. The function performs a constant amount of
+    work for each iteration, and the number of iterations is bounded by the length of the piles
+    list. Additionally, the function performs a binary search on the possible speeds, which takes
+    O(log m) time.
 
-    The space complexity of the minEatingSpeed function is O(1), as it only uses a constant amount of extra space to store the pointers and the result variable.
+    The space complexity of the minEatingSpeed function is O(1), as it only uses a constant amount
+    of extra space to store the pointers and the result variable.
     """
 
     # the minimum speed is 1 and the maximum speed is the maximum number of bananas in a pile
     l = 1
     r = max(piles)
+    # initialize the result to be the maximum number of bananas in a pile since we know that
+    # regardless, the speed will have to be greater than or equal to the maximum number of bananas
+    # in a pile
     res = max(piles)
 
-    # we perform a binary search on the possible speeds
+    # perform a binary search on the possible speeds
     while l <= r:
         # calculate the middle speed
         k = (l + r) // 2
         hours = 0
         # calculate the number of hours it takes to eat all the bananas at the current speed (k)
+        # we use the math.ceil function to round up the number of hours to the nearest whole number
         for p in piles:
             hours += math.ceil(p / k)
         # if the number of hours it takes to eat all the bananas at the current speed is less than
-        # or equal to h, we update the result to be the minimum of the current result and the current
-        # speed we also move the right pointer to the left so as to decrease the speed since we want
-        # to find the minimum speed
+        # or equal to h, we update the result to be the minimum of the current result and the
+        # current speed we also move the right pointer to the left so as to decrease the speed
+        # since we want to find the minimum speed
         if hours <= h:
             res = min(res, k)
             r = k - 1
-        # if the number of hours it takes to eat all the bananas at the current speed is greater than h,
-        # it means our current speed is too small so we move the left pointer to the right so as to
-        # increase the speed
+        # if the number of hours it takes to eat all the bananas at the current speed is greater
+        # than h, it means our current speed is too small so we move the left pointer to the right
+        # so as to increase the speed
         else:
             l = k + 1
     return res
