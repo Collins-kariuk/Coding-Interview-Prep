@@ -379,7 +379,7 @@ def levelOrder(root):
 
 
 # --------------- 43. Validate Binary Search Tree - Leetcode 98 - Medium --------------
-def isValidBST(root): 
+def isValidBST(root):
     # the gist of the solution is that we need to check whether the current node's value
     # is between the minimum and maximum values
     # we do this by recursively calling the function on the left and right subtrees
@@ -1869,6 +1869,28 @@ def rob(nums):
         rob2 = temp
     # the maximum bounty we can get till the last house
     return rob2
+
+
+def rob2(nums):
+    # Edge case: if there are no houses, the robber can't rob anything.
+    if not nums:
+        return 0
+    # Edge case: if there's only one house, the robber can only rob that house.
+    if len(nums) == 1:
+        return nums[0]
+    # Create an array to store the maximum money that can be robbed up to each house.
+    max_money = [0] * len(nums)
+    # The maximum money robbed from the first house is just the value of the first house.
+    max_money[0] = nums[0]
+    # The maximum money robbed from the first two houses is the max of the first two house values.
+    max_money[1] = max(nums[0], nums[1])
+    # Iterate over the rest of the houses, starting from the third house.
+    for i in range(2, len(nums)):
+        # For each house, you can choose not to rob it and take the max money from the previous house,
+        # or rob it and add its value to the max money from the house before the previous one.
+        max_money[i] = max(nums[i] + max_money[i-2], max_money[i-1])
+    # The last element in the max_money array contains the maximum money that can be robbed.
+    return max_money[-1]
 
 # ------------------ 23. House Robber II - Leetcode 213 - Medium ---------------------
 
