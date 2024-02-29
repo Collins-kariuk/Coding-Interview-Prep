@@ -1196,9 +1196,8 @@ def search(nums, target):
     l = 0
     r = len(nums) - 1
 
-    # as long as the pointers don't cross each other, continue with the
     while l <= r:
-        # calculated the middle pointer
+        # calculate the middle pointer
         mid = (l + r) // 2
         # directly return if the target is equal to the number at the middle pointer
         if target == nums[mid]:
@@ -1231,6 +1230,7 @@ def search(nums, target):
             # pointers to concentrate on this region
             else:
                 l = mid + 1
+    
     # when the target is not  in our list of numbers, we just return -1
     return -1
 
