@@ -835,18 +835,15 @@ def generateParenthesis(n):
     parameter representing the number of pairs of parentheses. This is because the function uses a
     stack to store the parentheses combinations, and the maximum size of the stack at any given
     time is n.
-
     The stack indeed stores one potential parentheses combination at a time, but the maximum length
     of this combination can be up to 2n (for n pairs of parentheses, each pair consists of an
     opening and a closing bracket). Therefore, the space complexity is O(n) because the maximum
     size of the stack (or the maximum length of a single combination) is proportional to the input
     size n.
-
     Additionally, the recursive nature of the function also contributes to the space complexity.
     Each recursive call to backtrack adds a new level to the call stack. In the worst-case
     scenario, the depth of recursion (i.e., the maximum height of the implicit call stack) can be
     up to 2n, which also contributes to the O(n) space complexity.
-
     So, in summary, the space complexity of the function is O(n) due to the MAXIMUM SIZE OF THE
     STACK used to store a single parentheses combination and the MAXIMUM DEPTH OF THE RECURSIVE
     CALL STACK.
@@ -1471,7 +1468,7 @@ def checkInclusion(s1, s2):
         curWindowDict = dictify(curWindow)
 
         # if the character counts of the current window and s1 are the same, it means that the
-        # current window is a permutation of s1 and so we return True
+        # current window is a permutation of s1
         if curWindowDict == s1Dict:
             return True
         # otherwise, we move the left and right pointers (the whole window) rightwards
