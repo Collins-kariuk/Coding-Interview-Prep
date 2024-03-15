@@ -2,7 +2,6 @@ import math
 import collections
 from collections import defaultdict, deque
 import heapq
-from collections import defaultdict
 
 #### ARRAYS AND HASHING #####
 
