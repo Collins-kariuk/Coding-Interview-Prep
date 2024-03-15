@@ -308,22 +308,24 @@ def isValidSudoku(board):
     """
     COMPLEXITY:
 
-    The space complexity of the isValidSudoku function is O(1) because the space used by the cols, rows, and squares dictionaries
-    is CONSTANT and does not depend on the size of the input.
+    The space complexity of the isValidSudoku function is O(1) because the space used by the cols,
+    rows, and squares dictionaries is CONSTANT and does not depend on the size of the input.
 
-    The time complexity of the isValidSudoku function is O(1) because the function iterates through a FIXED-SIZE 9x9 Sudoku board.
-    The number of iterations is constant and does not depend on the size of the input. Therefore, the time complexity is constant.
+    The time complexity of the isValidSudoku function is O(1) because the function iterates through
+    a FIXED-SIZE 9x9 Sudoku board. The number of iterations is constant and does not depend on the
+    size of the input. Therefore, the time complexity is constant.
     """
 
     # initialize the rows, cols, and squares dictionaries
     # the keys are the row/col/square numbers and the values are sets
-    # the sets will contain the numbers that are in that particular row/col/square (will be populated as we iterate through the
-    # board so we can check for duplicates in later iterations)
+    # the sets will contain the numbers that are in that particular row/col/square (will be
+    # populated as we iterate through the board so we can check for duplicates in later iterations)
     # cols might look like {0: {5, 7}, 1: {1, 2, 3}, 2: {4, 6}}
     cols = collections.defaultdict(set)
     # rows might look like {0: {5, 7}, 1: {1, 2, 3}, 2: {4, 6}}
     rows = collections.defaultdict(set)
-    # key = (r // 3, c // 3) so squares might look like {(0, 0): {5, 7}, (0, 1): {1, 2, 3}, (0, 2): {4, 6}}
+    # key = (r // 3, c // 3) so squares might look like {(0, 0): {5, 7}, (0, 1): {1, 2, 3},
+    # (0, 2): {4, 6}}
     squares = collections.defaultdict(set)
 
     # iterate through the board
@@ -334,10 +336,11 @@ def isValidSudoku(board):
                 continue
             # check if the number is already in the row/col/square
             # remember that the square is determined by the row and column number
-            # for example, the square that contains the number in row 2 and column 3 is (2 // 3, 3 // 3) = (0, 1)
+            # for example, the square that contains the number in row 2 and column 3 is
+            # (2 // 3, 3 // 3) = (0, 1)
             if (board[r][c] in rows[r] or
                 board[r][c] in cols[c] or
-                    board[r][c] in squares[(r // 3, c // 3)]):
+                board[r][c] in squares[(r // 3, c // 3)]):
                 return False
             # if the number is not in the row/col/square, add it to the respective set
             rows[r].add(board[r][c])
