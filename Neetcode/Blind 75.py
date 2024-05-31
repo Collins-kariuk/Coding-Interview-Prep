@@ -1397,23 +1397,19 @@ def maxArea(height):
 
     # continue with the loop as long as the pointers do not cross each other
     while l < r:
-        # calculate the current area at the specific point in the iteration
-        # it is basic equation of base*height where the base is the difference
-        # in the pointers and the height is the smaller of the 2 values at the
-        # left and right pointers
+        # Calculate the current area at the specific point in the iteration using the basic
+        # equation of base * height. Here, the base is the difference between the pointers, and the
+        # height is the smaller of the two values at the left and right pointers.
         currArea = (r - l) * min(height[l], height[r])
-        # the current maximum volume at the specific point in the iteration is
-        # just the bigger of the previous volume and the current volume
+        # The current maximum volume is the larger of the previous volume and the current volume
         res = max(res, currArea)
-        # when the height at the left pointer is smaller than the height at the
-        # right pointer we increment the left pointer by one so as to still
-        # preserve the bigger height at the right pointer since that height may
-        # be the smaller of 2 heights later in the iteration
+        # When the height at the left pointer is smaller than the height at the right pointer we
+        # increment the left pointer by one so as to still preserve the bigger height at the right
+        # pointer since that height may be the smaller of 2 heights later in the iteration
         if height[l] < height[r]:
             l += 1
         else:
             r -= 1
-
     return res
 
 # ---------- 30. Valid Palindrome - Leetcode 125 - Easy -------------
