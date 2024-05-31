@@ -948,14 +948,12 @@ def groupAnagrams(strs):
 # --------- 37. Product of Array Except Self - Leetcode 238 - Medium ------------
 def productExceptSelf(nums):
     """
-    the gist of the solution is that we need to calculate the product of all
-    the numbers to the left of a number and the product of all the numbers
-    to the right of a number
-    we can do this by using 2 arrays, one that stores the product of all the
-    numbers to the left of a number and another that stores the product of
-    all the numbers to the right of a number
-    we then multiply the corresponding elements in the 2 arrays to get the
-    product of all the numbers except the number at the current index
+    The gist of the solution is that we need to calculate the product of all the numbers to the
+    left of a number and the product of all the numbers to the right of a number
+    We can do this by using 2 arrays, one that stores the product of all the numbers to the left of
+    a number and another that stores the product of all the numbers to the right of a number
+    We then multiply the corresponding elements in the 2 arrays to get the product of all the
+    numbers except the number at the current index
     """
 
     # initialize the prefix and postfix arrays
@@ -972,22 +970,23 @@ def productExceptSelf(nums):
 
     # calculate the postfix array
     postMult = 1
-    # we loop backwards
+    # We loop backwards to calculate the postfix array
     for i in range(len(nums) - 1, 0, -1):
         postMult *= nums[i]
         post.append(postMult)
 
-    # reverse the postfix array
+    # We reverse the postfix array because we looped backwards
     post = post[::-1]
 
-    # first of all, initialize the result array to be all zeros because we
-    # need to multiply the corresponding elements in the prefix and postfix
-    # arrays and to index into the result array, we need to have something in
-    # the result array so the zeros are the placeholders
+    # First, initialize the result array with zeros. This is necessary because we will be
+    # multiplying the corresponding elements in the prefix and postfix arrays. By starting with
+    # zeros, we ensure there are placeholders in the result array for indexing and storing the
+    # final multiplied values.
     res = [0] * len(pre)
+    # Calculate the product of all the numbers except the number at the current index since we have
+    # the prefix and postfix arrays
     for i in range(len(pre)):
         res[i] = pre[i] * post[i]
-
     return res
 
 
