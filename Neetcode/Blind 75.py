@@ -1302,40 +1302,39 @@ def minWindow(s, t):
         return ""
 
 
-# =================================================================== #
+# =============================================================================================== #
 
 ### BINARY SEARCH ###
 # --------- 8. Find Minimum in Rotated Sorted Array - Leetcode 153 - Medium ------------
 
 
 def findMin(nums):
-    # variable that'll store the current minimum
+    # Variable that'll store the current minimum
     res = nums[0]
-    # intiaialize pointers
+    # Initialize the pointers
     l = 0
     r = len(nums) - 1
 
     while l <= r:
-        # if the number at the left pointer is less than the one at the right pointer,
-        # it means that nums is already sorted and we can safely return the number at
-        # the left pointer or the current minimum, whichever is smaller
+        # If the number at the left pointer is less than the number at the right pointer, it
+        # indicates that the array is already sorted. We can then safely return the number at the
+        # left pointer or the current minimum, whichever is smaller.
         if nums[l] < nums[r]:
             res = min(res, nums[l])
             break
 
-        # calculation of the location of the middle pointer
+        # Calculate the middle pointer
         mid = (l + r) // 2
-        # before further comparison, the number at the middle pointer will serve as
-        # the minimum
+        # Before further comparison, the number at the middle pointer will serve as the minimum
         res = min(res, nums[mid])
-        # If the central element is greater than or equal to the element at the left pointer,
-        # it indicates that the left segment of the sublist is already sorted. Due to the
-        # array's rotation, searching in the left segment is not logical, as it will always
-        # contain larger values compared to the right segment. Therefore, our search should
-        # concentrate on the right segment of the array.
+        # If the middle element is greater than or equal to the element at the left pointer, it
+        # indicates that the left segment of the sublist is already sorted. Due to the array's
+        # rotation, searching in the left segment is illogical, as it will always contain larger
+        # values compared to the right segment. Therefore, our search should concentrate on the
+        # right segment of the array.
         if nums[mid] >= nums[l]:
             l = mid + 1
-        # the opposite holds
+        # The opposite holds
         else:
             r = mid - 1
     return res
@@ -1543,11 +1542,11 @@ def isValid(s):
             # If the stack is empty or if the open parenthesis at the top of the stack does not
             # match the corresponding open parenthesis for the current closing parenthesis, the
             # input string is considered invalid.
-            # 
+            #
             # In the case where the stack is empty, a sample input string might be '(()))[]{}'. By
             # the time we reach the third closing parenthesis ')', the stack will be empty because
             # two '(' characters will have been popped in previous iterations.
-            # 
+            #
             # In the case where the top of the stack does not match the expected open parenthesis,
             # a sample string could be '[{]}'. Here, the stack will not be empty, but when we reach
             # the closing bracket ']', the top of the stack will be '{', which does not match the
