@@ -1208,9 +1208,9 @@ def characterReplacement(s, k):
         # characters that are NOT the most frequent in the current substring, as we can substitute
         # them with the most frequent character up to k times and still maintain a valid substring.
         if (r - l + 1) - max(count.values()) > k:
-        # When this situation arises, decrement the count of the character at the left pointer in
-        # the dictionary, as we will be moving the left pointer rightwards to create a valid
-        # substring that can be formed with k or fewer character replacements.
+            # When this situation arises, decrement the count of the character at the left pointer in
+            # the dictionary, as we will be moving the left pointer rightwards to create a valid
+            # substring that can be formed with k or fewer character replacements.
             count[s[l]] -= 1
             l += 1
         # The maximum length of the substring with repeating characters will be the larger of the
@@ -1526,43 +1526,41 @@ def threeSum(nums):
 ### STACK ###
 # ---------- 13. Valid Parentheses - Leetcode 20 - Easy -------------
 def isValid(s):
-    # stack to store potentially matching open parentheses
+    # Stack to store (potentially matching) open parentheses
     stack = []
-    # dictionary with closing to open parentheses as key:val pairs
+    # Dictionary with closing to open parentheses as key:val pairs
     closeToOpen = {')': '(', ']': '[', '}': '{'}
 
     for char in s:
-        # when the character we're looking at is a closing parens
+        # When char is a closing parenthesis
         if char in closeToOpen:
-            # when the stack is non-empty and the open parens character at the top
-            # of the stack matches the open parens counterpart of the closing parens
-            # we're looking at, then it means that we have a matching pair of parens
-            # and we can pop the open parens character at the top of the stack
+            # If the stack is not empty and the open parenthesis at the top of the stack matches
+            # the corresponding open parenthesis for the current closing parenthesis, it indicates
+            # that we have a matching pair of parentheses. In this case, we can remove the open
+            # parenthesis from the top of the stack.
             if len(stack) != 0 and stack[-1] == closeToOpen[char]:
                 stack.pop()
-            # when the stack is empty or if the open parens character at the top
-            # of the stack does not match the open parens counterpart of the closing
-            # parens we're looking at, then it means that the input string is not a
-            # valid parens
-            # in the case of the stack being empty, a sample input string would be
-            # '(()))[]{}' whereby the time we get to the third closing ) parens, the
-            # stack will be empty since 2 pops of ( will have been made in prior
-            # iterations
-            # in the case of the open parens character at the top of the stack not
-            # matching the open parens counterpart of the closing parens we're looking
-            # at, a sample string would be '[{]}' whereby the stack will be non-empty
-            # but by the time we get to the third character, the closing parens ], the
-            # character at the top of the stack will be the prior { which does not match
-            # the open parens counterpart of ]
+            # If the stack is empty or if the open parenthesis at the top of the stack does not
+            # match the corresponding open parenthesis for the current closing parenthesis, the
+            # input string is considered invalid.
+            # 
+            # In the case where the stack is empty, a sample input string might be '(()))[]{}'. By
+            # the time we reach the third closing parenthesis ')', the stack will be empty because
+            # two '(' characters will have been popped in previous iterations.
+            # 
+            # In the case where the top of the stack does not match the expected open parenthesis,
+            # a sample string could be '[{]}'. Here, the stack will not be empty, but when we reach
+            # the closing bracket ']', the top of the stack will be '{', which does not match the
+            # expected counterpart for ']'.
             else:
                 return False
-        # when the character we're looking at is an open parens, we add it to the stack
-        # and it will be compared in a later iteration
+        # When char is an open parenthesis, we add it to the stack and it will be compared in a
+        # later iteration
         else:
             stack.append(char)
-    # the input string will only be a valid string if by the end of iterating the whole
-    # string, the stack should be empty which is just the technical way of saying we have
-    # crossed out all matching parens and we have made sure they appear in order
+    # The input string will be valid only if the stack is empty after iterating through the entire
+    # string. This means that all matching parentheses have been successfully paired and removed,
+    # ensuring they appear in the correct order.
     return len(stack) == 0
 
 
