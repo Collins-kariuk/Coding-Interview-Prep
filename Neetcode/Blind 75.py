@@ -340,36 +340,36 @@ def lowestCommonAncestor(root, p, q):
 
 
 def levelOrder(root):
-    # initialize the result
+    # The result array that'll store the levels of the binary tree; so res is a list of lists
     res = []
-    # initialize queue for Breadth First Search (BFS)
+    # Initialize the queue for Breadth First Search (BFS)
     q = collections.deque()
-    # add the root to the queue
+    # Add the root node to the queue
     q.append(root)
 
-    # run BFS while queue is nonempty
+    # Continue to run BFS while the queue is nonempty
     while q:
-        # get the length of the queue
-        # get number of nodes that are in the queue at a given point/currently
-        # ensures that we go through the queue one level at a time
+        # Determine the length of the queue. Get the number of nodes currently in the queue at a
+        # given moment. This ensures that we process the queue one level at a time.
         qLen = len(q)
+        # The list that'll store the nodes at the current level
         level = []
-        # loop through every value currently in the queue
         for i in range(qLen):
-            # pop nodes from the left of the queue (FIFO)
+            # Pop nodes from the left of the queue (FIFO)
             node = q.popleft()
-            # it's technically possible that the node could be null, so we have to check that
-            # the popped node is non-null before proceeding
+            # It's possible for the node to be null, so we must check that the popped node is
+            # non-null before proceeding.
             if node:
-                # append the node's value to the current level
+                # Append the node's value to the current level
                 level.append(node.val)
-                # add the children of the popped node
+                # Add the children of the popped node
                 q.append(node.left)
                 q.append(node.right)
-        # if the level is non-empty, we append it to the result
+        # level could be empty is all nodes at a certain level are null. By checking if level is
+        # non-empty, we ensure only non-empty levels are appended to res. This avoids adding empty
+        # lists to res, maintaining a cleaner and more accurate representation of the tree levels
         if level:
             res.append(level)
-    # return the result
     return res
 
 
