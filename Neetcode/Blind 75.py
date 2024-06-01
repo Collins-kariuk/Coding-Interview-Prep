@@ -40,26 +40,21 @@ def removeNthFromEnd(head, n):
 
 
 def reverseList(head):
-    # intialize the 2 needed pointers required to traverse through the linked list
+    # Initialize the 2 needed pointers required to traverse through the linked list
     prev = None
     curr = head
-
-    # continue with the loop as long as the current pointer does not point at a
-    # null node
+    # Continue with the loop as long as the current pointer does not point at a null node
     while curr:
-        # save the reference to the next node after the current one since
-        # ,in the next iteration, it will serve as the current node
+        # Save a reference to the node following the current one, as it will become the current
+        # node in the next iteration.
         placeholder = curr.next
-        # changing the "direction of the arrow" or where the current node
-        # points to
+        # Changing the direction of the pointer for the current node.
         curr.next = prev
-        # advancing the previous pointer to be where the current pointer is
+        # Advancing the previous pointer to the location of the current pointer
         prev = curr
-        # advancing the current pointer to the placeholder we conveniently
-        # saved earlier
+        # Advancing the current pointer to the location of the placeholder we conveniently saved
         curr = placeholder
-
-    # the new head of the reversed linked list will be the node the prev is pointing to
+    # The new head of the reversed linked list will be the node that 'prev' is pointing to.
     return prev
 
 # ------------- 17. Merge Two Sorted Lists - Leetcode 21 - Easy -----------------
