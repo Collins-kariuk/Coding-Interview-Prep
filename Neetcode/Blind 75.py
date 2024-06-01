@@ -1202,22 +1202,19 @@ def characterReplacement(s, k):
     for r in range(len(s)):
         # increment the count of the character at the right pointer in your dictionary
         count[s[r]] = count.get(s[r], 0) + 1
-        # check whether a character replacement can even be made
-        # the logic of this is that if the length of the current substring minus the
-        # maximum count of a character in the current substring is greater than k, then
-        # we know that we can't make a character replacement
-        # it makes sense to replace the characters that are NOT the most frequent character
-        # in the current substring because we can replace them with the most frequent character
-        # replacements (k) in the current substring and still have a valid substring
-        while r - l + 1 - max(count.values()) > k:
-            # when this occurs, we need to decrement the count of the character at the left
-            # pointer in the dictionary since we're going to move the left pointer rightwards
-            # in order to make a valid substring that can be made with k character replacements
-            # (is less than k)
+        # Verify if a character replacement is possible. The logic is that if the length of the
+        # current substring minus the maximum count of any single character in the substring
+        # exceeds k, then a character replacement cannot be made. It makes sense to replace the
+        # characters that are NOT the most frequent in the current substring, as we can substitute
+        # them with the most frequent character up to k times and still maintain a valid substring.
+        if (r - l + 1) - max(count.values()) > k:
+        # When this situation arises, decrement the count of the character at the left pointer in
+        # the dictionary, as we will be moving the left pointer rightwards to create a valid
+        # substring that can be formed with k or fewer character replacements.
             count[s[l]] -= 1
             l += 1
-        # the maximum length of the substring with repeating characters will be the larger of
-        # the previous window length and the current sliding window length
+        # The maximum length of the substring with repeating characters will be the larger of the
+        # previous window length and the current sliding window length
         res = max(res, r - l + 1)
     return res
 
