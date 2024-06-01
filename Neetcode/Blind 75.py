@@ -374,29 +374,30 @@ def levelOrder(root):
 
 
 # --------------- 43. Validate Binary Search Tree - Leetcode 98 - Medium --------------
+
+
 def isValidBST(root):
-    # the gist of the solution is that we need to check whether the current node's value
-    # is between the minimum and maximum values
-    # we do this by recursively calling the function on the left and right subtrees
-    # and updating the minimum and maximum values as we go along
-    def helper(node, minVal, maxVal):
-        # the base case
-        # if the node is null, we return True
+    # The essence of the solution is to verify if the current node's value falls between the
+    # minimum and maximum values. This is achieved by recursively calling the function on the left
+    # and right subtrees, updating the minimum and maximum values accordingly.
+    def helper(node, leftBoundary, rightBoundary):
+        # Base cases
+        # A null node is a valid BST
         if not node:
             return True
-        # if the node's value is less than the minimum value or greater than the maximum
-        # value, we return False
-        if node.val <= minVal or node.val >= maxVal:
+        # If the node's value is less than the minimum value or greater than the maximum value,
+        # return False. This indicates that the tree is not a valid BST.
+        if not (leftBoundary < node.val < rightBoundary):
             return False
-        # the recursive case
-        # we call the function on the left and right subtrees
-        # we update the minimum and maximum values as we go along
-        return helper(node.left, minVal, node.val) and helper(node.right, node.val, maxVal)
 
-    # we start the recursive function call with the root node
-    # we set the minimum and maximum values to be the minimum and maximum values of a
-    # 32-bit signed integer
-    return helper(root, -2**31, 2**31 - 1)
+        # The recursive case
+        # We call the function on the left and right subtrees The left and right boundaries are
+        # updated as we traverse the tree.
+        return (helper(node.left, leftBoundary, node.val) and 
+                helper(node.right, node.val, rightBoundary))
+    # Begin the recursive function call with the root node. Initialize the left and right
+    # boundaries to negative and positive infinity, respectively.
+    return helper(root, leftBoundary=float('-inf'), rightBoundary=float('inf'))
 
 
 # --------------- 44. Kth Smallest Element - Leetcode 230 - Medium --------------
