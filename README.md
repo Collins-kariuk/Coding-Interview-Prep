@@ -1,2 +1,2 @@
 # Coding-Interview-Prep
- Holds all the prep materials I do for the new grad 2024 SWE hiring cycle
+This repository contains all the preparation materials I create for the new graduate 2024 software engineering hiring cycle.
