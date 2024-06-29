@@ -393,7 +393,7 @@ def isValidBST(root):
         # The recursive case
         # We call the function on the left and right subtrees The left and right boundaries are
         # updated as we traverse the tree.
-        return (helper(node.left, leftBoundary, node.val) and 
+        return (helper(node.left, leftBoundary, node.val) and
                 helper(node.right, node.val, rightBoundary))
     # Begin the recursive function call with the root node. Initialize the left and right
     # boundaries to negative and positive infinity, respectively.
@@ -770,23 +770,18 @@ def canFinish(numCourses, prerequisites):
 ### ARRAYS & HASHING ###
 # --------- 4. Contains Duplicate - Leetcode 217 - Easy ------------
 def containsDuplicate(nums):
-    # initialize a dictionary that'll store the running occurrences
-    # of elements in nums
+    # Initialize a dictionary that'll store the running occurrences of elements in nums
     dict_list = {}
-    # loop through nums
     for num in nums:
-        # if the number already exists in the dictionary, then nums
-        # contains a duplicate since it means it was added in a
-        # previous iteration
+        # If the number already exists in the dictionary, then nums contains a duplicate since it
+        # means it was added in a previous iteration
         if num in dict_list:
             return True
-        # if the number does not already exist in the dictionary,
-        # we add it to the dict, so that if we encounter it in a
-        # following iteration, we'll know nums contains a duplicate
+        # If the number does not already exist in the dictionary, we add it to the dict, so that if
+        # we encounter it in a following iteration, we'll know nums contains a duplicate
         else:
             dict_list[num] = 1
-    # we've gone through all numbers in nums and have not found
-    # nums to have a duplicate
+    # We've gone through all numbers in nums and have not found nums to have a duplicate
     return False
 
 # using a set
