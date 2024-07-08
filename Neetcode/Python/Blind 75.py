@@ -877,13 +877,13 @@ def topKFrequent(nums, k):
 
 def isAnagram(s, t):
     def dictify(s):
-        wordCounter = {}
+        charCounter = {}
         for char in s:
-            if char in wordCounter:
-                wordCounter[char] += 1
+            if char in charCounter:
+                charCounter[char] += 1
             else:
-                wordCounter[char] = 1
-        return wordCounter
+                charCounter[char] = 1
+        return charCounter
 
     sDict = dictify(s)
     tDict = dictify(t)
