@@ -1,5 +1,7 @@
 /// ARRAYS & HASHING ///
 
+// --------- 4. Contains Duplicate - Leetcode 217 - Easy ------------
+
 /**
  * @param {number[]} nums
  * @return {boolean}
