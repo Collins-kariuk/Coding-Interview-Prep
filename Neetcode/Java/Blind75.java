@@ -64,4 +64,27 @@ public class Blind75 {
         }
         return charCounter;
     }
+
+    // --------- 3. Two Sum - Leetcode 1 - Easy ------------
+    public int[] twoSum(int[] nums, int target) {
+        // HashMap to store already visited numbers in nums alongside their indices as key-value
+        // pairs
+        HashMap<Integer, Integer> twoSumMap = new HashMap<>();
+
+        // Looping through nums, where each number in each iteration will act as num1
+        for (int i = 0; i < nums.length; i++) {
+            // The second number, num2, that when added to num1 will produce target
+            int num2 = target - nums[i];
+            // When num2 is already in the HashMap, it means we've already found our 2 numbers and
+            // we can return their indices as an array
+            if (twoSumMap.containsKey(num2)) {
+                return new int[]{i, twoSumMap.get(num2)};
+            }
+            // Otherwise we add the number at the current iteration into the HashMap which will
+            // later serve as num2
+            twoSumMap.put(nums[i], i);
+        }
+        // In case there is no solution, though the problem statement guarantees one
+        throw new IllegalArgumentException("No two sum solution");
+    }
 }
