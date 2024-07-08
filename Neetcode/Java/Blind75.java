@@ -38,4 +38,30 @@ public class Blind75 {
         // Compare the two HashMaps
         return countS.equals(countT);
     }
+
+    public boolean isAnagramB(String s, String t) {
+        // Create a function that converts a string to a HashMap with character counts
+        HashMap<Character, Integer> sDict = dictify(s);
+        HashMap<Character, Integer> tDict = dictify(t);
+
+        // Compare the two HashMaps
+        return sDict.equals(tDict);
+    }
+
+    private HashMap<Character, Integer> dictify(String s) {
+        // Create a HashMap to store the character counts
+        HashMap<Character, Integer> charCounter = new HashMap<>();
+        // Convert the string to an array of characters and count the number of occurrences of each
+        // character
+        for (char c : s.toCharArray()) {
+            // If the character already exists in the HashMap, increment the count
+            if (charCounter.containsKey(c)) {
+                charCounter.put(c, charCounter.get(c) + 1);
+            } else {
+                // Otherwise, add the character to the HashMap with a count of 1
+                charCounter.put(c, 1);
+            }
+        }
+        return charCounter;
+    }
 }
