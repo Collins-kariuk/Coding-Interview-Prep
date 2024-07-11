@@ -131,4 +131,33 @@ public class Blind75 {
         return true;
     }
 
+    // --------- 5. Container With Most Water - Leetcode 11 - Medium ------------
+    public int maxArea(int[] heights) {
+        // Initialize pointers
+        int l = 0;
+        int r = heights.length - 1;
+        // Initialize variable that will store the maximum volume
+        int res = 0;
+
+        // Continue with the loop as long as the pointers do not cross each other
+        while (l < r) {
+            // Calculate the current area at the specific point in the iteration using the basic
+            // equation of base * height. Here, the base is the difference between the pointers,
+            // and the height is the smaller of the two values at the left and right pointers
+            int currArea = (r - l) * Math.min(heights[l], heights[r]);
+            // The current maximum volume is the larger of the previous volume and the current
+            // volume
+            res = Math.max(res, currArea);
+            // When the height at the left pointer is smaller than the height at the right pointer
+            // we increment the left pointer by one so as to still preserve the bigger height at
+            // the right pointer since that height may be the smaller of 2 heights later in the
+            // iteration
+            if (heights[l] < heights[r]) {
+                l++;
+            } else {
+                r--;
+            }
+        }
+        return res;
+    }
 }
