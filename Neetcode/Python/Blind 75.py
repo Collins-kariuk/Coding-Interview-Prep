@@ -1430,15 +1430,15 @@ def alphanum(c):
 # a true two pointer solution
 
 
-def isPalindrome(self, s: str) -> bool:
+def isPalindrome(s):
     l = 0
     r = len(s) - 1
 
     while l < r:
         # skip non-alphanumeric characters
-        while l < r and not self.alphanum(s[l]):
+        while l < r and not alphanum(s[l]):
             l += 1
-        while l < r and not self.alphanum(s[r]):
+        while l < r and not alphanum(s[r]):
             r -= 1
         # check whether the characters at the left and right pointers are equal
         # return False immediately if they are not
