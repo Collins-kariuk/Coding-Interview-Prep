@@ -1,4 +1,6 @@
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Stack;
 import java.util.HashMap;
 
 public class Blind75 {
@@ -159,5 +161,55 @@ public class Blind75 {
             }
         }
         return res;
+    }
+
+    // STACK //
+    // --------- 5. Valid Parentheses - Leetcode 20 - Easy ------------
+    public static boolean isValid(String s) {
+        // Stack to store (potentially matching) open parentheses
+        Stack<Character> stack = new Stack<>();
+        // Map with closing to open parentheses as key-value pairs
+        HashMap<Character, Character> closeToOpen = new HashMap<>();
+        closeToOpen.put(')', '(');
+        closeToOpen.put(']', '[');
+        closeToOpen.put('}', '{');
+
+        for (char c : s.toCharArray()) {
+            // When char is a closing parenthesis
+            if (closeToOpen.containsKey(c)) {
+                // If the stack is not empty and the open parenthesis at the top of the stack
+                // matches the corresponding open parenthesis for the current closing parenthesis,
+                // it indicates that we have a matching pair of parentheses. In this case, we can
+                // remove the open parenthesis from the top of the stack.
+                if (!stack.isEmpty() && stack.peek() == closeToOpen.get(c)) {
+                    stack.pop();
+                } 
+                // If the stack is empty or if the open parenthesis at the top of the stack does
+                // not match the corresponding open parenthesis for the current closing
+                // parenthesis, the input string is considered invalid.
+                //
+                // In the case where the stack is empty, a sample input string might be
+                // '(()))[]{}'. By the time we reach the third closing parenthesis ')', the stack
+                // will be empty because two '(' characters will have been popped in previous
+                // iterations.
+                //
+                // In the case where the top of the stack does not match the expected open
+                // parenthesis, a sample string could be '[{]}'. Here, the stack will not be empty,
+                // but when we reach the closing bracket ']', the top of the stack will be '{',
+                // which does not match the expected counterpart for ']'.
+                else {
+                    return false;
+                }
+            } 
+            // When char is an open parenthesis, we add it to the stack and it will be compared in
+            // a later iteration
+            else {
+                stack.push(c);
+            }
+        }
+        // The input string will be valid only if the stack is empty after iterating through the
+        // entire string. This means that all matching parentheses have been successfully paired
+        // and removed, ensuring they appear in the correct order.
+        return stack.isEmpty();
     }
 }
