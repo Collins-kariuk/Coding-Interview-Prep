@@ -1375,10 +1375,10 @@ def search(nums, target):
 
 ### TWO POINTERS ###
 # ---------- 12. Container With Most Water - Leetcode 11 - Medium -------------
-def maxArea(height):
+def maxArea(heights):
     # initialize pointers
     l = 0
-    r = len(height) - 1
+    r = len(heights) - 1
     # initialize variable that'll store the maximum volume
     res = 0
 
@@ -1387,13 +1387,13 @@ def maxArea(height):
         # Calculate the current area at the specific point in the iteration using the basic
         # equation of base * height. Here, the base is the difference between the pointers, and the
         # height is the smaller of the two values at the left and right pointers.
-        currArea = (r - l) * min(height[l], height[r])
+        currArea = (r - l) * min(heights[l], heights[r])
         # The current maximum volume is the larger of the previous volume and the current volume
         res = max(res, currArea)
         # When the height at the left pointer is smaller than the height at the right pointer we
         # increment the left pointer by one so as to still preserve the bigger height at the right
         # pointer since that height may be the smaller of 2 heights later in the iteration
-        if height[l] < height[r]:
+        if heights[l] < heights[r]:
             l += 1
         else:
             r -= 1
