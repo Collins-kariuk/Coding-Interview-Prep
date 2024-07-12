@@ -13,27 +13,26 @@ class ListNode:
 
 
 def removeNthFromEnd(head, n):
-    # Create a dummy node and attach it to the head of the input list.
+    # Create a dummy node that points to the head of the list
     dummy = ListNode(val=0, next=head)
+    left = dummy
+    right = head
 
-    # Initialize 2 pointers, first and second, to point to the dummy node.
-    first = dummy
-    second = dummy
+    # Move the right pointer n steps ahead
+    while n > 0:
+        right = right.next
+        n -= 1
 
-    # Advances first pointer so that the gap between first and second is n nodes apart
-    for i in range(n + 1):
-        first = first.next
+    # Move both pointers until the right pointer reaches the end
+    # The left pointer will then be at the node before the one to be removed
+    while right:
+        left = left.next
+        right = right.next
 
-    # While the first pointer does not equal null move both first and second to maintain
-    # the gap and get nth node from the end
-    while first != None:
-        first = first.next
-        second = second.next
+    # Remove the nth node from the end.
+    left.next = left.next.next
 
-    # Delete the node being pointed to by second
-    second.next = second.next.next
-
-    # Return the head of the input list
+    # Return the head of the modified list.
     return dummy.next
 
 # --------- 14. Reverse Linked List - Leetcode 209 - Easy ------------
