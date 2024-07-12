@@ -1,5 +1,4 @@
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Stack;
 import java.util.HashMap;
 
@@ -11,9 +10,7 @@ public class Blind75 {
         HashSet<Integer> set = new HashSet<>();
         for (int num : nums) {
             // If the number already exists in the set, nums contains a duplicate
-            if (set.contains(num))
-                return true;
-
+            if (set.contains(num)) return true;
             // Otherwise, add the number to the set
             set.add(num);
         }
@@ -24,15 +21,13 @@ public class Blind75 {
     // --------- 2. Valid Anagram - Leetcode 242 - Easy ------------
     public boolean isAnagram(String s, String t) {
         // If the lengths of the strings are not equal, they can't be anagrams
-        if (s.length() != t.length())
-            return false;
+        if (s.length() != t.length()) return false;
 
         // Initialize 2 HashMaps to store the number of occurrences of each character
         HashMap<Character, Integer> countS = new HashMap<>();
         HashMap<Character, Integer> countT = new HashMap<>();
 
-        // Loop through the strings and count the number of occurrences of each
-        // character
+        // Loop through the strings and count the number of occurrences of each character
         for (int i = 0; i < s.length(); i++) {
             char charS = s.charAt(i);
             char charT = t.charAt(i);
@@ -57,8 +52,7 @@ public class Blind75 {
     private HashMap<Character, Integer> dictify(String s) {
         // Create a HashMap to store the character counts
         HashMap<Character, Integer> charCounter = new HashMap<>();
-        // Convert the string to an array of characters and count the number of
-        // occurrences of each
+        // Convert the string to an array of characters and count the number of occurrences of each
         // character
         for (char c : s.toCharArray()) {
             // If the character already exists in the HashMap, increment the count
@@ -74,8 +68,7 @@ public class Blind75 {
 
     // --------- 3. Two Sum - Leetcode 1 - Easy ------------
     public int[] twoSum(int[] nums, int target) {
-        // HashMap to store already visited numbers in nums alongside their indices as
-        // key-value
+        // HashMap to store already visited numbers in nums alongside their indices as key-value
         // pairs
         HashMap<Integer, Integer> twoSumMap = new HashMap<>();
 
@@ -83,14 +76,12 @@ public class Blind75 {
         for (int i = 0; i < nums.length; i++) {
             // The second number, num2, that when added to num1 will produce target
             int num2 = target - nums[i];
-            // When num2 is already in the HashMap, it means we've already found our 2
-            // numbers and
+            // When num2 is already in the HashMap, it means we've already found our 2 numbers and
             // we can return their indices as an array
             if (twoSumMap.containsKey(num2)) {
                 return new int[] { i, twoSumMap.get(num2) };
             }
-            // Otherwise we add the number at the current iteration into the HashMap which
-            // will
+            // Otherwise we add the number at the current iteration into the HashMap which will
             // later serve as num2
             twoSumMap.put(nums[i], i);
         }
