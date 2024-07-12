@@ -155,7 +155,7 @@ public class Blind75 {
     }
 
     // STACK //
-    // --------- 5. Valid Parentheses - Leetcode 20 - Easy ------------
+    // --------- 6. Valid Parentheses - Leetcode 20 - Easy ------------
     public static boolean isValid(String s) {
         // Stack to store (potentially matching) open parentheses
         Stack<Character> stack = new Stack<>();
@@ -202,5 +202,42 @@ public class Blind75 {
         // entire string. This means that all matching parentheses have been successfully paired
         // and removed, ensuring they appear in the correct order.
         return stack.isEmpty();
+    }
+
+    // BINARY SEARCH //
+    // --------- 7. Find Minimum in Rotated Sorted Array - Leetcode 153 - Medium ------------
+    public int findMin(int[] nums) {
+        // Variable that'll store the current minimum
+        int res = nums[0];
+        // Initialize the pointers
+        int l = 0;
+        int r = nums.length - 1;
+
+        while (l <= r) {
+            // If the number at the left pointer is less than the number at the right pointer, it
+            // indicates that the array is already sorted. We can then safely return the number at
+            // the left pointer or the current minimum, whichever is smaller.
+            if (nums[l] < nums[r]) {
+                res = Math.min(res, nums[l]);
+                break;
+            }
+
+            // Calculate the middle pointer
+            int mid = (l + r) / 2;
+            // Before further comparison, the number at the middle pointer will serve as the
+            // minimum
+            res = Math.min(res, nums[mid]);
+            // If the middle element is greater than or equal to the element at the left pointer,
+            // it indicates that the left segment of the sublist is already sorted. Due to the
+            // array's rotation, searching in the left segment is illogical, as it will always
+            // contain larger values compared to the right segment. Therefore, our search should
+            // concentrate on the right segment of the array.
+            if (nums[mid] >= nums[l]) {
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }
+        return res;
     }
 }
