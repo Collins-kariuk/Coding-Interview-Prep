@@ -327,4 +327,38 @@ public class Blind75 {
         // or fast.next would be null
         return false;
     }
+
+    // TREES //
+
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+    // --------- 11. Invert Binary Tree - Leetcode 226 - Easy ------------
+    public TreeNode invertTree(TreeNode root) {
+        // Base case: if the root is null, return null
+        if (root == null) {
+            return null;
+        }
+
+        // Exchange the left and right children of the node
+        // Save the left child in a temporary variable
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+
+        // Recursively invert the left and right children
+        invertTree(root.left);
+        invertTree(root.right);
+
+        return root;
+    }
 }
