@@ -375,4 +375,27 @@ public class Blind75 {
         // plus 1 since we're counting the current node as well, i.e., the root
         return Math.max(leftDepth, rightDepth) + 1;
     }
+
+    // ---------- 13. Validate Binary Search Tree - Leetcode 98 - Medium -------------
+    public boolean isValidBST(TreeNode root) {
+        // Start the recursive function call with the root node.
+        // Initialize the left and right boundaries to negative and positive infinity, respectively
+        return helper(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean helper(TreeNode node, long leftBoundary, long rightBoundary) {
+        // Base cases: a null node is a valid BST
+        if (node == null) {
+            return true;
+        }
+        // If the node's value is less than the minimum value or greater than the maximum value,
+        // return false. This indicates that the tree is not a valid BST
+        if (!(leftBoundary < node.val && node.val < rightBoundary)) {
+            return false;
+        }
+
+        // The recursive case: we call the function on the left and right subtrees. The left and
+        // right boundaries are updated as we traverse the tree
+        return helper(node.left, leftBoundary, node.val) && helper(node.right, node.val, rightBoundary);
+    }
 }
