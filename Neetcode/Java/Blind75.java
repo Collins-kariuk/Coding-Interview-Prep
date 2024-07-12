@@ -274,4 +274,32 @@ public class Blind75 {
         // The new head of the reversed linked list will be the node that 'prev' is pointing to
         return prev;
     }
+
+    // --------- 9. Remove Nth Node from End of List - Leetcode 19 - Medium ------------
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        // Create a dummy node that points to the head of the list
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode left = dummy;
+        ListNode right = head;
+
+        // Move the right pointer n steps ahead
+        while (n > 0) {
+            right = right.next;
+            n--;
+        }
+
+        // Move both pointers until the right pointer reaches the end
+        // The left pointer will then be at the node before the one to be removed
+        while (right != null) {
+            left = left.next;
+            right = right.next;
+        }
+
+        // Remove the nth node from the end
+        left.next = left.next.next;
+
+        // Return the head of the modified list
+        return dummy.next;
+    }
 }
