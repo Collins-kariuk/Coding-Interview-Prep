@@ -240,4 +240,38 @@ public class Blind75 {
         }
         return res;
     }
+
+    // LINKED LIST //
+    // Definition for singly-linked list.
+    class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int val) {
+            this.val = val;
+        }
+    }
+
+    // --------- 8. Reverse Linked List - Leetcode 209 - Easy ------------
+    public static ListNode reverseList(ListNode head) {
+        // Initialize the 2 needed pointers required to traverse through the linked list
+        ListNode prev = null;
+        ListNode curr = head;
+
+        // Continue with the loop as long as the current pointer does not point at a null node
+        while (curr != null) {
+            // Save a reference to the node following the current one, as it will become the
+            // current node in the next iteration.
+            ListNode placeholder = curr.next;
+            // Changing the direction of the pointer for the current node.
+            curr.next = prev;
+            // Advancing the previous pointer to the location of the current pointer
+            prev = curr;
+            // Advancing the current pointer to the location of the placeholder we conveniently
+            // saved
+            curr = placeholder;
+        }
+        // The new head of the reversed linked list will be the node that 'prev' is pointing to
+        return prev;
+    }
 }
