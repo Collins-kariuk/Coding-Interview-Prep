@@ -390,7 +390,7 @@ def isValidBST(root):
             return False
 
         # The recursive case
-        # We call the function on the left and right subtrees The left and right boundaries are
+        # We call the function on the left and right subtrees. The left and right boundaries are
         # updated as we traverse the tree.
         return (helper(node.left, leftBoundary, node.val) and
                 helper(node.right, node.val, rightBoundary))
