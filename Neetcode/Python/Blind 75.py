@@ -2269,27 +2269,29 @@ def insert(intervals, newInterval):
 
 
 def merge(intervals):
-    # sort the intervals by their start times
+    # Sort the intervals by their start times
     # intervals.sort() also works
     intervals.sort(key=lambda x: x[0])
-    # variable that'll store the result
-    res = []
-    # add the first interval to the result to initiate the comparison process
-    res.append(intervals[0])
-    # variable that'll store the index of the interval we're currently at
-    for i in range(len(intervals)):
-        # when the end of the current interval is less than the start of the next interval,
-        # we add the current interval to the result
-        # this is because the intervals are supposed to be sorted and non-overlapping
-        # in the case of [[1,2],[3,4]], for instance, 2 < 3
-        if res[-1][1] < intervals[i][0]:
-            res.append(intervals[i])
-        # when the end of the current interval is greater than or equal to the start of the
-        # next interval, we merge the intervals
+    
+    # Initialize the output list with the first interval
+    output = [intervals[0]]
+
+    # Iterate through each interval in the sorted list
+    for start, end in intervals:
+        # Get the end time of the last interval in the output list
+        lastEnd = output[-1][1]
+
+        # If the start time of the current interval is less than or equal to the end time of the
+        # last interval, there is an overlap, so merge the intervals by updating the end time of
+        # the last interval in the output list
+        if start <= lastEnd:
+            output[-1][1] = max(lastEnd, end)
         else:
-            res[-1][1] = max(res[-1][1], intervals[i][1])
-    # the result at the end will be the merged intervals
-    return res
+            # If there is no overlap, add the current interval to the output list
+            output.append([start, end])
+
+    # Return the merged intervals.
+    return output
 
 # ------------------ 35. Non-overlapping Intervals - Leetcode 435 - Medium ---------------------
 
