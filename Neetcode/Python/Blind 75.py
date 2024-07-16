@@ -910,28 +910,24 @@ def isAnagram(s, t):
 def groupAnagrams(strs):
     res = defaultdict(list)
 
-    # visit each string in strs
+    # Visit each string in strs
     for s in strs:
-        # initialize a specific count list for that specific list
-        # since we have not started counting the number of occurrences
-        # of the characters in each string, we feel the count with zeros
-        # 26 for every letter in the alphabet
-        # count[0] -> 'a', count[1] -> 'b', count[2] -> 'c'...
-        # count[25] -> 'z'
+        # Initialize a count list for the specific string. Since we have not yet counted the
+        # occurrences of characters in the string, we fill the count list with zeros. The list has
+        # 26 slots, one for each letter of the alphabet. count[0] corresponds to 'a', count[1]
+        # corresponds to 'b', count[2] corresponds to 'c', and so on, up to count[25] which
+        # corresponds to 'z'
         count = [0] * 26
 
-        # visit each character in the string
+        # Visit each character in the string
         for char in s:
-            # count the occurrence of each letter/character in the string
-            # using ord helps us assign each letter in the alphabet to
-            # its corresponding index in count
+            # Count the occurrence of each letter/character in the string. Using ord helps us map
+            # each letter in the alphabet to its corresponding index in the count list
             count[ord(char) - ord('a')] += 1
-        # append the string that corresponds to that particular count list
-        # to the value that corresponds to the specific count key in the
-        # default dictionary
+        # Append the string that corresponds to the particular count list to the value associated
+        # with the specific count key in the default dictionary.
         res[tuple(count)].append(s)
 
-    # we just want all the values in list forms
     return list(res.values())
 
 
