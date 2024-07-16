@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class Blind75 {
@@ -116,9 +117,7 @@ public class Blind75 {
             // 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]"
             String key = Arrays.toString(count);
             // If the key is not already in the map, add it with an empty list
-            if (!ans.containsKey(key)) {
-                ans.put(key, new ArrayList<>());
-            }
+            if (!ans.containsKey(key)) ans.put(key, new ArrayList<>());
 
             // Append the current string to the corresponding list in the map
             ans.get(key).add(s);
@@ -435,4 +434,38 @@ public class Blind75 {
         // right boundaries are updated as we traverse the tree
         return helper(node.left, leftBoundary, node.val) && helper(node.right, node.val, rightBoundary);
     }
+
+    // INTERVALS //
+    // ---------- 15. Merge Intervals - Leetcode 56 - Medium -------------
+    public List<int[]> merge(int[][] intervals) {
+        // Sort the intervals by their start times
+        Arrays.sort(intervals, Comparator.comparingInt(a -> a[0]));
+        
+        // Initialize the output list with the first interval
+        List<int[]> output = new ArrayList<>();
+        output.add(intervals[0]);
+
+        // Iterate through each interval in the sorted list
+        for (int i = 1; i < intervals.length; i++) {
+            int[] currentInterval = intervals[i];
+            int[] lastInterval = output.get(output.size() - 1);
+
+            // Get the end time of the last interval in the output list
+            int lastEnd = lastInterval[1];
+
+            // If the start time of the current interval is less than or equal to the end time of
+            // the last interval, there is an overlap, so merge the intervals by updating the end
+            // time of the last interval in the output list
+            if (currentInterval[0] <= lastEnd) {
+                lastInterval[1] = Math.max(lastEnd, currentInterval[1]);
+            } else {
+                // If there is no overlap, add the current interval to the output list
+                output.add(currentInterval);
+            }
+        }
+
+        // Return the merged intervals
+        return output;
+    }
+
 }
