@@ -68,8 +68,7 @@ public class Blind75 {
 
     // --------- 3. Two Sum - Leetcode 1 - Easy ------------
     public int[] twoSum(int[] nums, int target) {
-        // HashMap to store already visited numbers in nums alongside their indices as key-value
-        // pairs
+        // HashMap to store visited numbers in nums alongside their indices as key-value pairs
         HashMap<Integer, Integer> twoSumMap = new HashMap<>();
 
         // Looping through nums, where each number in each iteration will act as num1
@@ -96,7 +95,6 @@ public class Blind75 {
         return (('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z') || ('0' <= c && c <= '9'));
     }
 
-    // Method to check if a string is a palindrome
     public boolean isPalindrome(String s) {
         // The left and right pointers
         int l = 0;
@@ -111,8 +109,8 @@ public class Blind75 {
                 r--;
             }
 
-            // Check whether the characters at the left and right pointers are equal
-            // Return false immediately if they are not
+            // Check whether the characters at the left and right pointers are equal and
+            // immediately return false if they are not
             if (Character.toLowerCase(s.charAt(l)) != Character.toLowerCase(s.charAt(r))) {
                 return false;
             }
@@ -132,7 +130,6 @@ public class Blind75 {
         // Initialize variable that will store the maximum volume
         int res = 0;
 
-        // Continue with the loop as long as the pointers do not cross each other
         while (l < r) {
             // Calculate the current area at the specific point in the iteration using the basic
             // equation of base * height. Here, the base is the difference between the pointers,
@@ -143,7 +140,7 @@ public class Blind75 {
             res = Math.max(res, currArea);
             // When the height at the left pointer is smaller than the height at the right pointer
             // we increment the left pointer by one so as to still preserve the bigger height at
-            // the right pointer since that height may be the smaller of 2 heights later in the
+            // the right pointer since that height may be the smaller of 2 heights later in a
             // iteration
             if (heights[l] < heights[r]) {
                 l++;
@@ -215,8 +212,8 @@ public class Blind75 {
 
         while (l <= r) {
             // If the number at the left pointer is less than the number at the right pointer, it
-            // indicates that the array is already sorted. We can then safely return the number at
-            // the left pointer or the current minimum, whichever is smaller.
+            // indicates that the (sub)array is already sorted. We can then safely return the
+            // number at the left pointer or the current minimum, whichever is smaller
             if (nums[l] < nums[r]) {
                 res = Math.min(res, nums[l]);
                 break;
@@ -231,7 +228,7 @@ public class Blind75 {
             // it indicates that the left segment of the sublist is already sorted. Due to the
             // array's rotation, searching in the left segment is illogical, as it will always
             // contain larger values compared to the right segment. Therefore, our search should
-            // concentrate on the right segment of the array.
+            // concentrate on the right segment of the array
             if (nums[mid] >= nums[l]) {
                 l = mid + 1;
             } else {
