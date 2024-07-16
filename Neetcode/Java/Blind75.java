@@ -1,5 +1,9 @@
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Stack;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class Blind75 {
@@ -77,15 +81,51 @@ public class Blind75 {
             int num2 = target - nums[i];
             // When num2 is already in the HashMap, it means we've already found our 2 numbers and
             // we can return their indices as an array
-            if (twoSumMap.containsKey(num2)) {
-                return new int[] { i, twoSumMap.get(num2) };
-            }
+            if (twoSumMap.containsKey(num2)) return new int[] { i, twoSumMap.get(num2) };
             // Otherwise we add the number at the current iteration into the HashMap which will
             // later serve as num2
             twoSumMap.put(nums[i], i);
         }
         // In case there is no solution, though the problem statement guarantees one
         throw new IllegalArgumentException("No two sum solution");
+    }
+
+    // --------- 14. Group Anagrams - Leetcode 49 - Medium ------------
+    /**
+     * Groups anagrams together from a list of strings.
+     * @param strs An array of strings to be grouped into anagrams.
+     * @return A list of lists, where each inner list contains anagrams.
+     */
+    public List<List<String>> groupAnagrams(String[] strs) {
+        // Create a HashMap to store the grouped anagrams
+        HashMap<String, List<String>> ans = new HashMap<>();
+
+        // Iterate through each string in the input array
+        for (String s : strs) {
+            // Initialize a count array for the specific string. The array has 26 slots, one for
+            // each letter of the alphabet
+            int[] count = new int[26];
+            // Count the occurrence of each letter in the string
+            for (char c : s.toCharArray()) {
+                count[c - 'a']++;
+            }
+
+            // Convert the count array to a string key
+            // If the array was count = [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+            // 0, 0, 0, 0, 0, 0, 0] then the corresponding key would be key = "[1, 0, 0, 0, 1, 0, 
+            // 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]"
+            String key = Arrays.toString(count);
+            // If the key is not already in the map, add it with an empty list
+            if (!ans.containsKey(key)) {
+                ans.put(key, new ArrayList<>());
+            }
+
+            // Append the current string to the corresponding list in the map
+            ans.get(key).add(s);
+        }
+
+        // Return a list of the grouped anagrams
+        return new ArrayList<>(ans.values());
     }
 
     // TWO POINTERS //
