@@ -207,9 +207,7 @@ public class Blind75 {
                 // matches the corresponding open parenthesis for the current closing parenthesis,
                 // it indicates that we have a matching pair of parentheses. In this case, we can
                 // remove the open parenthesis from the top of the stack.
-                if (!stack.isEmpty() && stack.peek() == closeToOpen.get(c)) {
-                    stack.pop();
-                } 
+                if (!stack.isEmpty() && stack.peek() == closeToOpen.get(c)) stack.pop();
                 // If the stack is empty or if the open parenthesis at the top of the stack does
                 // not match the corresponding open parenthesis for the current closing
                 // parenthesis, the input string is considered invalid.
@@ -223,10 +221,8 @@ public class Blind75 {
                 // parenthesis, a sample string could be '[{]}'. Here, the stack will not be empty,
                 // but when we reach the closing bracket ']', the top of the stack will be '{',
                 // which does not match the expected counterpart for ']'.
-                else {
-                    return false;
-                }
-            } 
+                else return false;
+            }
             // When char is an open parenthesis, we add it to the stack and it will be compared in
             // a later iteration
             else {
