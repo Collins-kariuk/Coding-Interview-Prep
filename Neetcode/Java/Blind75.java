@@ -391,9 +391,7 @@ public class Blind75 {
     // ---------- 12. Maximum Depth of Binary Tree - Leetcode 104 - Easy -------------
     public static int maxDepth(TreeNode root) {
         // Base case: when we reach a null node, we return 0 since the depth of a null node is 0
-        if (root == null) {
-            return 0;
-        }
+        if (root == null) return 0;
         // Recursive case: calculate the depth of the left and right parts of the binary tree
         int leftDepth = maxDepth(root.left);
         int rightDepth = maxDepth(root.right);
