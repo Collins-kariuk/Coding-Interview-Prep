@@ -358,7 +358,6 @@ public class Blind75 {
     }
 
     // TREES //
-
     public class TreeNode {
         int val;
         TreeNode left;
@@ -374,13 +373,11 @@ public class Blind75 {
     // --------- 11. Invert Binary Tree - Leetcode 226 - Easy ------------
     public TreeNode invertTree(TreeNode root) {
         // Base case: if the root is null, return null
-        if (root == null) {
-            return null;
-        }
+        if (root == null) return null;
 
-        // Exchange the left and right children of the node
         // Save the left child in a temporary variable
         TreeNode temp = root.left;
+        // Exchange the left and right children of the node
         root.left = root.right;
         root.right = temp;
 
