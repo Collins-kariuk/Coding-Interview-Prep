@@ -336,13 +336,13 @@ public class Blind75 {
 
     // --------- 10. Linked List Cycle - Leetcode 141 - Easy ------------
     public boolean hasCycle(ListNode head) {
-        // Using slow and fast pointers
+        // Initialize the slow and fast pointers
         ListNode slow = head;
         ListNode fast = head;
 
-        // Continue with the loop as long as the fast pointer is non-null and the next pointer of
-        // the fast pointer is non-null. We include fast.next because if we don't, we'll get a null
-        // pointer exception when we try to access fast.next.next
+        // Continue with the loop as long as both the fast pointer and the next pointer of the fast
+        // pointer are non-null. We include fast.next because if we don't, we'll get a null pointer
+        // exception when we try to access fast.next.next
         while (fast != null && fast.next != null) {
             // Slow pointer moves slower than the fast pointer
             slow = slow.next;
@@ -350,9 +350,7 @@ public class Blind75 {
 
             // At a certain point in the iteration, the fast pointer will overlap the slow pointer
             // and when this happens we know there's a cycle
-            if (slow == fast) {
-                return true;
-            }
+            if (slow == fast) return true;
         }
         // Once the loop exits, we know for sure that the linked list is linear since either fast
         // or fast.next would be null
