@@ -2670,3 +2670,20 @@ def climbStairs(n):
         two = temp
     # the number of ways to get to the nth stair
     return one
+
+# ----------------------------------------------------------------------------------------------------------------------------------------------------------
+#### HEAP OR PRIORITY QUEUE ####
+# --------- 55. Kth Largest Element in an Array - Leetcode 215 - Medium ------------
+def findKthLargest(nums, k):
+    # Initialize a min-heap
+    min_heap = []
+
+    # Iterate through the array
+    for num in nums:
+        # Push the current number onto the heap if the heap size is less than k
+        if len(min_heap) < k: heapq.heappush(min_heap, num)
+        # If the heap size is k, push the current number and pop the smallest element
+        elif num > min_heap[0]: heapq.heapreplace(min_heap, num)
+
+    # The root of the heap is the kth largest element
+    return min_heap[0]
