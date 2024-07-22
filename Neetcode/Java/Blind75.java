@@ -255,8 +255,7 @@ public class Blind75 {
 
             // Calculate the middle pointer
             int mid = (l + r) / 2;
-            // Before further comparison, the number at the middle pointer will serve as the
-            // minimum
+            // Before more comparison, the number at the middle pointer will serve as the minimum
             res = Math.min(res, nums[mid]);
             // If the middle element is greater than or equal to the element at the left pointer,
             // it indicates that the left segment of the sublist is already sorted. Due to the
