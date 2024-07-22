@@ -430,7 +430,7 @@ public class Blind75 {
         List<int[]> output = new ArrayList<>();
         output.add(intervals[0]);
 
-        // Iterate through each interval in the sorted list
+        // Iterate through each interval, from the second one, in the sorted list
         for (int i = 1; i < intervals.length; i++) {
             int[] currentInterval = intervals[i];
             int[] lastInterval = output.get(output.size() - 1);
@@ -441,12 +441,9 @@ public class Blind75 {
             // If the start time of the current interval is less than or equal to the end time of
             // the last interval, there is an overlap, so merge the intervals by updating the end
             // time of the last interval in the output list
-            if (currentInterval[0] <= lastEnd) {
-                lastInterval[1] = Math.max(lastEnd, currentInterval[1]);
-            } else {
-                // If there is no overlap, add the current interval to the output list
-                output.add(currentInterval);
-            }
+            if (currentInterval[0] <= lastEnd) lastInterval[1] = Math.max(lastEnd, currentInterval[1]);
+            // If there is no overlap, add the current interval to the output list
+            else output.add(currentInterval);
         }
 
         // Return the merged intervals
