@@ -301,7 +301,7 @@ public class Blind75 {
             // saved
             curr = placeholder;
         }
-        // The new head of the reversed linked list will be the node that 'prev' is pointing to
+        // The new head of the reversed linked list will be the node that prev points to
         return prev;
     }
 
