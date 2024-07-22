@@ -409,18 +409,15 @@ public class Blind75 {
 
     private boolean helper(TreeNode node, long leftBoundary, long rightBoundary) {
         // Base cases: a null node is a valid BST
-        if (node == null) {
-            return true;
-        }
+        if (node == null) return true;
         // If the node's value is less than the minimum value or greater than the maximum value,
         // return false. This indicates that the tree is not a valid BST
-        if (!(leftBoundary < node.val && node.val < rightBoundary)) {
-            return false;
-        }
+        if (!(leftBoundary < node.val && node.val < rightBoundary)) return false;
 
         // The recursive case: we call the function on the left and right subtrees. The left and
         // right boundaries are updated as we traverse the tree
-        return helper(node.left, leftBoundary, node.val) && helper(node.right, node.val, rightBoundary);
+        return helper(node.left, leftBoundary, node.val) && 
+               helper(node.right, node.val, rightBoundary);
     }
 
     // INTERVALS //
