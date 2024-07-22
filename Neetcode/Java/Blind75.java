@@ -310,6 +310,7 @@ public class Blind75 {
         // Create a dummy node that points to the head of the list
         ListNode dummy = new ListNode(0);
         dummy.next = head;
+        // Initialize left and right pointers pointing to the dummy and head nodes respectively
         ListNode left = dummy;
         ListNode right = head;
 
