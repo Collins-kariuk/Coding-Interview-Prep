@@ -7,18 +7,22 @@
  * @return {boolean}
  */
 function containsDuplicate(nums) {
-    // Initialize an object that will store the occurrences of elements in nums
-    let dictList = {};
-    for (let num of nums) {
-        // If the number already exists in the object, nums contains a duplicate
-        if (dictList.hasOwnProperty(num)) {
-            return true;
-        }
-        // If the number does not already exist in the object, add it
-        else {
-            dictList[num] = 1;
-        }
+  // Initialize an object that will store the occurrences of elements in nums
+  let dictList = {};
+  for (let num of nums) {
+    // If the number already exists in the object, nums contains a duplicate
+    if (dictList.hasOwnProperty(num)) {
+      return true;
     }
-    // We've gone through all numbers in nums and have not found any duplicates
-    return false;
+    // If the number does not already exist in the object, add it
+    else {
+      dictList[num] = 1;
+    }
+  }
+  // We've gone through all numbers in nums and have not found any duplicates
+  return false;
 }
+
+// Test cases
+console.log(containsDuplicate([1, 2, 3, 1])); // true
+console.log(containsDuplicate([1, 2, 3, 4])); // false
