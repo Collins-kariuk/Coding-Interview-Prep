@@ -2,27 +2,23 @@
 
 // --------- 4. Contains Duplicate - Leetcode 217 - Easy ------------
 
-/**
- * @param {number[]} nums
- * @return {boolean}
- */
-function containsDuplicate(nums) {
-  // Initialize an object that will store the occurrences of elements in nums
-  let dictList = {};
-  for (let num of nums) {
-    // If the number already exists in the object, nums contains a duplicate
-    if (dictList.hasOwnProperty(num)) {
-      return true;
-    }
-    // If the number does not already exist in the object, add it
-    else {
-      dictList[num] = 1;
-    }
-  }
-  // We've gone through all numbers in nums and have not found any duplicates
-  return false;
-}
+class ContainsDuplicateSolution {
+  /**
+   * @param {number[]} nums
+   * @return {boolean}
+   */
+  hasDuplicate(nums) {
+    let uniqueNums = new Set();
 
-// Test cases
-console.log(containsDuplicate([1, 2, 3, 1])); // true
-console.log(containsDuplicate([1, 2, 3, 4])); // false
+    for (let i = 0; i < nums.length; i++) {
+      if (uniqueNums.has(nums[i])) {
+        // Use `has` to check for existence in the Set
+        return true;
+      } else {
+        uniqueNums.add(nums[i]); // Add the number to the Set
+      }
+    }
+
+    return false; // Return false if no duplicates are found
+  }
+}
